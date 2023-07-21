@@ -2995,7 +2995,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       ),
     );
   }
-
+  static int roundUpAbsolute(double number) {
+    return number.isNegative ? number.floor() : number.ceil();
+  }
   checkout(List<SectionModel> cartList) {
     _razorpay = Razorpay();
     _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -3015,6 +3017,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             checkoutState = setState;
+           totalPrice = roundUpAbsolute(totalPrice).toDouble();
             return Container(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height * 0.8),

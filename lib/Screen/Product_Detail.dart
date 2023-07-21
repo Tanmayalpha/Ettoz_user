@@ -70,6 +70,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
   int _curSlider = 0;
   final _pageController = PageController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   List<int?> _selectedIndex = [];
   List<TextEditingController> _controller = [];
   ChoiceChip? choiceChip, tagChip;
@@ -403,210 +404,219 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
       }
     }
     double priceAdd =
-        double.parse(model.prVarientList![model.selVarient!].disPrice!);
+        double.parse(model.prVarientList![model.selVarient!].disPrice!)*newCounter;
     if (priceAdd == 0) {
-      priceAdd = double.parse(model.prVarientList![model.selVarient!].price!);
+      priceAdd = double.parse(model.prVarientList![model.selVarient!].price!)*newCounter;
     }
     setState(() {
       addIdList.clear();
     });
     persistentBottomSheetController =
-        await _scaffoldKey.currentState!.showBottomSheet(
+         _scaffoldKey.currentState!.showBottomSheet(
       (context) {
         return WillPopScope(
           onWillPop: back,
           child: SingleChildScrollView(
             child: model.addOnList!.length == 0 ||
-                    model.addOnList!.length == null
+                model.addOnList!.length == null
                 ? SizedBox.shrink()
                 : Container(
-                    color: Theme.of(context).cardColor,
+              color: Theme.of(context).cardColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Add-on",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: model.addOnList!.length,
-                                  itemBuilder: (c, i) {
-                                    //indexList.add(i);
-                                    // if (_controller.length < i + 1)
-                                    //   _controller.add(new TextEditingController());
-                                    print(
-                                        "imagesssssssssssssssss${model.addOnList![i].image}");
-                                    if (model.addOnList![i].price == '' ||
-                                        model.addOnList![i].price == null) {
-                                      return SizedBox.shrink();
-                                    } else {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                        Text(
+                          "Add-on",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: model.addOnList!.length,
+                            itemBuilder: (c, i) {
+                              //indexList.add(i);
+                              // if (_controller.length < i + 1)
+                              //   _controller.add(new TextEditingController());
+                              print(
+                                  "imagesssssssssssssssss${model.addOnList![i].image}");
+                              if (model.addOnList![i].price == '' ||
+                                  model.addOnList![i].price == null) {
+                                return SizedBox.shrink();
+                              } else {
+
+                                return Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ChoiceChip(
+                                        selected: addIdList.indexWhere(
+                                                (element) =>
+                                            element.id ==
+                                                model
+                                                    .addOnList![i]
+                                                    .id!) !=
+                                            -1
+                                            ? true
+                                            : false,
+                                        label: Row(
                                           children: [
-                                            ChoiceChip(
-                                              selected: addIdList.indexWhere(
-                                                          (element) =>
-                                                              element.id ==
-                                                              model
-                                                                  .addOnList![i]
-                                                                  .id!) !=
-                                                      -1
-                                                  ? true
-                                                  : false,
-                                              label: Row(
-                                                children: [
-                                                  Icon(
-                                                    addIdList.indexWhere(
-                                                                (element) =>
-                                                                    element
-                                                                        .id ==
-                                                                    model
-                                                                        .addOnList![
-                                                                            i]
-                                                                        .id!) !=
-                                                            -1
-                                                        ? Icons.check_box
-                                                        : Icons
-                                                            .check_box_outline_blank,
-                                                    color: addIdList.contains(
-                                                            model.addOnList![i]
-                                                                .id)
-                                                        ? Colors.green
-                                                        : Colors.grey,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                      model.addOnList![i].name
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 15,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .fontColor)),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    CUR_CURRENCY! +
-                                                        " " +
-                                                        model
-                                                            .addOnList![i].price
-                                                            .toString(),
-                                                    //style: Theme.of(context).textTheme.headline6,
-                                                    style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .fontColor,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ],
+                                            Icon(
+                                              addIdList.indexWhere(
+                                                      (element) =>
+                                                  element
+                                                      .id ==
+                                                      model
+                                                          .addOnList![
+                                                      i]
+                                                          .id!) !=
+                                                  -1
+                                                  ? Icons.check_box
+                                                  : Icons
+                                                  .check_box_outline_blank,
+                                              color: addIdList.contains(
+                                                  model.addOnList![i]
+                                                      .id)
+                                                  ? Colors.green
+                                                  : Colors.grey,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                                model.addOnList![i].name
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.w500,
+                                                    fontSize: 15,
+                                                    color:
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .fontColor)),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              CUR_CURRENCY! +
+                                                  " " +
+                                                  model
+                                                      .addOnList![i].price
+                                                      .toString(),
+                                              //style: Theme.of(context).textTheme.headline6,
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .fontColor,
+                                                fontWeight:
+                                                FontWeight.w400,
+                                                fontSize: 12,
                                               ),
-                                              selectedColor:
-                                                  Theme.of(context).cardColor,
-                                              avatar:
-                                                  // model.addOnList![i].image == null || model.addOnList![i].image == ""?SizedBox.shrink():  Image.network("${model.addOnList![i].image}"),
-                                                  Icon(
-                                                Icons
-                                                    .radio_button_checked_sharp,
-                                                color: Colors.green,
-                                                size: 16,
-                                              ),
-                                              backgroundColor:
-                                                  Theme.of(context).cardColor,
-                                              labelPadding: EdgeInsets.all(0),
-                                              //selectedColor: Theme.of(context).colorScheme.fontColor.withOpacity(0.1),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                /*side: BorderSide(
+                                            ),
+                                          ],
+                                        ),
+                                        selectedColor:
+                                        Theme.of(context).cardColor,
+                                        avatar:
+                                        // model.addOnList![i].image == null || model.addOnList![i].image == ""?SizedBox.shrink():  Image.network("${model.addOnList![i].image}"),
+                                        Icon(
+                                          Icons
+                                              .radio_button_checked_sharp,
+                                          color: Colors.green,
+                                          size: 16,
+                                        ),
+                                        backgroundColor:
+                                        Theme.of(context).cardColor,
+                                        labelPadding: EdgeInsets.all(0),
+                                        //selectedColor: Theme.of(context).colorScheme.fontColor.withOpacity(0.1),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(10),
+                                          /*side: BorderSide(
                                         color: _selectedIndex[index] == (i)
                                             ? colors.primary
                                             : colors.black12,
                                         width: 1.5),*/
-                                              ),
-                                              onSelected: (bool selected) {
-                                                print(selected);
-                                                if (selected) {
-                                                  if (mounted) {
-                                                    persistentBottomSheetController!
-                                                        .setState!(() {
-                                                      model.addOnList![i]
-                                                          .cartCount = "1";
-                                                      addIdList.add(AddQtyModel(
-                                                          model.addOnList![i]
-                                                              .id!,
-                                                          "1"));
-                                                      print(
-                                                          "addIdList data here");
-                                                      for (var i = 0;
-                                                          i < addIdList.length;
-                                                          i++) {
-                                                        print(
-                                                            "result here now ${addIdList[i].id} and ${addIdList[i].qty}");
-                                                      }
-                                                      priceAdd += double.parse(
-                                                          model.addOnList![i]
-                                                              .price!);
-                                                    });
-                                                    if (_controller.length <
-                                                        i + 1)
-                                                      _controller.add(
-                                                          new TextEditingController());
-                                                  }
-                                                } else {
-                                                  persistentBottomSheetController!
-                                                      .setState!(() {
-                                                    if (addIdList.indexWhere(
-                                                            (element) =>
-                                                                element.id ==
-                                                                model
-                                                                    .addOnList![
-                                                                        i]
-                                                                    .id!) !=
-                                                        -1) {
-                                                      model.addOnList![i]
-                                                          .cartCount = "0";
-                                                      addIdList.removeAt(addIdList
-                                                          .indexWhere((element) =>
-                                                              element.id ==
-                                                              model
-                                                                  .addOnList![i]
-                                                                  .id!));
-                                                      priceAdd -= double.parse(
-                                                          model.addOnList![i]
-                                                              .price!);
-                                                    }
-                                                  });
+                                        ),
+                                        onSelected: (bool selected) {
+                                          print(selected);
+                                          if (selected) {
+                                            if (mounted) {
+                                              persistentBottomSheetController!
+                                                  .setState!(() {
+                                                model.addOnList![i]
+                                                    .cartCount = "1";
+                                                addIdList.add(AddQtyModel(
+                                                    model.addOnList![i]
+                                                        .id!,
+                                                    "1"));
+                                                print(
+                                                    "addIdList data here");
+                                                for (var i = 0;
+                                                i < addIdList.length;
+                                                i++) {
+                                                  print(
+                                                      "result here now ${addIdList[i].id} and ${addIdList[i].qty}");
                                                 }
-                                              },
-                                            ),
-                                            addIdList.indexWhere((element) =>
-                                                        element.id ==
-                                                        model.addOnList![i]
-                                                            .id!) !=
-                                                    -1
-                                                ? Row(
-                                                    children: [
-                                                      /* IconButton(
+                                                /*priceAdd += double.parse(
+                                                    model.addOnList![i]
+                                                        .price!);*/
+
+
+                                                priceAdd +=  (double.parse(model.addOnList![i].price ?? '0.0') *newCounter)  ;
+
+                                                print('___________${bottomSheetAmount}__________');
+
+
+                                              });
+                                              if (_controller.length <
+                                                  i + 1)
+                                                _controller.add(
+                                                    new TextEditingController());
+                                            }
+                                          } else {
+                                            persistentBottomSheetController!
+                                                .setState!(() {
+                                              if (addIdList.indexWhere(
+                                                      (element) =>
+                                                  element.id ==
+                                                      model
+                                                          .addOnList![
+                                                      i]
+                                                          .id!) !=
+                                                  -1) {
+                                                model.addOnList![i]
+                                                    .cartCount = "0";
+                                                addIdList.removeAt(addIdList
+                                                    .indexWhere((element) =>
+                                                element.id ==
+                                                    model
+                                                        .addOnList![i]
+                                                        .id!));
+                                                /*priceAdd -= double.parse(
+                                                    model.addOnList![i]
+                                                        .price!);*/
+                                                priceAdd -= (double.parse(model.addOnList![i].price ?? '0.0') * newCounter)  ;
+                                              }
+                                            });
+                                          }
+                                        },
+                                      ),
+                                      addIdList.indexWhere((element) =>
+                                      element.id ==
+                                          model.addOnList![i]
+                                              .id!) !=
+                                          -1
+                                          ? Row(
+                                        children: [
+                                          /* IconButton(
                                                           onPressed: () {
                                                             persistentBottomSheetController!
                                                                 .setState!(() {
@@ -647,20 +657,20 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                                                           icon: Icon(
                                                             Icons.add,
                                                           )),*/
-                                                      Text(
-                                                          model.addOnList![i]
+                                          Text('${newCounter}'
+                                              /*model.addOnList![i]
                                                               .cartCount
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 15,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .fontColor)),
-                                                      /* IconButton(
+                                                              .toString()*/,
+                                              style: TextStyle(
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .w500,
+                                                  fontSize: 15,
+                                                  color: Theme.of(
+                                                      context)
+                                                      .colorScheme
+                                                      .fontColor)),
+                                          /* IconButton(
                                                           onPressed: () {
                                                             persistentBottomSheetController!
                                                                 .setState!(() {
@@ -703,247 +713,247 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                                                           icon: Icon(
                                                             Icons.remove,
                                                           )),*/
-                                                    ],
-                                                  )
-                                                : SizedBox(),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                  }),
-                              // Column(
-                              //   children: model.addOnList!.map<Widget>((e) {
-                              //     return Padding(
-                              //       padding: const EdgeInsets.all(2.0),
-                              //       child: Row(
-                              //         mainAxisSize: MainAxisSize.max,
-                              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //         children: [
-                              //           ChoiceChip(
-                              //             selected: addIdList.indexWhere(
-                              //                     (element) => element.id == e.id!) !=
-                              //                 -1
-                              //                 ? true
-                              //                 : false,
-                              //             label: Row(
-                              //               children: [
-                              //                 Icon(
-                              //                   addIdList.indexWhere((element) =>
-                              //                   element.id == e.id!) !=
-                              //                       -1
-                              //                       ? Icons.check_box
-                              //                       : Icons.check_box_outline_blank,
-                              //                   color: addIdList.contains(e.id)
-                              //                       ? Colors.green
-                              //                       : Colors.grey,
-                              //                 ),
-                              //                 SizedBox(
-                              //                   width: 5,
-                              //                 ),
-                              //                 Text(e.name.toString(),
-                              //                     style: TextStyle(
-                              //                         fontWeight: FontWeight.w500,
-                              //                         fontSize: 15,
-                              //                         color: Theme.of(context)
-                              //                             .colorScheme
-                              //                             .fontColor)),
-                              //                 SizedBox(
-                              //                   width: 5,
-                              //                 ),
-                              //                 Text(
-                              //                   CUR_CURRENCY! + " " + e.price.toString(),
-                              //                   //style: Theme.of(context).textTheme.headline6,
-                              //                   style: TextStyle(
-                              //                     color: Theme.of(context)
-                              //                         .colorScheme
-                              //                         .fontColor,
-                              //                     fontWeight: FontWeight.w400,
-                              //                     fontSize: 12,
-                              //                   ),
-                              //                 ),
-                              //
-                              //               ],
-                              //             ),
-                              //             selectedColor: Theme.of(context).cardColor,
-                              //             avatar: Icon(
-                              //               Icons.radio_button_checked_sharp,
-                              //               color: Colors.green,
-                              //               size: 16,
-                              //             ),
-                              //             backgroundColor: Theme.of(context).cardColor,
-                              //             labelPadding: EdgeInsets.all(0),
-                              //             //selectedColor: Theme.of(context).colorScheme.fontColor.withOpacity(0.1),
-                              //             shape: RoundedRectangleBorder(
-                              //               borderRadius: BorderRadius.circular(10),
-                              //               /*side: BorderSide(
-                              //                 color: _selectedIndex[index] == (i)
-                              //                     ? colors.primary
-                              //                     : colors.black12,
-                              //                 width: 1.5),*/
-                              //             ),
-                              //             onSelected: (bool selected) {
-                              //               print(selected);
-                              //               if (selected) {
-                              //                 if (mounted) {
-                              //                   persistentBottomSheetController!
-                              //                       .setState!(() {
-                              //                     e.cartCount = "1";
-                              //                     addIdList.add(AddQtyModel(e.id!, "1"));
-                              //                     print("addIdList data here");
-                              //                     for(var i=0;i<addIdList.length;i++){
-                              //                       print("result here now ${addIdList[i].id} and ${addIdList[i].qty}");
-                              //                     }
-                              //                     priceAdd += double.parse(e.price!);
-                              //                   });
-                              //                 }
-                              //               } else {
-                              //                 persistentBottomSheetController!.setState!(
-                              //                         () {
-                              //                       if (addIdList.indexWhere((element) =>
-                              //                       element.id == e.id!) !=
-                              //                           -1) {
-                              //                         e.cartCount = "0";
-                              //                         addIdList.removeAt(addIdList.indexWhere(
-                              //                                 (element) => element.id == e.id!));
-                              //                         priceAdd -= double.parse(e.price!);
-                              //                       }
-                              //                     });
-                              //               }
-                              //             },
-                              //           ),
-                              //           addIdList.indexWhere((element) =>
-                              //           element.id == e.id!) !=
-                              //               -1?Row(
-                              //             children: [
-                              //               IconButton(
-                              //                   onPressed: () {
-                              //                     persistentBottomSheetController!
-                              //                         .setState!(() {
-                              //                       print(e.cartCount);
-                              //                       e.cartCount =
-                              //                           (int.parse(e.cartCount!) +
-                              //                               1)
-                              //                               .toString();
-                              //                       if (addIdList.indexWhere((element) =>
-                              //                       element.id == e.id!) !=
-                              //                           -1) {
-                              //                         addIdList[addIdList.indexWhere(
-                              //                                 (element) => element.id == e.id!)].qty=e.cartCount!;
-                              //                       }
-                              //                       priceAdd += double.parse(e.price!);
-                              //                     });
-                              //                   },
-                              //                   icon: Icon(
-                              //                     Icons.add,
-                              //                   )),
-                              //               Text(e.cartCount.toString(),
-                              //                   style: TextStyle(
-                              //                       fontWeight: FontWeight.w500,
-                              //                       fontSize: 15,
-                              //                       color: Theme.of(context)
-                              //                           .colorScheme
-                              //                           .fontColor)),
-                              //               IconButton(
-                              //                   onPressed: () {
-                              //                     persistentBottomSheetController!
-                              //                         .setState!(() {
-                              //                       if (e.cartCount != "1") {
-                              //                         e.cartCount =
-                              //                             (int.parse(e.cartCount!) -
-                              //                                 1)
-                              //                                 .toString();
-                              //                         if (addIdList.indexWhere((element) =>
-                              //                         element.id == e.id!) !=
-                              //                             -1) {
-                              //                           addIdList[addIdList.indexWhere(
-                              //                                   (element) => element.id == e.id!)].qty=e.cartCount!;
-                              //                         }
-                              //                         priceAdd -=
-                              //                             double.parse(e.price!);
-                              //                       }
-                              //                     });
-                              //                   },
-                              //                   icon: Icon(
-                              //                     Icons.remove,
-                              //                   )),
-                              //             ],
-                              //           ):SizedBox(),
-                              //         ],
-                              //       ),
-                              //     );
-                              //   }).toList(),
-                              // ),
-                            ],
-                          ),
+                                        ],
+                                      )
+                                          : SizedBox(),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }),
+                        // Column(
+                        //   children: model.addOnList!.map<Widget>((e) {
+                        //     return Padding(
+                        //       padding: const EdgeInsets.all(2.0),
+                        //       child: Row(
+                        //         mainAxisSize: MainAxisSize.max,
+                        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //         children: [
+                        //           ChoiceChip(
+                        //             selected: addIdList.indexWhere(
+                        //                     (element) => element.id == e.id!) !=
+                        //                 -1
+                        //                 ? true
+                        //                 : false,
+                        //             label: Row(
+                        //               children: [
+                        //                 Icon(
+                        //                   addIdList.indexWhere((element) =>
+                        //                   element.id == e.id!) !=
+                        //                       -1
+                        //                       ? Icons.check_box
+                        //                       : Icons.check_box_outline_blank,
+                        //                   color: addIdList.contains(e.id)
+                        //                       ? Colors.green
+                        //                       : Colors.grey,
+                        //                 ),
+                        //                 SizedBox(
+                        //                   width: 5,
+                        //                 ),
+                        //                 Text(e.name.toString(),
+                        //                     style: TextStyle(
+                        //                         fontWeight: FontWeight.w500,
+                        //                         fontSize: 15,
+                        //                         color: Theme.of(context)
+                        //                             .colorScheme
+                        //                             .fontColor)),
+                        //                 SizedBox(
+                        //                   width: 5,
+                        //                 ),
+                        //                 Text(
+                        //                   CUR_CURRENCY! + " " + e.price.toString(),
+                        //                   //style: Theme.of(context).textTheme.headline6,
+                        //                   style: TextStyle(
+                        //                     color: Theme.of(context)
+                        //                         .colorScheme
+                        //                         .fontColor,
+                        //                     fontWeight: FontWeight.w400,
+                        //                     fontSize: 12,
+                        //                   ),
+                        //                 ),
+                        //
+                        //               ],
+                        //             ),
+                        //             selectedColor: Theme.of(context).cardColor,
+                        //             avatar: Icon(
+                        //               Icons.radio_button_checked_sharp,
+                        //               color: Colors.green,
+                        //               size: 16,
+                        //             ),
+                        //             backgroundColor: Theme.of(context).cardColor,
+                        //             labelPadding: EdgeInsets.all(0),
+                        //             //selectedColor: Theme.of(context).colorScheme.fontColor.withOpacity(0.1),
+                        //             shape: RoundedRectangleBorder(
+                        //               borderRadius: BorderRadius.circular(10),
+                        //               /*side: BorderSide(
+                        //                 color: _selectedIndex[index] == (i)
+                        //                     ? colors.primary
+                        //                     : colors.black12,
+                        //                 width: 1.5),*/
+                        //             ),
+                        //             onSelected: (bool selected) {
+                        //               print(selected);
+                        //               if (selected) {
+                        //                 if (mounted) {
+                        //                   persistentBottomSheetController!
+                        //                       .setState!(() {
+                        //                     e.cartCount = "1";
+                        //                     addIdList.add(AddQtyModel(e.id!, "1"));
+                        //                     print("addIdList data here");
+                        //                     for(var i=0;i<addIdList.length;i++){
+                        //                       print("result here now ${addIdList[i].id} and ${addIdList[i].qty}");
+                        //                     }
+                        //                     priceAdd += double.parse(e.price!);
+                        //                   });
+                        //                 }
+                        //               } else {
+                        //                 persistentBottomSheetController!.setState!(
+                        //                         () {
+                        //                       if (addIdList.indexWhere((element) =>
+                        //                       element.id == e.id!) !=
+                        //                           -1) {
+                        //                         e.cartCount = "0";
+                        //                         addIdList.removeAt(addIdList.indexWhere(
+                        //                                 (element) => element.id == e.id!));
+                        //                         priceAdd -= double.parse(e.price!);
+                        //                       }
+                        //                     });
+                        //               }
+                        //             },
+                        //           ),
+                        //           addIdList.indexWhere((element) =>
+                        //           element.id == e.id!) !=
+                        //               -1?Row(
+                        //             children: [
+                        //               IconButton(
+                        //                   onPressed: () {
+                        //                     persistentBottomSheetController!
+                        //                         .setState!(() {
+                        //                       print(e.cartCount);
+                        //                       e.cartCount =
+                        //                           (int.parse(e.cartCount!) +
+                        //                               1)
+                        //                               .toString();
+                        //                       if (addIdList.indexWhere((element) =>
+                        //                       element.id == e.id!) !=
+                        //                           -1) {
+                        //                         addIdList[addIdList.indexWhere(
+                        //                                 (element) => element.id == e.id!)].qty=e.cartCount!;
+                        //                       }
+                        //                       priceAdd += double.parse(e.price!);
+                        //                     });
+                        //                   },
+                        //                   icon: Icon(
+                        //                     Icons.add,
+                        //                   )),
+                        //               Text(e.cartCount.toString(),
+                        //                   style: TextStyle(
+                        //                       fontWeight: FontWeight.w500,
+                        //                       fontSize: 15,
+                        //                       color: Theme.of(context)
+                        //                           .colorScheme
+                        //                           .fontColor)),
+                        //               IconButton(
+                        //                   onPressed: () {
+                        //                     persistentBottomSheetController!
+                        //                         .setState!(() {
+                        //                       if (e.cartCount != "1") {
+                        //                         e.cartCount =
+                        //                             (int.parse(e.cartCount!) -
+                        //                                 1)
+                        //                                 .toString();
+                        //                         if (addIdList.indexWhere((element) =>
+                        //                         element.id == e.id!) !=
+                        //                             -1) {
+                        //                           addIdList[addIdList.indexWhere(
+                        //                                   (element) => element.id == e.id!)].qty=e.cartCount!;
+                        //                         }
+                        //                         priceAdd -=
+                        //                             double.parse(e.price!);
+                        //                       }
+                        //                     });
+                        //                   },
+                        //                   icon: Icon(
+                        //                     Icons.remove,
+                        //                   )),
+                        //             ],
+                        //           ):SizedBox(),
+                        //         ],
+                        //       ),
+                        //     );
+                        //   }).toList(),
+                        // ),
+                      ],
+                    ),
+                  ),
+                  available == false || outOfStock == true
+                      ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          outOfStock == true
+                              ? 'Out of Stock'
+                              : "This varient doesn't available.",
+                          style: TextStyle(color: Colors.red),
                         ),
-                        available == false || outOfStock == true
-                            ? Center(
-                                child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  outOfStock == true
-                                      ? 'Out of Stock'
-                                      : "This varient doesn't available.",
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ))
-                            : Container(),
-                        !loading
-                            ? CupertinoButton(
-                                padding: EdgeInsets.all(0),
-                                child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 30.0),
-                                    alignment: FractionalOffset.center,
-                                    height: 55,
-                                    decoration: BoxDecoration(
-                                      gradient: available!
-                                          ? LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                              colors: [
-                                                  Colors.green,
-                                                  Colors.green,
-                                                ],
-                                              stops: [
-                                                  0,
-                                                  1
-                                                ])
-                                          : null,
-                                      color: available!
-                                          ? null
-                                          : Theme.of(context).colorScheme.gray,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                            "Item total ${CUR_CURRENCY! + priceAdd.toString()}",
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .button!
-                                                .copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .white,
-                                                )),
-                                        Text("ADD ITEM",
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .button!
-                                                .copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .white,
-                                                )),
-                                      ],
-                                    )),
-                                onPressed: available
-                                    ? () {
-                                        /*if(addIdList.length>0){
+                      ))
+                      : Container(),
+                  !loading
+                      ? CupertinoButton(
+                    padding: EdgeInsets.all(0),
+                    child: Container(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 30.0),
+                        alignment: FractionalOffset.center,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          gradient: available!
+                              ? LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.green,
+                                Colors.green,
+                              ],
+                              stops: [
+                                0,
+                                1
+                              ])
+                              : null,
+                          color: available!
+                              ? null
+                              : Theme.of(context).colorScheme.gray,
+                        ),
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                "Item total ${CUR_CURRENCY! + priceAdd.toString()}",
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button!
+                                    .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .white,
+                                )),
+                            Text("ADD ITEM",
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button!
+                                    .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .white,
+                                )),
+                          ],
+                        )),
+                    onPressed: available
+                        ? () {
+                      /*if(addIdList.length>0){
                         persistentBottomSheetController!.setState!((){
                           loading =true;
                         });
@@ -952,38 +962,40 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                               int.parse(addIdList[i]), 1.toString(),status: "yes");
                         }
                       }*/
-                                        // persistentBottomSheetController!
-                                        //     .setState!(() {
-                                        //   loading = false;
-                                        // });
-                                        //applyVarient();
-                                        var index;
+                      // persistentBottomSheetController!
+                      //     .setState!(() {
+                      //   loading = false;
+                      // });
+                      //applyVarient();
+                      var index;
 
-                                        for (var i = 0;
-                                            i < addIdList.length;
-                                            i++) {
-                                          index = i;
-                                          print("hello here ${index}");
-                                        }
-                                        Navigator.of(context).pop();
-                                        setState(() {
-                                          loading = false;
-                                        });
-                                        applyVarient1(model, widget.index,
-                                            addIdList.toList());
-                                      }
-                                    : null,
-                                // onPressed: available ? applyVarient : null,
-                              )
-                            : Center(child: CircularProgressIndicator()),
-                      ],
-                    ),
-                  ),
+                      for (var i = 0;
+                      i < addIdList.length;
+                      i++) {
+                        index = i;
+                        print("hello here ${index}");
+                      }
+                      Navigator.of(context).pop();
+                      setState(() {
+                        loading = false;
+                      });
+                      applyVarient1(model, widget.index,
+                          addIdList.toList());
+                    }
+                        : null,
+                    // onPressed: available ? applyVarient : null,
+                  )
+                      : Center(child: CircularProgressIndicator()),
+                ],
+              ),
+            ),
           ),
         );
       },
     );
   }
+
+
 
   applyVarient1(model, index, addList) {
     print("values are here ${index}");
@@ -1237,11 +1249,12 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
       ),
     );
   }
-
+  double bottomSheetAmount = 0.0 ;
   _price(pos, from) {
     double price = double.parse(widget.model!.prVarientList![pos].disPrice!);
     if (price == 0)
       price = double.parse(widget.model!.prVarientList![pos].price!);
+    bottomSheetAmount = price ;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -2284,7 +2297,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
           List<String> qtyList = [];
           addIdList.forEach((element) {
             idList.add(element.id);
-            qtyList.add(element.qty);
+            qtyList.add(newCounter.toString()/*element.qty*/);
           });
           var parameter = {
             USER_ID: CUR_USERID,
