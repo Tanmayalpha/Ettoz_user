@@ -3559,8 +3559,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             .toString()
             .toLowerCase()
             .contains("maharashtra")) {
-          parameter['cgst'] = (double.parse(totalTax) / 2).toStringAsFixed(1);
-          parameter['sgst'] = (double.parse(totalTax) / 2).toStringAsFixed(1);
+          parameter['cgst'] = (double.parse(totalTax) / 2).toStringAsFixed(2);
+          parameter['sgst'] = (double.parse(totalTax) / 2).toStringAsFixed(2);
         } else {
           parameter['igst'] = totalTax;
         }
@@ -4038,7 +4038,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               //   ],
               // ),
               //
-              addressList[selectedAddress!]
+              addressList.isNotEmpty ?  addressList[selectedAddress!]
                       .state
                       .toString()
                       .toLowerCase()
@@ -4058,7 +4058,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                             Text(
                               CUR_CURRENCY! +
                                   " " +
-                                  "${(double.parse(totalTax) / 2).toStringAsFixed(1)}",
+                                  "${(double.parse(totalTax) / 2).toStringAsFixed(2)}",
                               style: TextStyle(
                                   color:
                                       Theme.of(context).colorScheme.fontColor,
@@ -4079,7 +4079,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                             Text(
                               CUR_CURRENCY! +
                                   " " +
-                                  "${(double.parse(totalTax) / 2).toStringAsFixed(1)}",
+                                  "${(double.parse(totalTax) / 2).toStringAsFixed(2)}",
                               style: TextStyle(
                                   color:
                                       Theme.of(context).colorScheme.fontColor,
@@ -4104,7 +4104,22 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                               fontWeight: FontWeight.bold),
                         )
                       ],
-                    ),
+                    ) : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "IGST($taxPer %)",
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.lightBlack2),
+                  ),
+                  Text(
+                    CUR_CURRENCY! + " " + "${totalTax}",
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.fontColor,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ) ,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -4415,7 +4430,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                             Text(
                                               CUR_CURRENCY! +
                                                   " " +
-                                                  "${(double.parse(totalTax) / 2).toStringAsFixed(1)}",
+                                                  "${(double.parse(totalTax) / 2).toStringAsFixed(2)}",
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .colorScheme
@@ -4438,7 +4453,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                             Text(
                                               CUR_CURRENCY! +
                                                   " " +
-                                                  "${(double.parse(totalTax) / 2).toStringAsFixed(1)}",
+                                                  "${(double.parse(totalTax) / 2).toStringAsFixed(2)}",
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .colorScheme

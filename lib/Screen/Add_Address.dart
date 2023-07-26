@@ -838,16 +838,16 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                                       .toString()
                                       .split(",");
                                   setState(() {
-                                    _cityController.text =
-                                        cityList[cityList.length - 4];
+                                    /*_cityController.text =
+                                        cityList[cityList.length - 3];*/
                                     _areaController.text =
-                                    cityList[cityList.length - 3];
+                                    cityList[cityList.length - 4];
                                     stateC!.text =
                                         cityList[cityList.length - 2];
-                                    pincodeC!.text =
+                                    /*pincodeC!.text =
                                         cityList[cityList.length - 2]
                                             .split(" ")
-                                            .last;
+                                            .last;*/
                                     countryC!.text =
                                         cityList[cityList.length - 1];
                                   });
@@ -864,6 +864,8 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                                               });
                                           });*/
 
+                                _getAddressFromLatLng();
+
                                 Navigator.of(context).pop();
                                 //  getBookInfo();
                                 // getRides("3");
@@ -874,7 +876,9 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                             ),
                           ),
                         );
-                        _getLocation();
+                        //_getLocation();
+                         _getAddressFromLatLng () ;
+
 
                         // Position position = await Geolocator.getCurrentPosition(
                         //     desiredAccuracy: LocationAccuracy.high);
@@ -929,6 +933,33 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
       ],
     );
   }
+
+  Future<void> _getAddressFromLatLng() async {
+    await placemarkFromCoordinates(
+        double.parse(latitude ?? '0.0'), double.parse(longitude ?? '0.0'))
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      setState(() {
+        pincodeC!.text   = place.postalCode ?? '';
+        _cityController.text =  place.locality ?? '' ;
+
+        print('${place.name}____________');
+        print('${place.postalCode}____________');
+       // print('${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode},${place.locality}____________');
+
+        setState(() {
+
+        });
+
+        /*_currentAddress =
+        '${place.street}, ${place.subLocality},
+        ${place.subAdministrativeArea}, ${place.postalCode}';*/
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
+
+}
 
   setPincode() {
     return Padding(

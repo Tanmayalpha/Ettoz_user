@@ -1792,7 +1792,7 @@ class StateOrder extends State<OrderDetail>
           getTab("Preparing"),
           getTab("Delivered"),
           getTab("Cancelled"),
-          getTab("Returned"),
+          //getTab("Returned"),
         ],
         indicator: BoxDecoration(
           shape: BoxShape.rectangle,
@@ -2405,7 +2405,7 @@ class StateOrder extends State<OrderDetail>
                                   (orderItem.listStatus!.contains(DELIVERD) &&
                                           orderItem.isReturn == "1" &&
                                           orderItem.isAlrReturned == "0")
-                                      ? Padding(
+                                      ? SizedBox()/*Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8.0),
                                           child: OutlinedButton(
@@ -2483,7 +2483,7 @@ class StateOrder extends State<OrderDetail>
                                             child: Text(getTranslated(
                                                 context, 'ITEM_RETURN')!),
                                           ),
-                                        )
+                                        )*/
                                       : Container(),
                               ],
                             ),
@@ -2862,7 +2862,7 @@ class StateOrder extends State<OrderDetail>
                                   (orderItem.listStatus!.contains(DELIVERD) &&
                                           orderItem.isReturn == "1" &&
                                           orderItem.isAlrReturned == "0")
-                                      ? Padding(
+                                      ? SizedBox() /*Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8.0),
                                           child: OutlinedButton(
@@ -2940,7 +2940,7 @@ class StateOrder extends State<OrderDetail>
                                             child: Text(getTranslated(
                                                 context, 'ITEM_RETURN')!),
                                           ),
-                                        )
+                                        )*/
                                       : Container(),
                               ],
                             ),
@@ -3242,7 +3242,7 @@ class StateOrder extends State<OrderDetail>
                                       alignment: Alignment.bottomRight,
                                       child: OutlinedButton(
                                         onPressed: _isReturnClick
-                                            ? () {
+                                            ? isTabed ? null : () {
                                                 showDialog(
                                                   context: context,
                                                   builder:
@@ -3276,6 +3276,8 @@ class StateOrder extends State<OrderDetail>
                                                                     .primary),
                                                           ),
                                                           onPressed: () {
+                                                            isTabed = true ;
+
                                                             Navigator.pop(
                                                                 context);
                                                             setState(() {
@@ -3310,7 +3312,7 @@ class StateOrder extends State<OrderDetail>
                                               }
                                             : null,
                                         child:
-                                            Text("Order Cancel with in a minut"
+        isTabed ? SizedBox() : Text("Order Cancel with in a minute"
                                                 // getTranslated(
                                                 //   context, 'ITEM_CANCEL')!
                                                 ),
@@ -3318,7 +3320,7 @@ class StateOrder extends State<OrderDetail>
                                 )
                               else
                                 orderItem.listStatus!.contains(DELIVERD)
-                                    ? Padding(
+                                    ? SizedBox()/*Padding(
                                         padding:
                                             const EdgeInsets.only(left: 8.0),
                                         child: OutlinedButton(
@@ -3395,7 +3397,7 @@ class StateOrder extends State<OrderDetail>
                                           child: Text(getTranslated(
                                               context, 'ITEM_RETURN')!),
                                         ),
-                                      )
+                                      )*/
                                     : Container()
                             ],
                           ),
@@ -3416,6 +3418,8 @@ class StateOrder extends State<OrderDetail>
       },
     );
   }
+
+  bool isTabed = false ;
 
   @override
   bool get wantKeepAlive => true;
