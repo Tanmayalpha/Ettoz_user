@@ -121,6 +121,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
         print('_____getWalTranApi______${getWalTranApi}____${parameter}______');
 
         if (response.statusCode == 200) {
+          print('___________${response.body}__________');
           var getdata = json.decode(response.body);
           bool error = getdata["error"];
           // String msg = getdata["message"];
@@ -193,9 +194,9 @@ class _TransactionHistoryState extends State<TransactionHistory>
 
   listItem(int index) {
     Color back;
-    if (tranList[index].status!.toLowerCase().contains("success")) {
+    if (tranList[index].status?.toLowerCase().contains("success") ?? false) {
       back = Colors.green;
-    } else if (tranList[index].status!.toLowerCase().contains("failure"))
+    } else if (tranList[index].status ?.toLowerCase().contains("failure") ?? false)
       back = Colors.red;
     else
       back = Colors.orange;
@@ -237,7 +238,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
                             child: Text(
                                 getTranslated(context, 'ORDER_ID_LBL')! +
                                     " : " +
-                                    tranList[index].orderId!),
+                                    (tranList[index].orderId ?? '') ),
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 8),
@@ -248,7 +249,7 @@ class _TransactionHistoryState extends State<TransactionHistory>
                                 borderRadius: new BorderRadius.all(
                                     const Radius.circular(4.0))),
                             child: Text(
-                              tranList[index].status!,
+                              tranList[index].status ?? '',
                               style: TextStyle(
                                   color: Theme.of(context).colorScheme.white),
                             ),

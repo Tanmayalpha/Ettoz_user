@@ -258,9 +258,13 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                             contentPadding: EdgeInsets.all(0),
                                             value: isUseWallet,
                                             onChanged: (bool? value) {
+                                              print('___________${value}__________');
+                                              print('___________${totalPrice}__________');
+
                                               if (mounted)
                                                 setState(() {
                                                   isUseWallet = value;
+
                                                   if (value!) {
                                                     if (totalPrice <=
                                                         double.parse(
@@ -272,6 +276,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                           totalPrice);
                                                       usedBal = totalPrice;
                                                       payMethod = "Wallet";
+                                                      print('___________${usedBal}__________');
+                                                      print('___________${totalPrice}___tttt_______');
 
                                                       isPayLayShow = false;
                                                     } else {
@@ -285,6 +291,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                     totalPrice =
                                                         totalPrice - usedBal;
                                                   } else {
+                                                    print(
+                                                        '___________${totalPrice}____gffghgf______');
                                                     totalPrice =
                                                         totalPrice + usedBal;
                                                     remWalBal = double.parse(
@@ -424,8 +432,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                               itemCount:
                                                   paymentMethodList.length,
                                               itemBuilder: (context, index) {
-                                                print(
-                                                    "checking nnnnnnnn ${index} and ${cod} and ${widget.total} and ${codHideAmount} and ${totalOrderCount} and ${codlimit}");
+                                                print("checking nnnnnnnn ${index} and ${cod} and ${widget.total} and ${codHideAmount} and ${totalOrderCount} and ${codlimit}");
+
                                                 if (index == 1 &&
                                                     cod == true &&
                                                     totalOrderCount! <
@@ -581,6 +589,7 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
       timeSlotList.clear();
       try {
         var parameter = {TYPE: PAYMENT_METHOD, USER_ID: CUR_USERID};
+        print('___________${parameter}__________');
         Response response =
             await post(getSettingApi, body: parameter, headers: headers)
                 .timeout(Duration(seconds: timeOut));
@@ -598,6 +607,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                 time_slot["is_time_slots_enabled"] == "1" ? true : false;
             startingDate = time_slot["starting_date"];
             codAllowed = data["is_cod_allowed"] == 1 ? true : false;
+            print('___________${data["is_cod_allowed"]}____ggfgffghghfghgfh______');
+           // print('___________${data['payment_method']["cod_method"]}____cod_method______');
 
             var timeSlots = data["time_slots"];
             timeSlotList = (timeSlots as List)

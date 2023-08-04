@@ -1129,6 +1129,7 @@ class _SubCategoryState extends State<SubCategory> {
     // var parm = {"seller_id": "$sellerId"};
     // try {
     var parm = {"seller_id": sellerId};
+    print('___________${sellerId}__________');
     print(parm);
     var data = await apiBaseHelper.postAPINew(recommendedProductapi, parm);
     newData = data;

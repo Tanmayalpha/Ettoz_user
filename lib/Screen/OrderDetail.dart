@@ -110,13 +110,14 @@ class StateOrder extends State<OrderDetail>
   }
 
   getTaxTotal() {
-    if (widget.model!.cgst == "" || widget.model!.cgst == null) {
+    if (widget.model!.cgst == "" || widget.model!.cgst == null ) {
       totalTax = 0.0;
     } else {
+
       print(
           "final values are here ${widget.model!.cgst} and ${widget.model!.sgst}");
       totalTax = double.parse(widget.model!.cgst.toString()) +
-          double.parse(widget.model!.sgst.toString());
+          double.parse(widget.model!.sgst.toString()) + double.parse(widget.model!.igst.toString());
       print("final value here ${totalTax}");
     }
   }
@@ -471,10 +472,10 @@ class StateOrder extends State<OrderDetail>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Total GST" + " " + ":",
+                    Text("Total Tax" + " " + ":",
                         style: Theme.of(context).textTheme.button!.copyWith(
                             color: Theme.of(context).colorScheme.lightBlack2)),
-                    Text("- " + CUR_CURRENCY! + " " + "${totalTax}",
+                    Text("+ " + CUR_CURRENCY! + " " + "${totalTax}",
                         style: Theme.of(context).textTheme.button!.copyWith(
                             color: Theme.of(context).colorScheme.lightBlack2))
                   ],
@@ -1610,8 +1611,10 @@ class StateOrder extends State<OrderDetail>
     if (_isNetworkAvail) {
       try {
         var parameter = {ORDERID: id, STATUS: status};
+        print('___________${parameter}__________');
         var response = await post(api, body: parameter, headers: headers)
             .timeout(Duration(seconds: timeOut));
+        print('___________${response.body}__________');
 
         var getdata = json.decode(response.body);
         bool error = getdata["error"];
@@ -2301,8 +2304,9 @@ class StateOrder extends State<OrderDetail>
                                   Expanded(
                                     child: OutlinedButton.icon(
                                       onPressed: () {
+
                                         openDriverBottomSheet(
-                                            context, orderItem.deliveryBoyId);
+                                            context, orderItem.deliveryBoyId, model.id);
                                       },
                                       icon: Icon(Icons.rate_review_outlined,
                                           color: colors.primary),
@@ -2755,8 +2759,10 @@ class StateOrder extends State<OrderDetail>
                                   Expanded(
                                     child: OutlinedButton.icon(
                                       onPressed: () {
+                                        print('___________${orderItem.deliveryBoyId}___2_______');
+
                                         openDriverBottomSheet(
-                                            context, orderItem.deliveryBoyId);
+                                            context, orderItem.deliveryBoyId, model.id);
                                       },
                                       icon: Icon(Icons.rate_review_outlined,
                                           color: colors.primary),
@@ -3211,8 +3217,9 @@ class StateOrder extends State<OrderDetail>
                                 Expanded(
                                   child: OutlinedButton.icon(
                                     onPressed: () {
-                                      openDriverBottomSheet(
-                                          context, orderItem.deliveryBoyId);
+                                      print('___________${orderItem.deliveryBoyId}_____3_____');
+
+                                      openDriverBottomSheet(context, '${orderItem.deliveryBoyId}', model.id);
                                     },
                                     icon: Icon(Icons.rate_review_outlined,
                                         color: colors.primary),
@@ -3228,7 +3235,7 @@ class StateOrder extends State<OrderDetail>
                                     ),
                                   ),
                                 ),
-                              if (difference < 1
+                                if (difference < 1
                               //DateTime(widget.model!.delTime.toString()) >
                               // DateTime.now()
                               // !orderItem.listStatus!.contains(DELIVERD) &&
@@ -3236,7 +3243,7 @@ class StateOrder extends State<OrderDetail>
                               // orderItem.isCancle == "1" &&
                               // orderItem.isAlrCancelled == "0"
                               )
-                                Padding(
+        orderItem.status == DELIVERD || orderItem.status == CANCLED ? SizedBox() :   isTabed ? SizedBox() :  Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Align(
                                       alignment: Alignment.bottomRight,
@@ -3276,6 +3283,7 @@ class StateOrder extends State<OrderDetail>
                                                                     .primary),
                                                           ),
                                                           onPressed: () {
+                                                            print('___________${difference}__________');
                                                             isTabed = true ;
 
                                                             Navigator.pop(
@@ -3289,7 +3297,7 @@ class StateOrder extends State<OrderDetail>
                                                             cancelOrder(
                                                                 CANCLED,
                                                                 updateOrderItemApi,
-                                                                orderItem.id);
+                                                                model.id);
                                                           },
                                                         ),
                                                         TextButton(
@@ -3312,7 +3320,7 @@ class StateOrder extends State<OrderDetail>
                                               }
                                             : null,
                                         child:
-        isTabed ? SizedBox() : Text("Order Cancel with in a minute"
+                                       Text("Order Cancel with in a minute"
                                                 // getTranslated(
                                                 //   context, 'ITEM_CANCEL')!
                                                 ),
@@ -3456,7 +3464,7 @@ class StateOrder extends State<OrderDetail>
         });
   }
 
-  void openDriverBottomSheet(BuildContext context, var deliveryBoyId) {
+  void openDriverBottomSheet(BuildContext context, String? deliveryBoyId, String? orderId) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -3479,7 +3487,7 @@ class StateOrder extends State<OrderDetail>
                     writeReviewLabel(),
                     writeReviewField(),
                     // getImageField(),
-                    sendDriverReviewButton(deliveryBoyId),
+                    sendDriverReviewButton(deliveryBoyId,orderId),
                   ],
                 ),
               ),
@@ -3685,7 +3693,7 @@ class StateOrder extends State<OrderDetail>
     );
   }
 
-  Widget sendDriverReviewButton(var driverId) {
+  Widget sendDriverReviewButton(var driverId, String? orderId) {
     return Row(
       children: [
         Expanded(
@@ -3703,7 +3711,7 @@ class StateOrder extends State<OrderDetail>
                     (reviewPhotos.isNotEmpty)) {
                   Navigator.pop(context);
                   setDriverRating(
-                      curRating, commentTextController.text, driverId);
+                      curRating, commentTextController.text, driverId, orderId);
                 } else {
                   Navigator.pop(context);
                   setSnackbar(getTranslated(context, 'REVIEW_W')!);
@@ -3775,7 +3783,8 @@ class StateOrder extends State<OrderDetail>
   }
 
   Future<void> setDriverRating(
-      double rating, String comment, var driverId) async {
+      double rating, String comment, var driverId, String? orderId) async {
+    print('_____________________');
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
       try {
@@ -3783,6 +3792,7 @@ class StateOrder extends State<OrderDetail>
         request.headers.addAll(headers);
         request.fields[USER_ID] = CUR_USERID!;
         request.fields[DRIVER_ID] = driverId;
+        request.fields[ORDER_ID] = orderId.toString();
 
         /*if (files != null) {
           for (var i = 0; i < files.length; i++) {
@@ -3795,6 +3805,7 @@ class StateOrder extends State<OrderDetail>
         if (rating != 0) request.fields["ratting"] = rating.toString();
         var response = await request.send();
         var responseData = await response.stream.toBytes();
+        print('___________${responseData}__________');
         var responseString = String.fromCharCodes(responseData);
         print("Driver Rating Param=====" + request.fields.toString());
         var getdata = json.decode(responseString);
@@ -3891,6 +3902,23 @@ class StateOrder extends State<OrderDetail>
                     ],
                   )
                 : SizedBox(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${getTranslated(context, "Payment Type") ?? 'Payment Type'} : ",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.lightBlack,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "${model.payMethod} ",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.lightBlack2,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

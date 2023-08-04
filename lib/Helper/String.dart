@@ -29,6 +29,7 @@ final Uri setRatingApi = Uri.parse(baseUrl + 'set_product_rating');
 final Uri setDriverRatingApi = Uri.parse(baseUrl + 'driver_ratting');
 final Uri getNotificationApi = Uri.parse(baseUrl + 'get_notifications');
 final Uri getAddressApi = Uri.parse(baseUrl + 'get_address');
+final Uri checkOrderShouldBePlacedApi = Uri.parse(baseUrl + 'check_privious_order');
 final Uri deleteAddressApi = Uri.parse(baseUrl + "delete_address");
 final Uri getResetPassApi = Uri.parse(baseUrl + 'reset_password');
 final Uri getCitiesApi = Uri.parse(baseUrl + 'get_cities');

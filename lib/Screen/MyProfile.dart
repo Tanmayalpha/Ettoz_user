@@ -549,6 +549,10 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
         // CUR_USERID == "" || CUR_USERID == null ? Container() : _getDivider(),
         CUR_USERID == "" || CUR_USERID == null
             ? Container()
+            : _getDrawerItem('Delete Account',
+            'assets/images/delete.svg'),
+        CUR_USERID == "" || CUR_USERID == null
+            ? Container()
             : _getDrawerItem(getTranslated(context, 'LOGOUT')!,
                 'assets/images/pro_logout.svg'),
       ],
@@ -702,10 +706,85 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
             openChangePasswordBottomSheet();
           } else if (title == getTranslated(context, 'CHANGE_LANGUAGE_LBL')) {
             openChangeLanguageBottomSheet();
+          }else if (title == 'Delete Account') {
+            deleteAccountDailog();
           }
         },
       ),
     );
+  }
+
+
+  deleteAccountDailog() async {
+    await dialogAnimate(context,
+        StatefulBuilder(builder: (BuildContext context, StateSetter setStater) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setStater) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                  content: Text(
+                    'Are you sure you want to delete you account ?',
+                    style: Theme.of(this.context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: Theme.of(context).colorScheme.fontColor),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                        child: Text(
+                          getTranslated(context, 'NO')!,
+                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                              color: Theme.of(context).colorScheme.lightBlack,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        }),
+                    TextButton(
+                        child: Text(
+                          getTranslated(context, 'YES')!,
+                          style: Theme.of(this.context).textTheme.subtitle2!.copyWith(
+                              color: Theme.of(context).colorScheme.fontColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          accountDeleteApi();
+
+                        })
+                  ],
+                );
+              });
+        }));
+  }
+
+  accountDeleteApi() async {
+    var headers = {
+      'Cookie': 'ci_session=8e256c265c2f540decd230089d884e19dd60626b'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/delete_account'));
+    request.fields.addAll({
+      'user_id': CUR_USERID.toString()
+    });
+    print('___________${request.fields}__________');
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result = await response.stream.bytesToString();
+      var finalResult =  jsonDecode(result);
+     setSnackbar(finalResult['message']);
+      SettingProvider settingProvider =
+      Provider.of<SettingProvider>(context, listen: false);
+      settingProvider.clearUserSession(context);
+      //favList.clear();
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          '/home', (Route<dynamic> route) => false);
+      // Navigator.pop(context);
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
   }
 
   List<Widget> themeListView(BuildContext ctx) {

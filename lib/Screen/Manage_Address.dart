@@ -13,6 +13,7 @@ import '../Helper/user_custom_radio.dart';
 import '../Model/User.dart';
 import 'Add_Address.dart';
 import 'Cart.dart';
+import 'package:http/http.dart'as http;
 
 class ManageAddress extends StatefulWidget {
   final bool? home;
@@ -179,7 +180,7 @@ class StateAddress extends State<ManageAddress> with TickerProviderStateMixin {
     return Scaffold(
       key: _scaffoldKey,
       appBar: widget.fromBar == true
-          ? getAppBar("Delivery Addrss", context)
+          ? getAppBar("Delivery Address", context)
           : getSimpleAppBar(getTranslated(context, "SHIPP_ADDRESS")!, context),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -320,10 +321,16 @@ class StateAddress extends State<ManageAddress> with TickerProviderStateMixin {
         onTap: () {
           if (mounted) {
             setState(() {
+              selectedAddress = index;
+
               if (!ISFLAT_DEL) {
                 // if (oriPrice <
                 //     double.parse(addressList[selectedAddress!].freeAmt!)) {
-                print("sssssssss");
+                print("${addressList[selectedAddress!].deliveryCharge}_______________");
+                delCharge =
+                    double.parse(addressList[selectedAddress!].deliveryCharge!);
+                print('___________${delCharge}____kjhklhlkklhlkjkllkh______');
+                print('___________${addressList[selectedAddress!].address}____kjhklhlkklhlkjkllkh______');
                 // delCharge = double.parse(addressList[selectedAddress!].deliveryCharge!);
                 Navigator.pop(context, {
                   "address": addressList[selectedAddress!].address,
@@ -382,8 +389,9 @@ class StateAddress extends State<ManageAddress> with TickerProviderStateMixin {
         if (!error) {
           if (!ISFLAT_DEL) {
             if (addressList.length != 1) {
+              print('___________${addressList[selectedAddress!].freeAmt}__________');
               if (oriPrice <
-                  double.parse(addressList[selectedAddress!].freeAmt!)) {
+                  double.parse(addressList[selectedAddress!].freeAmt == '' ? '0.0' : addressList[selectedAddress!].freeAmt ?? '0.0')) {
                 delCharge =
                     double.parse(addressList[selectedAddress!].deliveryCharge!);
               } else
@@ -396,7 +404,7 @@ class StateAddress extends State<ManageAddress> with TickerProviderStateMixin {
               selAddress = addressList[0].id;
 
               if (totalPrice <
-                  double.parse(addressList[selectedAddress!].freeAmt!)) {
+                  double.parse(addressList[selectedAddress!].freeAmt == '' ? '0.0' : addressList[selectedAddress!].freeAmt ?? '0.0')) {
                 delCharge =
                     double.parse(addressList[selectedAddress!].deliveryCharge!);
               } else
@@ -491,5 +499,27 @@ class StateAddress extends State<ManageAddress> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).colorScheme.white,
       elevation: 1.0,
     ));
+  }
+
+  checkAddressForDelivery() async{
+    var headers = {
+      'Cookie': 'ci_session=3555d518752c27d3f07a9fd57cc43c5496e988ac'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('https://developmentalphawizz.com/eatoz_food/app/v1/api/check_delivery_boy'));
+    request.fields.addAll({
+      'seller_id': '236',
+      'address_id': '121'
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+    print(response.reasonPhrase);
+    }
   }
 }

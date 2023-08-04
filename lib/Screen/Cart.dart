@@ -156,6 +156,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     });
     _getCart("0");
     _getSaveLater("1");
+    _getAddress();
     Future.delayed(Duration(milliseconds: 300), () {
       return getSetting();
     });
@@ -1832,14 +1833,14 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           // print('_______cartID____${cartID}__________');
           print("nononon ${getdata['delivery_charge']}");
           newDeliveryCharge = int.parse(getdata['delivery_charge'].toString());
-          print(
-              "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv ${newDeliveryCharge}");
+          print("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv ${newDeliveryCharge}");
           newSellerId = data[0]['seller_id'];
           print("new Seller id here now ${newSellerId}");
           // delCharge = double.parse(newDeliveryCharge.toString());
           oriPrice = double.parse(getdata[SUB_TOTAL]);
           taxPer = double.parse(getdata[TAX_PER]);
           totalPrice = delCharge + oriPrice + double.parse(totalTax);
+          print('___________${totalPrice}____kk______');
 
           List<SectionModel> cartList = (data as List)
               .map((data) => new SectionModel.fromCart(data))
@@ -1861,7 +1862,12 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             _isCartLoad = false;
           });
 
-        _getAddress();
+        setState(() {
+          isAdreesChange ? _getAddress2() :  _getAddress();
+        });
+
+
+
       } on TimeoutException catch (_) {
         setSnackbar(getTranslated(context, 'somethingMSg')!, _scaffoldKey);
       }
@@ -1870,6 +1876,41 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
         setState(() {
           _isNetworkAvail = false;
         });
+    }
+  }
+
+bool isAvailableDelivery = true;
+  String? messageForDelivery ;
+
+  checkAddressForDelivery() async{
+    var headers = {
+      'Cookie': 'ci_session=3555d518752c27d3f07a9fd57cc43c5496e988ac'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('https://developmentalphawizz.com/eatoz_food/app/v1/api/check_delivery_boy'));
+    request.fields.addAll({
+      'seller_id': newSellerId ?? '236',
+      'address_id': selAddress ?? '121'
+    });
+
+    print('___________${request.fields}__________');
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var result  = await response.stream.bytesToString();
+      var finalResult = jsonDecode(result) ;
+      if(finalResult ['error'] == false) {
+       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(finalResult ['message'].toString())));
+        isAvailableDelivery =  false ;
+      }else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(finalResult ['message'].toString())));
+      }
+
+    }
+    else {
+      print(response.reasonPhrase);
     }
   }
 
@@ -3007,6 +3048,10 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     deviceHeight = MediaQuery.of(context).size.height;
     deviceWidth = MediaQuery.of(context).size.width;
 
+
+setState(() {
+  _isLoading = false ;
+});
     return showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -3182,11 +3227,19 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                               'MIN_CART_AMT')!,
                                                           _checkscaffoldKey);
                                                     }
+                                                    else
+                                                    if(payMethod == 'RazorPay'&& isAvailableDelivery) {
+                                                      checkAddressForDelivery();
+                                                      checkoutState!(() {
+                                                        _placeOrder = true;
+                                                      });
+                                                    }
                                                     // else if (!deliverable) {
                                                     //   checkDeliverable();
                                                     // }
                                                     else
-                                                      confirmDialog();
+
+                                                    confirmDialog();
                                                   }
                                                 : null)
                                         //}),
@@ -3206,7 +3259,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       print("payple order");
       placeOrder('');
     } else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
-      razorpayPayment();
+
+      _checkOrderShouldBePlacedOrNot ();
+       // razorpayPayment();
     // else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
     //   paystackPayment(context);
     else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
@@ -3230,6 +3285,53 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       bankTransfer();
     else if (payMethod == "Cash On Delivery") {
       placeOrder('');
+    }else if (payMethod == "Wallet") {
+      placeOrder('');
+    }
+  }
+
+
+  Future<void> _checkOrderShouldBePlacedOrNot () async{
+    _isNetworkAvail = await isNetworkAvailable();
+    if (_isNetworkAvail) {
+      try {
+
+        var parameter = {
+          USER_ID: CUR_USERID,
+        };
+
+        Response response =
+        await post(checkOrderShouldBePlacedApi, body: parameter, headers: headers)
+            .timeout(Duration(seconds: timeOut));
+
+        if (response.statusCode == 200){
+          var getdata = json.decode(response.body);
+
+          bool error = getdata["error"];
+          if (!error) {
+            razorpayPayment();
+          }else {
+            setSnackbar(getdata["message"], _checkscaffoldKey);
+          }
+
+        }else {
+          setSnackbar(
+              getTranslated(context, 'somethingMSg')!, _checkscaffoldKey);
+          if (mounted)
+            setState(() {
+            });
+        }
+
+
+
+      }on TimeoutException catch (_) {}
+    }else {
+    if (mounted)
+    setState(() {
+    _isNetworkAvail = false;
+    });
+
+
     }
   }
 
@@ -3262,6 +3364,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               selectedAddress = 0;
               selAddress = addressList[0].id;
 
+
               if (!ISFLAT_DEL) {
                 //  if (totalPrice < double.parse(addressList[0].freeAmt!)) {
                 delCharge = double.parse(addressList[0].deliveryCharge!);
@@ -3293,11 +3396,15 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               double newdel = 0.0;
               delCharge =
                   double.parse(addressList[selectedAddress!].deliveryCharge!);
+              print('___________${delCharge}__________');
               //prefs.setDouble('delicharge', delCharge);
               print("final del charge here ${delCharge}");
+              setState(() {
+
+              });
             }
             if (ISFLAT_DEL) {
-              if ((oriPrice) < double.parse(MIN_AMT!)) {
+              if ((oriPrice) < double.parse(MIN_AMT ?? '0.0')) {
                 delCharge = double.parse(CUR_DEL_CHR!);
                 print("nnnnnnnnnnnn ${delCharge}");
               } else
@@ -3322,6 +3429,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           /*if (mounted && checkoutState != null) {
             checkoutState!(() {});
           }*/
+          setState(() {
+            _isLoading = false;
+          });
         } else {
           setSnackbar(
               getTranslated(context, 'somethingMSg')!, _checkscaffoldKey);
@@ -3330,6 +3440,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               _isLoading = false;
             });
         }
+        setState(() {
+          _isLoading = false;
+        });
       } on TimeoutException catch (_) {}
     } else {
       if (mounted)
@@ -3338,6 +3451,136 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
         });
     }
   }
+
+  Future<void> _getAddress2() async
+  {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    _isNetworkAvail = await isNetworkAvailable();
+    if (_isNetworkAvail) {
+      try {
+        var parameter = {
+          USER_ID: CUR_USERID,
+        };
+        Response response =
+        await post(getAddressApi, body: parameter, headers: headers)
+            .timeout(Duration(seconds: timeOut));
+
+        if (response.statusCode == 200) {
+          var getdata = json.decode(response.body);
+
+          bool error = getdata["error"];
+          // String msg = getdata["message"];
+          if (!error) {
+            var data = getdata["data"];
+            totalPrice -= delCharge;
+            addressList = (data as List)
+                .map((data) => new User.fromAddress(data))
+                .toList();
+
+            if (addressList.length == 1) {
+              selectedAddress = 0;
+              selAddress = addressList[0].id;
+
+
+              if (!ISFLAT_DEL) {
+                //  if (totalPrice < double.parse(addressList[0].freeAmt!)) {
+                delCharge = double.parse(addressList[0].deliveryCharge!);
+                prefs.setDouble('delicharge', delCharge);
+                print("charge 1 ${delCharge}");
+                // } else {
+                //   delCharge = 0;
+                // }
+              }
+            } else {
+              for (int i = 0; i < addressList.length; i++) {
+                /*if (addressList[i].isDefault == "1") {
+                  selectedAddress = i;
+                  selAddress = addressList[i].id;
+                  // if (!ISFLAT_DEL) {
+                  //   if (addressList[i].freeAmt == "0" ||
+                  //       addressList[i].freeAmt == "") {
+                  //   } else {
+                  //     if (totalPrice < double.parse(addressList[i].freeAmt!)) {
+                  //       delCharge =
+                  //           double.parse(addressList[i].deliveryCharge!);
+                  //       print("ddddddd ${delCharge}");
+                  //     } else
+                  //       delCharge = 0;
+                  //   }
+                  // }
+                }*/
+              }
+              double newdel = 0.0;
+              print('___________${addressList[selectedAddress!].deliveryCharge}__________');
+              delCharge =
+                  double.parse(addressList[selectedAddress!].deliveryCharge ?? '0.0');
+              print('___________${delCharge}__________');
+              //prefs.setDouble('delicharge', delCharge);
+              print("final del charge here ${delCharge}");
+              setState(() {
+
+              });
+            }
+            if (ISFLAT_DEL) {
+              if ((oriPrice) < double.parse(MIN_AMT ?? '0.0')) {
+                delCharge = double.parse(CUR_DEL_CHR!);
+                print("nnnnnnnnnnnn ${delCharge}");
+              } else
+                delCharge = 0;
+            }
+
+            totalPrice += delCharge;
+
+            totalPrice -= promoAmt != 0 ? promoAmt  : 0;
+            checkoutState!((){
+              _isLoading = false;
+            });
+            //promoAmt
+          } else {
+            if (ISFLAT_DEL) {
+              if ((oriPrice) < double.parse(MIN_AMT!)) {
+                delCharge = double.parse(CUR_DEL_CHR!);
+                print("xxxxxxxxxx ${delCharge}");
+              } else
+                delCharge = 0;
+            }
+          }
+
+         // validatePromo( promoC.text.isNotEmpty ? true : false);
+          if (mounted) {
+            setState(() {
+              _isLoading = false;
+            });
+          }
+
+          /*if (mounted && checkoutState != null) {
+            checkoutState!(() {});
+          }*/
+        } else {
+          setSnackbar(
+              getTranslated(context, 'somethingMSg')!, _checkscaffoldKey);
+          if (mounted)
+            setState(() {
+              _isLoading = false;
+              print('___________${_isLoading}__________');
+            });
+        }
+
+        checkoutState!((){
+          _isLoading = false;
+        });
+
+      } on TimeoutException catch (_) {}
+    } else {
+      if (mounted)
+        setState(() {
+          _isNetworkAvail = false;
+        });
+    }
+  }
+
+bool  isAdreesChange = false ;
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print(" razor pay success order");
@@ -3491,6 +3734,10 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
   }
 
   Future<void> placeOrder(String? tranId) async {
+
+    print('___________${totalPrice}__________');
+
+
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
       context.read<CartProvider>().setProgress(true);
@@ -3538,7 +3785,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           PRODUCT_VARIENT_ID: varientId,
           QUANTITY: quantity,
           TOTAL: oriPrice.toString(),
-          FINAL_TOTAL: totalPrice.toString(),
+          FINAL_TOTAL: payVia == 'Wallet'  ? usedBal.toString() : totalPrice.toString(),
           DEL_CHARGE: delCharge.toString(),
           // TAX_AMT: taxAmt.toString(),
           TAX_PER: taxPer.toString(),
@@ -3834,10 +4081,17 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                         builder: (BuildContext context) =>
                                             ManageAddress(
                                               home: false,
-                                            )));
+                                            ))).then((value) =>  _isLoading = true );
                                 checkoutState!(() {
                                   deliverable = false;
                                 });
+
+                                isAdreesChange = true ;
+
+
+                                _getCart('0');
+
+
 
                                 /* */
                                 //_getAddress();
@@ -4203,10 +4457,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
           bool error = getdata["error"];
           String? msg = getdata["message"];
-          print("bbbbbbbbbbbbbbbbb ${error}");
           if (!error) {
-            print("checking promo new data ${getdata['error']}");
             var data = getdata["data"][0];
+            print('___________${getdata["data"]}__________');
             setState(() {
               promoAmt = 0.0;
             });

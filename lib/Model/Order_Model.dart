@@ -33,6 +33,7 @@ class OrderModel {
       deliveryTime,
       sgst,
       cgst,
+      igst,
       delTime;
   List<AddOnModel>? addonList = [];
   List<Attachment>? attachList = [];
@@ -59,6 +60,7 @@ class OrderModel {
       this.dateTime,
         this.sgst,
         this.cgst,
+        this.igst,
       this.itemList,
       required this.listStatus,
       this.listDate,
@@ -128,6 +130,7 @@ class OrderModel {
         orderDate: date,
         cgst: parsedJson['cgst'],
         sgst: parsedJson['sgst'],
+        igst: parsedJson['igst'],
         addonList: addList,
         itemList: itemList,
         // listStatus: lStatus,

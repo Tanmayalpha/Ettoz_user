@@ -942,10 +942,15 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
       setState(() {
         pincodeC!.text   = place.postalCode ?? '';
         _cityController.text =  place.locality ?? '' ;
+        stateC!.text = place.administrativeArea ?? '' ;
+
 
         print('${place.name}____________');
         print('${place.postalCode}____________');
-       // print('${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode},${place.locality}____________');
+        print('${place.administrativeArea}____________');
+        print('${place.isoCountryCode}____________');
+        print('${place.subAdministrativeArea}____________');
+       // print('${place.street}, ${place.subLocality},${place.subAdministrativeArea}, ${place.postalCode},${place.lo cality}____________');
 
         setState(() {
 
@@ -1018,6 +1023,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
   }
 
   Future<void> getCities() async {
+    print('__________');
     try {
       Response response = await post(getCitiesApi, headers: headers)
           .timeout(Duration(seconds: timeOut));
@@ -1027,6 +1033,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
       String? msg = getdata["message"];
       if (!error) {
         var data = getdata["data"];
+        print('_______${getdata["data"].first}___');
 
         cityList =
             (data as List).map((data) => new User.fromJson(data)).toList();
@@ -1238,16 +1245,20 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
       };
       if (widget.update!) data[ID] = addressList[widget.index!].id;
       print("checking data here now ok ${data}");
+      print(data);
+
       Response response = await post(
               widget.update! ? updateAddressApi : getAddAddressApi,
               body: data,
               headers: headers)
           .timeout(Duration(seconds: timeOut));
+
       print("checking data here now okkk ${response.statusCode}");
+      print(widget.update! ? updateAddressApi : getAddAddressApi);
+
       if (response.statusCode == 200) {
         var getdata = json.decode(response.body);
 
-        print("checking nnnnnn ${getdata}");
         bool error = getdata["error"];
         String? msg = getdata["message"];
 
@@ -1255,6 +1266,8 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
 
         if (!error) {
           var data = getdata["data"];
+
+          print('${getdata["data"]}');
 
           if (widget.update!) {
             if (checkedDefault.toString() == "true" ||
@@ -1310,9 +1323,10 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
 
               addressList[widget.index!].isDefault = "1";
 
+
               if (!ISFLAT_DEL && addressList.length != 1) {
-                if (oriPrice <
-                    double.parse(addressList[selectedAddress!].freeAmt!)) {
+                if (addressList[selectedAddress!].freeAmt!.isNotEmpty  && oriPrice <
+                    double.parse(addressList[selectedAddress!].freeAmt ?? '0.0')) {
                   delCharge = double.parse(
                       addressList[selectedAddress!].deliveryCharge!);
                 } else {
