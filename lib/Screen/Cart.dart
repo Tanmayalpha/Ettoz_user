@@ -1828,7 +1828,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             cgst = getdata['cgst'];
             sgst = getdata['sgst'];
           });
-          totalTax = getdata['tax_amount'].toString();
+          totalTax = double.parse(getdata['tax_amount'].toString()).toStringAsFixed(2);
             // cartID = getdata[0]['cart_id'].toString();
           // print('_______cartID____${cartID}__________');
           print("nononon ${getdata['delivery_charge']}");
@@ -3037,7 +3037,15 @@ bool isAvailableDelivery = true;
     );
   }
   static int roundUpAbsolute(double number) {
-    return number.isNegative ? number.floor() : number.ceil();
+    //return number.isNegative ? number.floor() : number.ceil();
+    print('___________${number}__________');
+    print('___________${number.floor()}__________');
+    double decimalPart = number - number.floor();
+    if (decimalPart >= 0.5) {
+      return number.isNegative ? number.ceil() : number.floor() + 1;
+    } else {
+      return number.floor();
+    }
   }
   checkout(List<SectionModel> cartList) {
     _razorpay = Razorpay();
@@ -3062,6 +3070,7 @@ setState(() {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             checkoutState = setState;
+            print('___________${totalPrice}___ffgs_______');
            totalPrice = roundUpAbsolute(totalPrice).toDouble();
             return Container(
                 constraints: BoxConstraints(

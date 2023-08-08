@@ -245,6 +245,7 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                               Consumer<UserProvider>(
                                   builder: (context, userProvider, _) {
                                 print(userProvider.curBalance);
+
                                 return Card(
                                   elevation: 0,
                                   child: userProvider.curBalance != "0" &&
@@ -258,41 +259,47 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                             contentPadding: EdgeInsets.all(0),
                                             value: isUseWallet,
                                             onChanged: (bool? value) {
-                                              print('___________${value}__________');
-                                              print('___________${totalPrice}__________');
 
-                                              if (mounted)
+                                                if (mounted)
                                                 setState(() {
-                                                  isUseWallet = value;
+                                                  //isUseWallet = value;
 
                                                   if (value!) {
                                                     if (totalPrice <=
                                                         double.parse(
                                                             userProvider
                                                                 .curBalance)) {
+                                                      setState(() {
+                                                        isUseWallet = value;
+                                                      });
                                                       remWalBal = (double.parse(
                                                               userProvider
                                                                   .curBalance) -
                                                           totalPrice);
                                                       usedBal = totalPrice;
                                                       payMethod = "Wallet";
-                                                      print('___________${usedBal}__________');
-                                                      print('___________${totalPrice}___tttt_______');
+                                                      print(
+                                                          '___________${usedBal}__________');
 
                                                       isPayLayShow = false;
                                                     } else {
-                                                      remWalBal = 0;
+
+                                                     setSnackbar("can't use wallet due to insufficient balance") ;
+                                                      /*remWalBal = 0;
                                                       usedBal = double.parse(
                                                           userProvider
                                                               .curBalance);
-                                                      isPayLayShow = true;
+                                                      print(
+                                                          '___________${isPayLayShow}__________');
+
+                                                      isPayLayShow = true;*/
                                                     }
 
                                                     totalPrice =
                                                         totalPrice - usedBal;
                                                   } else {
-                                                    print(
-                                                        '___________${totalPrice}____gffghgf______');
+                                                    isUseWallet = value;
+
                                                     totalPrice =
                                                         totalPrice + usedBal;
                                                     remWalBal = double.parse(
@@ -306,6 +313,10 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
 
                                                   widget.update();
                                                 });
+
+
+
+
                                             },
                                             title: Text(
                                               getTranslated(

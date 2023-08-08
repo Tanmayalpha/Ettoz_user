@@ -2083,6 +2083,9 @@ class _HomePageState extends State<HomePage>
         });
         latitude = data['lati'].toString();
         longitude = data['longi'].toString();
+        var loc = Provider.of<LocationProvider>(context, listen: false);
+        loc.lat = latitude ;
+        loc.lng = longitude ;
         _refresh();
 
         // if (data.isNotEmpty) {
@@ -2388,11 +2391,18 @@ class _HomePageState extends State<HomePage>
       if (!error) {
         var data = getdata["data"];
 
+
+
         sellerList =
             (data as List).map((data) => new Product.fromSeller(data)).toList();
+
+        print('___________${sellerList.length}___kfjsdljgdlsjs_______');
+        sellerList.forEach((element) {
+          print('___________${element.online}___abcdefgh_______');});
         setState(() {
           sellerList.sort((a, b) => b.online!.compareTo(a.online!));
         });
+
       } else {
         // setSnackbar(msg!, context);
       }
@@ -2475,21 +2485,23 @@ class _HomePageState extends State<HomePage>
                         height: 5,
                       ),
                       Container(
-                        height: sellerList.length > 2 ? 350 : 180,
+                        // height: sellerList.length > 2 ? 550 : 180,
                         padding: EdgeInsets.symmetric(horizontal: 12),
                         child: sellerList.length == 0
                             ? Center(
                                 child: Text("No Restaurant to show"),
                               )
                             : GridView.builder(
+                          shrinkWrap: true,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio: 3 / 3.1,
+                                        childAspectRatio: 3 / 3.3,
                                         crossAxisCount: 2),
                                 itemCount: sellerList.length,
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (c, index) {
+                                  print('___________${sellerList.length}__________');
                                   return InkWell(
                                     onTap: () {
                                       if (sellerList[index].online == "1") {
