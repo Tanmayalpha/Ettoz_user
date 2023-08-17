@@ -505,7 +505,7 @@ class StateAddress extends State<ManageAddress> with TickerProviderStateMixin {
     var headers = {
       'Cookie': 'ci_session=3555d518752c27d3f07a9fd57cc43c5496e988ac'
     };
-    var request = http.MultipartRequest('POST', Uri.parse('https://developmentalphawizz.com/eatoz_food/app/v1/api/check_delivery_boy'));
+    var request = http.MultipartRequest('POST', Uri.parse('https://eatoz.in/app/v1/api/check_delivery_boy'));
     request.fields.addAll({
       'seller_id': '236',
       'address_id': '121'

@@ -18,8 +18,8 @@ const int perPage = 10;
 // final String baseUrl = 'https://foodontheways.com/app/v1/api/';
 //final String baseUrl = 'https://foodontheways.com/New_food/app/v1/api/';
 final String baseUrl =
-    'https://developmentalphawizz.com/eatoz_food/app/v1/api/';
-final String imageUrl = 'https://developmentalphawizz.com/eatoz_food/';
+    'https://eatoz.in/app/v1/api/';
+final String imageUrl = 'https://eatoz.in/';
 //final String imageUrl = 'https://foodontheways.com/';
 final String jwtKey = "0352e7a815f965e8e278d47976b8f9cf466e1f42";
 double latitudeFirst = 0;
