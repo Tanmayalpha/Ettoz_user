@@ -8,6 +8,7 @@ import 'package:eshop_multivendor/Helper/PushNotificationService.dart';
 import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Helper/String.dart';
 import 'package:eshop_multivendor/Helper/app_assets.dart';
+import 'package:eshop_multivendor/Helper/ccavenue.dart';
 import 'package:eshop_multivendor/Model/Section_Model.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/Favorite.dart';
@@ -353,7 +354,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                       ? Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Favorite(),
+                            builder: (context) => Favorite() //CCAvenueScreen(),
                           ))
                       : Navigator.push(
                           context,

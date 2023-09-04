@@ -18,6 +18,11 @@ public final class GeneratedPluginRegistrant {
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     ShimPluginRegistry shimPluginRegistry = new ShimPluginRegistry(flutterEngine);
     try {
+      flutterEngine.getPlugins().add(new com.avinash.gotluru.cc_avenue.CcAvenuePlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin cc_avenue, com.avinash.gotluru.cc_avenue.CcAvenuePlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.connectivity.ConnectivityPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin connectivity, io.flutter.plugins.connectivity.ConnectivityPlugin", e);

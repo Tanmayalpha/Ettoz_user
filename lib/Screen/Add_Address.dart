@@ -751,6 +751,7 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                 ),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
+                  readOnly: true,
                   textInputAction: TextInputAction.next,
                   textCapitalization: TextCapitalization.sentences,
                   style: Theme.of(context)
@@ -763,6 +764,74 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                       val!, getTranslated(context, 'FIELD_REQUIRED')),
                   onSaved: (String? value) {
                     address = value;
+                  },
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PlacePicker(
+                          apiKey: Platform.isAndroid
+                              ? "AIzaSyDi_XlHtopewZHtpWWxIO-EQ7mCegHr5o0"
+                              : "AIzaSyDi_XlHtopewZHtpWWxIO-EQ7mCegHr5o0",
+                          onPlacePicked: (result) {
+                            print(result.formattedAddress);
+
+                            latitude =
+                                result.geometry!.location.lat.toString();
+                            longitude =
+                                result.geometry!.location.lng.toString();
+                            addressC!.text =
+                                result.formattedAddress.toString();
+                            if (result.formattedAddress
+                                .toString()
+                                .split(",")
+                                .length >
+                                2) {
+                              List<String> cityList = result
+                                  .formattedAddress
+                                  .toString()
+                                  .split(",");
+                              setState(() {
+                                /*_cityController.text =
+                                        cityList[cityList.length - 3];*/
+                                _areaController.text =
+                                cityList[cityList.length - 4];
+                                stateC!.text =
+                                cityList[cityList.length - 2];
+                                /*pincodeC!.text =
+                                        cityList[cityList.length - 2]
+                                            .split(" ")
+                                            .last;*/
+                                countryC!.text =
+                                cityList[cityList.length - 1];
+                              });
+                            }
+                            /*getAddress(
+                                                  dropLatitude, dropLongitude)
+                                              .then((value) {
+                                            if (!value.first.city
+                                                .toString()
+                                                .contains("pricing"))
+                                              setState(() {
+                                                dropCityCon.text =
+                                                    value.first.city.toString();
+                                              });
+                                          });*/
+
+                            _getAddressFromLatLng();
+
+                            Navigator.of(context).pop();
+                            //  getBookInfo();
+                            // getRides("3");
+                          },
+                          initialPosition:
+                          LatLng(latitudeFirst, longitudeFirst),
+                          useCurrentLocation: true,
+                        ),
+                      ),
+                    );
+                    //_getLocation();
+                    _getAddressFromLatLng () ;
                   },
                   onFieldSubmitted: (v) {
                     _fieldFocusChange(context, addFocus!, locationFocus);
@@ -817,8 +886,8 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                           MaterialPageRoute(
                             builder: (context) => PlacePicker(
                               apiKey: Platform.isAndroid
-                                  ? "AIzaSyB0uPBgryG9RisP8_0v50Meds1ZePMwsoY"
-                                  : "AIzaSyB0uPBgryG9RisP8_0v50Meds1ZePMwsoY",
+                                  ? "AIzaSyDi_XlHtopewZHtpWWxIO-EQ7mCegHr5o0"
+                                  : "AIzaSyDi_XlHtopewZHtpWWxIO-EQ7mCegHr5o0",
                               onPlacePicked: (result) {
                                 print(result.formattedAddress);
 

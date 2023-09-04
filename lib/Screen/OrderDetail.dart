@@ -2778,7 +2778,7 @@ class StateOrder extends State<OrderDetail>
                                       ),
                                     ),
                                   ),
-                                if (!orderItem.listStatus!.contains(DELIVERD) &&
+                                /*if (!orderItem.listStatus!.contains(DELIVERD) &&
                                     (!orderItem.listStatus!
                                         .contains(RETURNED)) &&
                                     orderItem.isCancle == "1" &&
@@ -2868,7 +2868,7 @@ class StateOrder extends State<OrderDetail>
                                   (orderItem.listStatus!.contains(DELIVERD) &&
                                           orderItem.isReturn == "1" &&
                                           orderItem.isAlrReturned == "0")
-                                      ? SizedBox() /*Padding(
+                                      ? SizedBox() *//*Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8.0),
                                           child: OutlinedButton(
@@ -2946,8 +2946,8 @@ class StateOrder extends State<OrderDetail>
                                             child: Text(getTranslated(
                                                 context, 'ITEM_RETURN')!),
                                           ),
-                                        )*/
-                                      : Container(),
+                                        )*//*
+                                      : Container(),*/
                               ],
                             ),
                           ],

@@ -11,7 +11,7 @@ final String deepLinkUrlPrefix = 'https://eshopmultivendor.page.link';
 final String deepLinkName = 'Eatoz Food';
 
 final int timeOut = 50;
-const int perPage = 10;
+const int perPage = 1000;
 
 //final String baseUrl = 'https://vendor.eshopweb.store/app/v1/api/';
 // final String baseUrl = 'https://alphawizztest.tk/Eatoz Food_Ecom/app/v1/api/';

@@ -52,7 +52,9 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
       stripe,
       paytm = true,
       gpay = false,
-      bankTransfer = true;
+      ccAvenue = true,
+  bankTransfer = true;
+
   List<RadioModel> timeModel = [];
   List<RadioModel> payModel = [];
   List<RadioModel> timeModelList = [];
@@ -156,7 +158,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
         getTranslated(context, 'COD_LBL'),
         getTranslated(context, 'PAYPAL_LBL'),
         getTranslated(context, 'PAYUMONEY_LBL'),
-        getTranslated(context, 'RAZORPAY_LBL'),
+       // getTranslated(context, 'RAZORPAY_LBL'),
+        getTranslated(context, 'CC_AVENUE'),
         getTranslated(context, 'PAYSTACK_LBL'),
         getTranslated(context, 'FLUTTERWAVE_LBL'),
         getTranslated(context, 'STRIPE_LBL'),
@@ -263,7 +266,6 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                 if (mounted)
                                                 setState(() {
                                                   //isUseWallet = value;
-
                                                   if (value!) {
                                                     if (totalPrice <=
                                                         double.parse(
@@ -272,18 +274,13 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                       setState(() {
                                                         isUseWallet = value;
                                                       });
-                                                      remWalBal = (double.parse(
-                                                              userProvider
-                                                                  .curBalance) -
-                                                          totalPrice);
+                                                      remWalBal = (double.parse(userProvider.curBalance) - totalPrice);
                                                       usedBal = totalPrice;
                                                       payMethod = "Wallet";
                                                       print(
                                                           '___________${usedBal}__________');
-
                                                       isPayLayShow = false;
                                                     } else {
-
                                                      setSnackbar("can't use wallet due to insufficient balance") ;
                                                       /*remWalBal = 0;
                                                       usedBal = double.parse(
@@ -294,29 +291,18 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
 
                                                       isPayLayShow = true;*/
                                                     }
-
-                                                    totalPrice =
-                                                        totalPrice - usedBal;
+                                                    totalPrice = totalPrice - usedBal;
                                                   } else {
                                                     isUseWallet = value;
-
-                                                    totalPrice =
-                                                        totalPrice + usedBal;
-                                                    remWalBal = double.parse(
-                                                        userProvider
-                                                            .curBalance);
+                                                    totalPrice = totalPrice + usedBal;
+                                                    remWalBal = double.parse(userProvider.curBalance);
                                                     payMethod = null;
                                                     selectedMethod = null;
                                                     usedBal = 0;
                                                     isPayLayShow = true;
                                                   }
-
                                                   widget.update();
                                                 });
-
-
-
-
                                             },
                                             title: Text(
                                               getTranslated(
@@ -458,6 +444,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                   return paymentItem(index);
                                                 else if (index == 4 && razorpay)
                                                   return paymentItem(index);
+                                                /*else if (index == 5 && ccAvenue)
+                                                  return paymentItem(index);*/
                                                 else if (index == 5 && paystack)
                                                   return paymentItem(index);
                                                 else if (index == 6 &&
@@ -684,6 +672,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
             paystack = payment["paystack_payment_method"] == "1" ? true : false;
             stripe = payment["stripe_payment_method"] == "1" ? true : false;
             paytm = payment["paytm_payment_method"] == "1" ? true : false;
+            ccAvenue = payment["ccavnue_method"] == "1" ? true : false;
+
             bankTransfer =
                 payment["direct_bank_transfer"] == "1" ? true : false;
 

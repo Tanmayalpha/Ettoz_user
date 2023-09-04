@@ -5,11 +5,14 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop_multivendor/Helper/Constant.dart';
 import 'package:eshop_multivendor/Helper/Session.dart';
+import 'package:eshop_multivendor/Helper/web_view.dart';
 import 'package:eshop_multivendor/Provider/CartProvider.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:eshop_multivendor/Screen/webview_cc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart';
 import 'package:paytm/paytm.dart';
@@ -3264,8 +3267,10 @@ setState(() {
 
   doPayment() {
     print("payment method here ${payMethod}");
+     if(payMethod == getTranslated(context, 'CC_AVENUE')) {
+    placeOrder('');
+    }else
     if (payMethod == getTranslated(context, 'PAYPAL_LBL')) {
-      print("payple order");
       placeOrder('');
     } else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
 
@@ -3786,6 +3791,9 @@ bool  isAdreesChange = false ;
         payVia = "Wallet";
       else if (payMethod == getTranslated(context, 'BANKTRAN'))
         payVia = "bank_transfer";
+      else if (payMethod == getTranslated(context, 'CC_AVENUE')) {
+        payVia = "CCAvenue";
+      }
 
       try {
         var parameter = {
@@ -3863,9 +3871,10 @@ bool  isAdreesChange = false ;
               addTransaction(tranId, orderId, SUCCESS, msg, true);
             } else if (payMethod == getTranslated(context, 'PAYTM_LBL')) {
               addTransaction(tranId, orderId, SUCCESS, msg, true);
+            }if (payMethod == getTranslated(context, 'CC_AVENUE')){
+              _initiateCcAvenuePayment(orderId, totalPrice);
             } else {
               context.read<UserProvider>().setCartCount("0");
-
               clearAll();
 
               Navigator.pushAndRemoveUntil(
@@ -4013,6 +4022,107 @@ bool  isAdreesChange = false ;
     return 'ChargedFrom${platform}_${DateTime.now().millisecondsSinceEpoch}';
   }
 
+  _initiateCcAvenuePayment(String orderId, double totalPrice) async {
+    // OrderModel model = OrderModel(listStatus: []);
+    try {
+      final amount = totalPrice.toString();
+      setState(() {
+        // _loading = true;
+        // errorText = "";
+      });
+      final response = await http.get(Uri.parse('${baseUrl}ccevenue_handler_wallet?order_id=$orderId&amount=$amount'));
+      // .post(Uri.parse(UrlList.merchant_server_enc_url),
+      // body: {"amount": amount});
+      // final json = jsonDecode(response.body);
+      // final data = PaymentData.fromJson(json);
+      final data = response.body;
+      var data1 =jsonDecode(data);
+      String url = data1["message"];
+      print('${response.body}_______dfkljd');
+      // if (data.statusMessage == "SUCCESS") {
+      initiatePayment(url);
+      setState(() {
+        // _loading = false;
+      });
+
+    } catch (e) {
+      print(e.toString());
+      setState(() {
+        // _loading = false;
+      });
+    }
+  }
+
+  InAppWebViewController? _webViewController;
+
+  /*void initiatePayment1(String url) {
+    // Replace this with the actual PhonePe payment URL you have
+   // String phonePePaymentUrl = url;
+   // String callBackUrl = "https://secure.ccavenue.ae/transaction/transaction";
+    String callBackUrl = "https://eatoz.in/home/ccevenue_response";
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: const Text('Payment'),
+          ),
+          body: InAppWebView(
+            initialUrlRequest: URLRequest(url: Uri.parse(url)),
+            onWebViewCreated: (controller) {
+              _webViewController = controller;
+            },
+            onLoadStart: ((controller, url) {
+
+            }),
+            onLoadStop: (controller, url) async {
+              print('___________${url}____cgf_____');
+
+              if (url.toString().contains(callBackUrl)) {
+                // Extract payment status from URL
+                /// String? paymentStatus = extractPaymentStatusFromUrl(url.toString());
+                ///
+                //_handlePaymentStatus(url.toString());
+                 print('_________swsfsff____________');
+
+
+                await _webViewController?.stopLoading();
+
+                if(await _webViewController?.canGoBack() ?? false){
+                  await _webViewController?.goBack();
+                }else {
+                  Navigator.pop(context);
+                }
+                // Update payment status
+                *//*setState(() {
+                  _paymentStatus = paymentStatus!;
+                });*//*
+                // Stop loading and close WebView
+
+
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }*/
+
+  void initiatePayment(String url) async{
+    // Replace this with the actual PhonePe payment URL you have
+    String phonePePaymentUrl = '${url}';
+    String calBackurl = phonePePaymentUrl + 'Eatoz';
+    print("call back url ${calBackurl}");
+    var data = await Navigator.push(context, CupertinoPageRoute(
+      builder: (context) {
+        return WebViewExample(
+            url: phonePePaymentUrl);
+      },
+    ));
+    print("Payment Data${data}");
+  }
+
+
   stripePayment() async {
     context.read<CartProvider>().setProgress(true);
 
@@ -4056,7 +4166,8 @@ bool  isAdreesChange = false ;
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.fontColor),
-                    )),
+                    ),
+                ),
               ],
             ),
             Divider(),
@@ -4094,13 +4205,8 @@ bool  isAdreesChange = false ;
                                 checkoutState!(() {
                                   deliverable = false;
                                 });
-
                                 isAdreesChange = true ;
-
-
                                 _getCart('0');
-
-
 
                                 /* */
                                 //_getAddress();

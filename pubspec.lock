@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.1"
+  cc_avenue:
+    dependency: "direct main"
+    description:
+      name: cc_avenue
+      sha256: "15d75b65354be6ce20be75354c22aa9921735d5279aef72825331931da021907"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   characters:
     dependency: transitive
     description:
@@ -382,7 +390,7 @@ packages:
     source: hosted
     version: "0.7.0"
   flutter_inappwebview:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_inappwebview
       sha256: f73505c792cf083d5566e1a94002311be497d984b5607f25be36d685cf6361cf
