@@ -203,7 +203,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
     print(getdata);
     bool error = getdata["error"];
     String? msg = getdata["message"];
-    int otp = getdata["otp"];
+    String? otp = getdata["otp"];
     dynamic getData = getdata["data"];
     await buttonController!.reverse();
     setSnackbar(msg.toString());

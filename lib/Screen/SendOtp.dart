@@ -156,7 +156,7 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
       if (widget.title == getTranslated(context, 'SEND_OTP_TITLE')) {
         if (!error!) {
           int otp = getdata["data"];
-          setSnackbar(otp.toString());
+         // setSnackbar(otp.toString());
 
           // settingsProvider.setPrefrence(MOBILE, mobile!);
           // settingsProvider.setPrefrence(COUNTRY_CODE, countrycode!);
