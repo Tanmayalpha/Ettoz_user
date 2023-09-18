@@ -253,8 +253,8 @@ class _SellerProfileState extends State<SellerProfile>
         if (_isFirstLoad) {
           filterList = getdata["filters"];
 
-          minPrice = getdata[MINPRICE];
-          maxPrice = getdata[MAXPRICE];
+          minPrice = getdata[MINPRICE].toString();
+          maxPrice = getdata[MAXPRICE].toString();
           _currentRangeValues =
               RangeValues(double.parse(minPrice), double.parse(maxPrice));
           _isFirstLoad = false;
@@ -1939,17 +1939,20 @@ class _SellerProfileState extends State<SellerProfile>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    model.name!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle1!
-                                        .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .lightBlack),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width/1.7,
+                                    child: Text(
+                                      model.name!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .lightBlack),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                   model.indicator == "1"
                                       ? Image.asset(

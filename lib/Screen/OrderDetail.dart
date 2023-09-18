@@ -1699,6 +1699,7 @@ class StateOrder extends State<OrderDetail>
                 var downloadsDirectory =
                     await DownloadsPathProvider.downloadsDirectory;
                 targetPath = downloadsDirectory!.path.toString();
+                print('___________${targetPath}__________');
               }
 
               var targetFileName = "Invoice_${widget.model!.id}";

@@ -386,7 +386,7 @@ class _SearchState extends State<Search> with TickerProviderStateMixin {
         body: _isNetworkAvail
             ? Stack(
                 children: <Widget>[
-                  searchType ? _showContent() : _showRest(),
+                  searchType ? _showContent() : _showRest(context),
                   showCircularProgress(_isProgress, colors.primary),
                   SizedBox(
                     height: 40,
@@ -1777,7 +1777,7 @@ class _SearchState extends State<Search> with TickerProviderStateMixin {
           );
   }
 
-  _showRest() {
+  _showRest(BuildContext context) {
     return sellerLists.isNotEmpty
         ? ListView.builder(
             shrinkWrap: true,
@@ -1790,38 +1790,59 @@ class _SearchState extends State<Search> with TickerProviderStateMixin {
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
                       onTap: () {
+
+                        if(sellerLists[index]["online"] == "1")
                         //  print("checking data here now ${sellerList[index]} and ${sellerList[index].seller_id}");
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SubCategory(
-                                      fromSearch: true,
-                                      title: sellerLists[index]['store_name']
-                                          .toString(),
-                                      sellerId: sellerLists[index]['user_id']
-                                          .toString(),
-                                      sellerData: sellerLists[index],
-                                    )
-                                //   SellerProfile(
-                                // sellerName: sellerLists[index]["seller_name"],
-                                // sellerImage: "$sellerImage${sellerLists[index]["logo"]}",
-                                // sellerStoreName: sellerLists[index]["store_name"],
-                                // storeDesc: sellerLists[index]["store_description"]??"",
-                                // sellerID: sellerLists[index]["user_id"],
-                                // extraData: sellerLists[index],
-                                // subCatId: sellerLists[index][''],
-                                // search: true,
-                                //   )
-                                ));
+                            {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SubCategory(
+                                        fromSearch: true,
+                                        title: sellerLists[index]['store_name']
+                                            .toString(),
+                                        sellerId: sellerLists[index]['user_id']
+                                            .toString(),
+                                        sellerData: sellerLists[index],
+                                      )
+                                  //   SellerProfile(
+                                  // sellerName: sellerLists[index]["seller_name"],
+                                  // sellerImage: "$sellerImage${sellerLists[index]["logo"]}",
+                                  // sellerStoreName: sellerLists[index]["store_name"],
+                                  // storeDesc: sellerLists[index]["store_description"]??"",
+                                  // sellerID: sellerLists[index]["user_id"],
+                                  // extraData: sellerLists[index],
+                                  // subCatId: sellerLists[index][''],
+                                  // search: true,
+                                  //   )
+                                  ));
+                        }else{
+                          setSnackbar(
+                              "Restaurant is Close!!");
+                        }
                       },
                       leading: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
                               "$sellerImage${sellerLists[index]["logo"]}")),
                       title: Text("${sellerLists[index]["store_name"]}"),
-                      subtitle: Text(
-                        "${sellerLists[index]["store_description"]}",
-                        maxLines: 2,
+                      subtitle: Row(
+                        children: [
+                          Text(
+                            "${sellerLists[index]["store_description"]}",
+                            maxLines: 2,
+                          ),
+                          SizedBox(width: 20,),
+                          sellerLists[index]["online"] == "1"
+                              ? Text(
+                                  "Open",
+                                  style: TextStyle(color: Colors.green),
+                                )
+                              : Text(
+                                  "Close",
+                                  style: TextStyle(color: Colors.red),
+                                )
+                        ],
                       ),
                       trailing: Icon(Icons.arrow_forward_ios_rounded),
                     ),

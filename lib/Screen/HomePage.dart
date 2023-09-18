@@ -3398,7 +3398,7 @@ class _HomePageState extends State<HomePage>
                     // ),
 
                     Container(
-                      height: 180,
+                      height: 190,
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: topSellerList.length == 0
                           ? Center(

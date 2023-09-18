@@ -531,7 +531,16 @@ class _SubCategoryState extends State<SubCategory> {
                                                                                 15,
                                                                           )
                                                                         ],
-                                                                      )
+                                                                      ),
+                                                            /*widget.sellerData[
+                                                            'address'] == '' ? SizedBox() :  Text(
+                                                              "address",
+                                                              style: TextStyle(
+                                                                  color: colors
+                                                                      .whiteTemp,
+                                                                  fontWeight:
+                                                                  FontWeight.w600),
+                                                            ),*/
                                                           ],
                                                         )
                                                         //:Container(),

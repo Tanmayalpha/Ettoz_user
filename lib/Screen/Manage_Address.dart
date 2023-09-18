@@ -328,7 +328,7 @@ class StateAddress extends State<ManageAddress> with TickerProviderStateMixin {
                 //     double.parse(addressList[selectedAddress!].freeAmt!)) {
                 print("${addressList[selectedAddress!].deliveryCharge}_______________");
                 delCharge =
-                    double.parse(addressList[selectedAddress!].deliveryCharge!);
+                    double.parse(addressList[selectedAddress!].deliveryCharge== '' ? '0.0' : addressList[selectedAddress!].deliveryCharge!);
                 print('___________${delCharge}____kjhklhlkklhlkjkllkh______');
                 print('___________${addressList[selectedAddress!].address}____kjhklhlkklhlkjkllkh______');
                 // delCharge = double.parse(addressList[selectedAddress!].deliveryCharge!);
