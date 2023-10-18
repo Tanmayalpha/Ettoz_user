@@ -3527,7 +3527,8 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
             LIMIT: perPage.toString(),
             OFFSET: notificationoffset.toString(),
             ID: widget.model!.id,
-            IS_SIMILAR: "1"
+            IS_SIMILAR: "1",
+            SELLER_ID: widget.sellerId
           };
 
           if (CUR_USERID != null) parameter[USER_ID] = CUR_USERID;

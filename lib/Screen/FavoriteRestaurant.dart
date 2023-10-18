@@ -40,22 +40,26 @@ class _FavoriteRestaurantState extends State<FavoriteRestaurant> {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       var finalResult = await response.stream.bytesToString();
+      print('___________${finalResult}__________');
       final jsonResponse = json.decode(finalResult);
 
       if (jsonResponse['error'] == false) {
-        List<Product> data = jsonResponse["data"];
-        print("datta here ${data}");
+        var data = jsonResponse["data"];
+       // List<Product> data = jsonResponse["data"]  ;
 
-        // setState(() {
-        //   restList = (data as List)
-        //       .map((data) => new Product.fromSeller(data))
-        //       .toList();
-        //   restList.sort((a, b) => b.online!.compareTo(a.online!));
-        // });
+
+
+        setState(() {
+          restList = (data as List).map((data) => new Product.fromSeller(data)).toList();
+
+
+
+          restList.sort((a, b) => b.online!.compareTo(a.online!));
+        });
 
         setState(() {
           //restList = data.map((val) => Product.fromSeller(val)).toList();
-          restList = data;
+          //restList = data;
         });
         print("reslist here now ${restList[0].id}");
 
@@ -124,7 +128,6 @@ class _FavoriteRestaurantState extends State<FavoriteRestaurant> {
                     physics: AlwaysScrollableScrollPhysics(),
                     itemCount: restList.length,
                     itemBuilder: (c, index) {
-                      print("uuuuuuuuu ${restList[index].id}");
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 1),
@@ -320,7 +323,7 @@ class _FavoriteRestaurantState extends State<FavoriteRestaurant> {
                                                           size: 15,
                                                         ),
                                                         Text(
-                                                          "${restList[index].noOfRating}",
+                                                          restList[index].noOfRating ?? '0.0',
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme

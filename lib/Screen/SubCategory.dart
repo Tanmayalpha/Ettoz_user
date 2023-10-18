@@ -671,9 +671,7 @@ class _SubCategoryState extends State<SubCategory> {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 image: DecorationImage(
-                                                  image: NetworkImage(widget
-                                                      .sellerData!
-                                                      .seller_profile),
+                                                  image: NetworkImage(widget.sellerData.seller_profile ?? ''),
                                                   fit: BoxFit.fill,
                                                 )),
                                             child: Container(

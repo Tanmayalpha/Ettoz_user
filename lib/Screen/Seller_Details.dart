@@ -659,7 +659,7 @@ class _SellerProfileState extends State<SellerProfile>
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    widget.sellerData!.seller_profile),
+                                    widget.sellerData.seller_profile ?? ''),
                                 fit: BoxFit.fill)),
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.35,
@@ -670,7 +670,7 @@ class _SellerProfileState extends State<SellerProfile>
                               ListTile(
                                 leading: CircleAvatar(
                                   backgroundImage: NetworkImage(
-                                      widget.sellerData!.seller_profile),
+                                      widget.sellerData.seller_profile ?? ''),
                                 ),
                                 title: Text(
                                   "${widget.sellerData.store_name!}"

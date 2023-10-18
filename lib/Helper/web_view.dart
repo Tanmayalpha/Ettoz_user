@@ -7,15 +7,15 @@ import 'package:eshop_multivendor/Screen/Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebViewExample extends StatefulWidget {
+class CcaAvenue extends StatefulWidget {
   final String url;
-  const WebViewExample({ required this.url});
+  const CcaAvenue({ required this.url});
 
   @override
-  State<WebViewExample> createState() => _WebViewExampleState();
+  State<CcaAvenue> createState() => _CcaAvenueState();
 }
 
-class _WebViewExampleState extends State<WebViewExample> {
+class _CcaAvenueState extends State<CcaAvenue> {
   late final WebViewController _controller;
 //   String kNavigationExamplePage = '''<!DOCTYPE html>
 //   <html>
@@ -126,6 +126,12 @@ class _WebViewExampleState extends State<WebViewExample> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
+            leading: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+                child: Icon(Icons.arrow_back,),
+            ),
             backgroundColor: colors.primary,
             title: Text('Payment'),
           ),

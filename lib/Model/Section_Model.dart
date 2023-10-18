@@ -377,6 +377,8 @@ class Product {
   factory Product.fromSeller(Map<String, dynamic> json) {
     return new Product(
       seller_name: json[SELLER_NAME],
+      id: json['id'],
+      noOfRating: json['no_of_ratings'],
       seller_profile: json[SELLER_PROFILE],
       seller_rating: json[SELLER_RATING],
       store_description: json[STORE_DESC],

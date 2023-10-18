@@ -1088,7 +1088,8 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
   Widget signUpLink() {
     return TextButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).push(
+              MaterialPageRoute(
             builder: (BuildContext context) => SendOtp(
               title: getTranslated(context, 'SEND_OTP_TITLE'),
             ),

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart'as http;
 
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
@@ -13,6 +15,7 @@ import 'package:http/http.dart';
 import 'package:paytm/paytm.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Helper/AppBtn.dart';
 import '../Helper/Color.dart';
@@ -24,6 +27,7 @@ import '../Helper/String.dart';
 import '../Helper/Stripe_Service.dart';
 import '../Model/Transaction_Model.dart';
 import 'HomePage.dart';
+import 'Webviewexample.dart';
 
 class MyWallet extends StatefulWidget {
   @override
@@ -115,6 +119,165 @@ class StateWallet extends State<MyWallet> with TickerProviderStateMixin {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
+  Future<void> initiatePayment() async {
+    // Replace this with the actual PhonePe payment URL you have
+    String phonePePaymentUrl = '${url}';
+    String calBackurl = phonePePaymentUrl + 'Eatoz';
+    print("call back url ${calBackurl}");
+    var data = await Navigator.push(context, CupertinoPageRoute(
+      builder: (context) {
+        return WebViewExample(
+            url: phonePePaymentUrl);
+      },
+    ));
+    print("Payment Data${data}");
+    if(data!=null){
+      http.post(Uri.parse("${baseUrl}check_phonepay_status"),body: {
+        "transaction_id":merchantTransactionId
+      }).then((value) {
+        print("Payment Data1${value.body}");
+        Map response = jsonDecode(value.body);
+        if(response['data']!=null) {
+         // setSnackbar("${response['data'][0]["message"]}", GlobalKey());
+          if ( response['data'][0]["error"]=="false"){
+            sendRequest(merchantTransactionId,'phonePe');
+           // placeOrder(merchantTransactionId);
+          } else {
+          }
+        }else{
+         // setSnackbar("Payment Failed or Cancelled", GlobalKey());
+        }
+      });
+    }else{
+     // setSnackbar("Payment Failed or Cancelled",GlobalKey());
+    }
+    /*  Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: Text('PhonePe Payment'),
+          ),
+          body: InAppWebView(
+            initialUrlRequest: URLRequest(url: Uri.parse(phonePePaymentUrl)),
+
+            onWebViewCreated: (controller) {
+              _webViewController = controller;
+            },
+            onLoadStop: (controller, url) async {
+              if (url.toString().contains('https://giftsbash.com/home/phonepay_success')) {
+                handelPhonePaySuccess(url.toString());
+                // Extract payment status from URL
+                //String? paymentStatus = extractPaymentStatusFromUrl(url.toString());
+                // Update payment status
+              //  print("jhhhhhhhhhhhhhhhhhh ${url}");
+               // setState(() {
+                  //_paymentStatus = paymentStatus!;
+             //   });
+                await _webViewController?.stopLoading();
+                if(await _webViewController?.canGoBack() ?? false){
+                  await _webViewController?.goBack();
+                }else {
+                  print('${paymentStatuss}____________');
+                  if(paymentStatuss == true){
+                    placeOrder(merchantTransactionId);
+                  }
+                  Navigator.pop(context);
+                }
+                //
+                // Stop loading and close WebView
+              //
+                //await _webViewController?.goBack();
+              }
+            },
+          ),
+        ),
+      ),
+    );*/
+  }
+
+  String? newStats;
+  bool? paymentStatuss;
+  handelPhonePaySuccess(String url) async{
+    Map <String, dynamic> finalResult = await fetchPaymentStatus();
+    if(finalResult['data'][0]['error'] ==  'true'){
+      // newStats = false;
+      Fluttertoast.showToast(msg: "Payment Failed");
+      paymentStatuss  = false ;
+    }
+    else{
+      paymentStatuss  = true ;
+      Fluttertoast.showToast(msg: "Payment Success");
+    }
+  }
+
+  Future<Map <String, dynamic>> fetchPaymentStatus () async {
+    var headers = {
+      'Cookie': 'ci_session=2192e13e91c2acac91d03ed3ab66370064afc742'
+    };
+    print(url);
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}check_phonepay_status'));
+    request.fields.addAll({
+      'transaction_id': '${merchantTransactionId}'
+    });
+    print("check paymnet status ${request.fields}");
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var Result = await response.stream.bytesToString();
+      var finalResult = jsonDecode(Result);
+      return finalResult;
+    }
+    else {
+      var Result = await response.stream.bytesToString();
+      var finalResult = jsonDecode(Result);
+      return finalResult;
+      //print(response.reasonPhrase);
+    }
+  }
+
+  String? extractPaymentStatusFromUrl(String url) {
+    Uri uri = Uri.parse(url);
+    String? paymentStatus = uri.queryParameters['status'];
+    return paymentStatus;
+  }
+
+  String url = '';
+  String? merchantId;
+  String? merchantTransactionId;
+  String? mobile;
+
+  Future<void> getPhonpayURL() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    mobile = preferences.getString("mobile");
+    print('___mobile_______${mobile}_________');
+    String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+    var headers = {
+      'Cookie': 'ci_session=56691520ceefd28e91e4992a486249c971156c0d'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}initiate_phone_payment'));
+    request.fields.addAll({
+      'user_id': '$CUR_USERID',
+      'mobile': '$mobile',
+      'amount': amtC!.text.toString()
+    });
+    print("initiate phone pay para${request.fields}");
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result = await response.stream.bytesToString();
+      print(result);
+      var finalResult = jsonDecode(result);
+      url = finalResult['data']['data']['instrumentResponse']['redirectInfo']['url'];
+      merchantId = finalResult['data']['data']['merchantId'];
+      merchantTransactionId = finalResult['data']['data']['merchantTransactionId'];
+      print("merchante trancfags ${merchantTransactionId}");
+      await initiatePayment();
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -363,34 +526,35 @@ class StateWallet extends State<MyWallet> with TickerProviderStateMixin {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                final form = _formkey.currentState!;
-                if (form.validate() && amtC!.text != '0') {
-                  form.save();
-                  if (payMethod == null) {
-                    dialogState!(() {
-                      payWarn = true;
-                    });
-                  } else {
-                    if (payMethod!.trim() ==
-                        getTranslated(context, 'STRIPE_LBL')!.trim()) {
-                      stripePayment(int.parse(amtC!.text));
-                    } else if (payMethod!.trim() ==
-                        getTranslated(context, 'RAZORPAY_LBL')!.trim())
-                      razorpayPayment(double.parse(amtC!.text));
-                    // else if (payMethod!.trim() ==
-                    //     getTranslated(context, 'PAYSTACK_LBL')!.trim())
-                    //   paystackPayment(context, int.parse(amtC!.text));
-                    else if (payMethod == getTranslated(context, 'PAYTM_LBL'))
-                      paytmPayment(double.parse(amtC!.text));
-                    else if (payMethod ==
-                        getTranslated(context, 'PAYPAL_LBL')) {
-                      paypalPayment((amtC!.text).toString());
-                    } else if (payMethod ==
-                        getTranslated(context, 'FLUTTERWAVE_LBL'))
-                      flutterwavePayment(amtC!.text);
-                    Navigator.pop(context);
-                  }
-                }
+                getPhonpayURL();
+                // final form = _formkey.currentState!;
+                // if (form.validate() && amtC!.text != '0') {
+                //   form.save();
+                //   if (payMethod == null) {
+                //     dialogState!(() {
+                //       payWarn = true;
+                //     });
+                //   } else {
+                //     if (payMethod!.trim() ==
+                //         getTranslated(context, 'STRIPE_LBL')!.trim()) {
+                //       stripePayment(int.parse(amtC!.text));
+                //     } else if (payMethod!.trim() ==
+                //         getTranslated(context, 'RAZORPAY_LBL')!.trim())
+                //       razorpayPayment(double.parse(amtC!.text));
+                //     // else if (payMethod!.trim() ==
+                //     //     getTranslated(context, 'PAYSTACK_LBL')!.trim())
+                //     //   paystackPayment(context, int.parse(amtC!.text));
+                //     else if (payMethod == getTranslated(context, 'PAYTM_LBL'))
+                //       paytmPayment(double.parse(amtC!.text));
+                //     else if (payMethod ==
+                //         getTranslated(context, 'PAYPAL_LBL')) {
+                //       paypalPayment((amtC!.text).toString());
+                //     } else if (payMethod ==
+                //         getTranslated(context, 'FLUTTERWAVE_LBL'))
+                //       flutterwavePayment(amtC!.text);
+                //     Navigator.pop(context);
+                //   }
+                // }
               })
         ],
       );

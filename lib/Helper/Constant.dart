@@ -1,4 +1,4 @@
-final String appName = 'Eatoz Food';
+final String appName = 'Eatoz: Food Delivery';
 
 final String packageName = 'com.eatozfood_user';
 final String androidLink = 'https://play.google.com/store/apps/details?id=';
@@ -17,8 +17,10 @@ const int perPage = 1000;
 // final String baseUrl = 'https://alphawizztest.tk/Eatoz Food_Ecom/app/v1/api/';
 // final String baseUrl = 'https://foodontheways.com/app/v1/api/';
 //final String baseUrl = 'https://foodontheways.com/New_food/app/v1/api/';
-final String baseUrl =
-    'https://eatoz.in/app/v1/api/';
+/*final String baseUrl =
+    'https://eatoz.in/app/v1/api/';*/
+final String baseUrl = "https://eatoz.in/app/v1/api/";
+// final String baseUrl = "https://developmentalphawizz.com/eatoz/app/v1/api/";
 final String imageUrl = 'https://eatoz.in/';
 //final String imageUrl = 'https://foodontheways.com/';
 final String jwtKey = "0352e7a815f965e8e278d47976b8f9cf466e1f42";

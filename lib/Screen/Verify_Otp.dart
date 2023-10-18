@@ -235,7 +235,7 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
   }
 
   void getOtpVerified(){
-    if (otp == otp.toString()) {
+    if (otp == widget.otp.toString()) {
       SettingProvider settingsProvider =
       Provider.of<SettingProvider>(context, listen: false);
       setSnackbar(getTranslated(context, 'OTPMSG')!);
@@ -265,7 +265,7 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
         });
       }
     }else{
-
+      setSnackbar('Please Enter Valid OTP');
     }
   }
   Future<void> getVerifyUser() async {

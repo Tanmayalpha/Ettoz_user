@@ -406,7 +406,7 @@ class _HomePageState extends State<HomePage>
                       height: 10,
                     ),
                     Container(
-                      height: 170,
+                      height: 190,
                       width: MediaQuery.of(context).size.width,
                       child: productList == null
                           ? Center(
@@ -468,6 +468,14 @@ class _HomePageState extends State<HomePage>
                                             "${productList[i].name}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 5, right: 3, top: 2),
+                                          child: Text(
+                                            "${productList[i].store_name}",
+                                            style: TextStyle(fontSize: 12),
                                           ),
                                         ),
                                         SizedBox(

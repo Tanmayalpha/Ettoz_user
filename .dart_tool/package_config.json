@@ -3,19 +3,19 @@
   "packages": [
     {
       "name": "_flutterfire_internals",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/_flutterfire_internals-1.3.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/_flutterfire_internals-1.3.7",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "args",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.4.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
     },
     {
       "name": "async",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -63,7 +63,7 @@
     },
     {
       "name": "characters",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -75,9 +75,9 @@
     },
     {
       "name": "collection",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.12"
     },
     {
       "name": "connectivity",
@@ -104,6 +104,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "convert",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "country_code_picker",
       "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/country_code_picker-2.0.2",
       "packageUri": "lib/",
@@ -111,15 +117,15 @@
     },
     {
       "name": "crypto",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.14"
     },
     {
       "name": "csslib",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/csslib-0.17.3",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/csslib-0.17.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.12"
     },
     {
       "name": "cupertino_icons",
@@ -177,25 +183,25 @@
     },
     {
       "name": "firebase_auth",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth-4.7.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth-4.10.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_auth_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_platform_interface-6.16.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_platform_interface-6.19.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_auth_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.6.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.8.2",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_core",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.15.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.17.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -207,63 +213,63 @@
     },
     {
       "name": "firebase_core_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_web-2.6.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_web-2.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_database",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database-10.2.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database-10.2.7",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_database_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database_platform_interface-0.2.5+4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database_platform_interface-0.2.5+7",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_database_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database_web-0.2.3+4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database_web-0.2.3+7",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_dynamic_links",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_dynamic_links-5.3.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_dynamic_links-5.3.7",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_dynamic_links_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_dynamic_links_platform_interface-0.2.6+4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_dynamic_links_platform_interface-0.2.6+7",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging-14.6.5",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging-14.6.9",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_platform_interface-4.5.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_platform_interface-4.5.8",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_web-3.5.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_web-3.5.8",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "flutter",
-      "rootUri": "file:///C:/Users/Alphawizz/Downloads/flutter_windows_3.10.0-stable/flutter/packages/flutter",
+      "rootUri": "file:///D:/Flutter_version/flutter_windows_3.7.2-stable/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_blurhash",
@@ -285,7 +291,7 @@
     },
     {
       "name": "flutter_html",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_html-3.0.0-beta.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_html-3.0.0-alpha.6",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -297,7 +303,7 @@
     },
     {
       "name": "flutter_inappwebview",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview-5.7.2+3",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview-5.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -321,15 +327,15 @@
     },
     {
       "name": "flutter_localizations",
-      "rootUri": "file:///C:/Users/Alphawizz/Downloads/flutter_windows_3.10.0-stable/flutter/packages/flutter_localizations",
+      "rootUri": "file:///D:/Flutter_version/flutter_windows_3.7.2-stable/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_math_fork",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_math_fork-0.7.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_math_fork-0.6.3+1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
@@ -351,21 +357,21 @@
     },
     {
       "name": "flutter_svg",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_svg-2.0.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_svg-1.1.6",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///C:/Users/Alphawizz/Downloads/flutter_windows_3.10.0-stable/flutter/packages/flutter_test",
+      "rootUri": "file:///D:/Flutter_version/flutter_windows_3.7.2-stable/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///C:/Users/Alphawizz/Downloads/flutter_windows_3.10.0-stable/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///D:/Flutter_version/flutter_windows_3.7.2-stable/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.17"
     },
     {
       "name": "fluttertoast",
@@ -375,21 +381,9 @@
     },
     {
       "name": "geocoding",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geocoding-2.1.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geocoding-2.0.3",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "geocoding_android",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geocoding_android-2.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "geocoding_ios",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geocoding_ios-2.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.12"
     },
     {
       "name": "geocoding_platform_interface",
@@ -405,31 +399,31 @@
     },
     {
       "name": "geolocator_android",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_android-4.2.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_android-4.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
     {
       "name": "geolocator_apple",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_apple-2.2.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_apple-2.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
     {
       "name": "geolocator_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_platform_interface-4.0.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_platform_interface-4.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
     {
       "name": "geolocator_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_web-2.1.6",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_web-2.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
     {
       "name": "geolocator_windows",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_windows-0.1.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/geolocator_windows-0.1.3",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -453,13 +447,13 @@
     },
     {
       "name": "google_maps_flutter",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter-2.3.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter-2.3.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.18"
     },
     {
       "name": "google_maps_flutter_android",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_android-2.4.15",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_android-2.4.16",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -471,13 +465,13 @@
     },
     {
       "name": "google_maps_flutter_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_platform_interface-2.3.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_platform_interface-2.4.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "google_maps_flutter_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_web-0.5.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_web-0.5.3",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -531,15 +525,15 @@
     },
     {
       "name": "html",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.17"
     },
     {
       "name": "http",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.5",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.14"
     },
     {
       "name": "http_parser",
@@ -549,19 +543,25 @@
     },
     {
       "name": "in_app_review",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/in_app_review-2.0.6",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/in_app_review-2.0.8",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "in_app_review_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/in_app_review_platform_interface-2.0.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/in_app_review_platform_interface-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "installed_apps",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/installed_apps-1.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "intl",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.17.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -573,9 +573,9 @@
     },
     {
       "name": "js",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.5",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.16"
     },
     {
       "name": "js_wrapping",
@@ -585,13 +585,7 @@
     },
     {
       "name": "json_annotation",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
-      "name": "list_counter",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/list_counter-1.0.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -615,7 +609,7 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.15",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.13",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -627,7 +621,7 @@
     },
     {
       "name": "meta",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -650,14 +644,20 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "numerus",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/numerus-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "octo_image",
       "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/octo_image-1.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
-      "name": "open_file",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/open_file-3.3.2",
+      "name": "open_filex",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/open_filex-4.3.4",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -681,7 +681,13 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "path_drawing",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_drawing-1.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -693,37 +699,37 @@
     },
     {
       "name": "path_provider",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.0.15",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.0.27",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_foundation",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.2.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "path_provider_linux",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_linux-2.1.10",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_linux-2.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_platform_interface-2.0.6",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_platform_interface-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_windows",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_windows-2.1.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_windows-2.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -741,13 +747,13 @@
     },
     {
       "name": "permission_handler",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler-10.4.3",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler-10.4.5",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
     {
       "name": "permission_handler_android",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler_android-10.3.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler_android-10.3.6",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -759,7 +765,7 @@
     },
     {
       "name": "permission_handler_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler_platform_interface-3.11.3",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler_platform_interface-3.12.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -771,9 +777,15 @@
     },
     {
       "name": "petitparser",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/petitparser-5.4.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/petitparser-5.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "phonepe_gateway",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/phonepe_gateway-0.0.5+beta",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "photo_view",
@@ -783,7 +795,7 @@
     },
     {
       "name": "pin_input_text_field",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/pin_input_text_field-4.5.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/pin_input_text_field-4.4.1",
       "packageUri": "lib/",
       "languageVersion": "2.13"
     },
@@ -795,15 +807,21 @@
     },
     {
       "name": "platform",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.4",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.5",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "pointycastle",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "process",
@@ -837,7 +855,7 @@
     },
     {
       "name": "sanitize_html",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/sanitize_html-2.0.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/sanitize_html-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -861,7 +879,7 @@
     },
     {
       "name": "shared_preferences_foundation",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_foundation-2.3.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_foundation-2.3.3",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -891,15 +909,15 @@
     },
     {
       "name": "shimmer",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/shimmer-2.0.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/shimmer-3.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///C:/Users/Alphawizz/Downloads/flutter_windows_3.10.0-stable/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///D:/Flutter_version/flutter_windows_3.7.2-stable/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "sms_autofill",
@@ -921,9 +939,9 @@
     },
     {
       "name": "speech_to_text_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/speech_to_text_platform_interface-2.1.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/speech_to_text_platform_interface-2.0.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "sqflite",
@@ -981,13 +999,19 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.5.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.4.16",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "timezone",
       "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/timezone-0.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "toast",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/toast-0.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -1011,13 +1035,13 @@
     },
     {
       "name": "url_launcher",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.1.12",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.1.11",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.18"
     },
     {
       "name": "url_launcher_android",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_android-6.0.36",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_android-6.0.38",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -1064,24 +1088,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "vector_graphics",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/vector_graphics-1.1.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "vector_graphics_codec",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/vector_graphics_codec-1.1.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "vector_graphics_compiler",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/vector_graphics_compiler-1.1.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
       "name": "vector_math",
       "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -1107,15 +1113,15 @@
     },
     {
       "name": "video_player_avfoundation",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_avfoundation-2.4.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_avfoundation-2.4.9",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "video_player_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_platform_interface-6.1.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_platform_interface-6.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "video_player_web",
@@ -1131,19 +1137,19 @@
     },
     {
       "name": "webview_flutter_android",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_android-3.9.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_android-3.9.3",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "webview_flutter_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-2.4.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-2.5.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "webview_flutter_wkwebview",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_wkwebview-3.7.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_wkwebview-3.7.3",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -1161,9 +1167,9 @@
     },
     {
       "name": "xml",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/xml-6.3.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/xml-6.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "2.17"
     },
     {
       "name": "youtube_player_flutter",
@@ -1178,7 +1184,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2023-09-11T09:48:55.526949Z",
+  "generated": "2023-10-17T10:11:58.283788Z",
   "generator": "pub",
-  "generatorVersion": "3.0.0"
+  "generatorVersion": "2.19.2"
 }

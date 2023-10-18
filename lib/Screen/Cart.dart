@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eshop_multivendor/Helper/ApiBaseHelper.dart';
 import 'package:eshop_multivendor/Helper/Constant.dart';
 import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Helper/web_view.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:paytm/paytm.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +36,8 @@ import 'Order_Success.dart';
 import 'Payment.dart';
 import 'PaypalWebviewActivity.dart';
 import 'package:http/http.dart' as http;
+
+import 'Webviewexample.dart';
 
 class Cart extends StatefulWidget {
   final bool fromBottom;
@@ -103,8 +107,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
   List<TextEditingController> _controller = [];
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   List<SectionModel> saveLaterList = [];
   String? msg;
   bool _isLoading = true;
@@ -1889,7 +1892,7 @@ bool isAvailableDelivery = true;
     var headers = {
       'Cookie': 'ci_session=3555d518752c27d3f07a9fd57cc43c5496e988ac'
     };
-    var request = http.MultipartRequest('POST', Uri.parse('https://eatoz.in/app/v1/api/check_delivery_boy'));
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}check_delivery_boy'));
     request.fields.addAll({
       'seller_id': newSellerId ?? '236',
       'address_id': selAddress ?? '121'
@@ -1905,6 +1908,7 @@ bool isAvailableDelivery = true;
       var result  = await response.stream.bytesToString();
       var finalResult = jsonDecode(result) ;
       if(finalResult ['error'] == false) {
+        getPhonpayURL();
        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(finalResult ['message'].toString())));
         isAvailableDelivery =  false ;
       }else {
@@ -3238,14 +3242,17 @@ setState(() {
                                                           getTranslated(context,
                                                               'MIN_CART_AMT')!,
                                                           _checkscaffoldKey);
-                                                    }
-                                                    else
-                                                    if(payMethod == 'RazorPay'&& isAvailableDelivery) {
+                                                    } else if(payMethod == 'RazorPay'&& isAvailableDelivery) {
                                                       checkAddressForDelivery();
                                                       checkoutState!(() {
                                                         _placeOrder = true;
                                                       });
-                                                    }
+                                                    }/*else if(payMethod == 'PhonePe'&& isAvailableDelivery){
+                                                      checkAddressForDelivery();
+                                                      checkoutState!(() {
+                                                        _placeOrder = true;
+                                                      });
+                                                    }*/
                                                     // else if (!deliverable) {
                                                     //   checkDeliverable();
                                                     // }
@@ -3267,8 +3274,13 @@ setState(() {
 
   doPayment() {
     print("payment method here ${payMethod}");
+
      if(payMethod == getTranslated(context, 'CC_AVENUE')) {
-    placeOrder('');
+    // placeOrder('');
+
+          checkAddressForDelivery();
+    // _checkOrderShouldBePlacedOrNot ();
+
     }else
     if (payMethod == getTranslated(context, 'PAYPAL_LBL')) {
       placeOrder('');
@@ -3323,7 +3335,8 @@ setState(() {
 
           bool error = getdata["error"];
           if (!error) {
-            razorpayPayment();
+            getPhonpayURL();
+            //razorpayPayment();
           }else {
             setSnackbar(getdata["message"], _checkscaffoldKey);
           }
@@ -3792,9 +3805,8 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'BANKTRAN'))
         payVia = "bank_transfer";
       else if (payMethod == getTranslated(context, 'CC_AVENUE')) {
-        payVia = "CCAvenue";
+        payVia = "PhonePe";
       }
-
       try {
         var parameter = {
           USER_ID: CUR_USERID,
@@ -3871,12 +3883,12 @@ bool  isAdreesChange = false ;
               addTransaction(tranId, orderId, SUCCESS, msg, true);
             } else if (payMethod == getTranslated(context, 'PAYTM_LBL')) {
               addTransaction(tranId, orderId, SUCCESS, msg, true);
-            }if (payMethod == getTranslated(context, 'CC_AVENUE')){
-              _initiateCcAvenuePayment(orderId, totalPrice);
-            } else {
+            }/*if (payMethod == getTranslated(context, 'CC_AVENUE')){
+               _initiateCcAvenuePayment(orderId, totalPrice);
+             // initiatePayment();
+            }*/ else {
               context.read<UserProvider>().setCartCount("0");
               clearAll();
-
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
@@ -4022,36 +4034,36 @@ bool  isAdreesChange = false ;
     return 'ChargedFrom${platform}_${DateTime.now().millisecondsSinceEpoch}';
   }
 
-  _initiateCcAvenuePayment(String orderId, double totalPrice) async {
-    // OrderModel model = OrderModel(listStatus: []);
-    try {
-      final amount = totalPrice.toString();
-      setState(() {
-        // _loading = true;
-        // errorText = "";
-      });
-      final response = await http.get(Uri.parse('${baseUrl}ccevenue_handler_wallet?order_id=$orderId&amount=$amount'));
-      // .post(Uri.parse(UrlList.merchant_server_enc_url),
-      // body: {"amount": amount});
-      // final json = jsonDecode(response.body);
-      // final data = PaymentData.fromJson(json);
-      final data = response.body;
-      var data1 =jsonDecode(data);
-      String url = data1["message"];
-      print('${response.body}_______dfkljd');
-      // if (data.statusMessage == "SUCCESS") {
-      initiatePayment(url);
-      setState(() {
-        // _loading = false;
-      });
-
-    } catch (e) {
-      print(e.toString());
-      setState(() {
-        // _loading = false;
-      });
-    }
-  }
+  // _initiateCcAvenuePayment(String orderId, double totalPrice) async {
+  //   // OrderModel model = OrderModel(listStatus: []);
+  //   try {
+  //     final amount = totalPrice.toString();
+  //     setState(() {
+  //       // _loading = true;
+  //       // errorText = "";
+  //     });
+  //     final response = await http.get(Uri.parse('${baseUrl}ccevenue_handler_wallet?order_id=$orderId&amount=$amount'));
+  //     // .post(Uri.parse(UrlList.merchant_server_enc_url),
+  //     // body: {"amount": amount});
+  //     // final json = jsonDecode(response.body);
+  //     // final data = PaymentData.fromJson(json);
+  //     final data = response.body;
+  //     var data1 =jsonDecode(data);
+  //     String url = data1["message"];
+  //     print('${response.body}_______dfkljd');
+  //     // if (data.statusMessage == "SUCCESS") {
+  //     initiatePayment(url);
+  //     setState(() {
+  //       // _loading = false;
+  //     });
+  //
+  //   } catch (e) {
+  //     print(e.toString());
+  //     setState(() {
+  //       // _loading = false;
+  //     });
+  //   }
+  // }
 
   InAppWebViewController? _webViewController;
 
@@ -4108,19 +4120,179 @@ bool  isAdreesChange = false ;
     );
   }*/
 
-  void initiatePayment(String url) async{
+
+  Future<void> initiatePayment() async {
     // Replace this with the actual PhonePe payment URL you have
     String phonePePaymentUrl = '${url}';
     String calBackurl = phonePePaymentUrl + 'Eatoz';
     print("call back url ${calBackurl}");
-    var data = await Navigator.push(context, CupertinoPageRoute(
+    var data = await Navigator.push(context!, CupertinoPageRoute(
       builder: (context) {
         return WebViewExample(
             url: phonePePaymentUrl);
       },
     ));
     print("Payment Data${data}");
+    if(data!=null){
+      http.post(Uri.parse("${baseUrl}check_phonepay_status"),body: {
+        "transaction_id":merchantTransactionId
+      }).then((value) {
+        print("Payment Data1${value.body}");
+        Map response = jsonDecode(value.body);
+        if(response['data']!=null) {
+          setSnackbar("${response['data'][0]["message"]}", GlobalKey());
+          if ( response['data'][0]["error"]=="false"){
+            placeOrder(merchantTransactionId);
+          } else {
+          }
+        }else{
+          setSnackbar("Payment Failed or Cancelled", GlobalKey());
+        }
+      });
+    }else{
+      setSnackbar("Payment Failed or Cancelled",GlobalKey());
+    }
+    /*  Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: Text('PhonePe Payment'),
+          ),
+          body: InAppWebView(
+            initialUrlRequest: URLRequest(url: Uri.parse(phonePePaymentUrl)),
+
+            onWebViewCreated: (controller) {
+              _webViewController = controller;
+            },
+            onLoadStop: (controller, url) async {
+              if (url.toString().contains('https://giftsbash.com/home/phonepay_success')) {
+                handelPhonePaySuccess(url.toString());
+                // Extract payment status from URL
+                //String? paymentStatus = extractPaymentStatusFromUrl(url.toString());
+                // Update payment status
+              //  print("jhhhhhhhhhhhhhhhhhh ${url}");
+               // setState(() {
+                  //_paymentStatus = paymentStatus!;
+             //   });
+                await _webViewController?.stopLoading();
+                if(await _webViewController?.canGoBack() ?? false){
+                  await _webViewController?.goBack();
+                }else {
+                  print('${paymentStatuss}____________');
+                  if(paymentStatuss == true){
+                    placeOrder(merchantTransactionId);
+                  }
+                  Navigator.pop(context);
+                }
+                //
+                // Stop loading and close WebView
+              //
+                //await _webViewController?.goBack();
+              }
+            },
+          ),
+        ),
+      ),
+    );*/
   }
+
+  String? newStats;
+  bool? paymentStatuss;
+  handelPhonePaySuccess(String url) async{
+    Map <String, dynamic> finalResult = await fetchPaymentStatus();
+    if(finalResult['data'][0]['error'] ==  'true'){
+      // newStats = false;
+      Fluttertoast.showToast(msg: "Payment Failed");
+      paymentStatuss  = false ;
+    }
+    else{
+      paymentStatuss  = true ;
+      Fluttertoast.showToast(msg: "Payment Success");
+    }
+  }
+
+  Future<Map <String, dynamic>> fetchPaymentStatus () async {
+    var headers = {
+      'Cookie': 'ci_session=2192e13e91c2acac91d03ed3ab66370064afc742'
+    };
+    print(url);
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}check_phonepay_status'));
+    request.fields.addAll({
+      'transaction_id': '${merchantTransactionId}'
+    });
+    print("check paymnet status ${request.fields}");
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var Result = await response.stream.bytesToString();
+      var finalResult = jsonDecode(Result);
+      return finalResult;
+    }
+    else {
+      var Result = await response.stream.bytesToString();
+      var finalResult = jsonDecode(Result);
+      return finalResult;
+      //print(response.reasonPhrase);
+    }
+  }
+
+  String? extractPaymentStatusFromUrl(String url) {
+    Uri uri = Uri.parse(url);
+    String? paymentStatus = uri.queryParameters['status'];
+    return paymentStatus;
+  }
+
+  String url = '';
+  String? merchantId;
+  String? merchantTransactionId;
+  String? mobile;
+
+  Future<void> getPhonpayURL() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    mobile = preferences.getString("mobile");
+    print('___mobile_______${mobile}_________');
+    String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+    var headers = {
+      'Cookie': 'ci_session=56691520ceefd28e91e4992a486249c971156c0d'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}initiate_phone_payment'));
+    request.fields.addAll({
+      'user_id': '$CUR_USERID',
+      'mobile': '$mobile',
+      'amount': '$totalPrice'
+    });
+    print("initiate phone pay para${request.fields}");
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result = await response.stream.bytesToString();
+      print(result);
+      var finalResult = jsonDecode(result);
+      url = finalResult['data']['data']['instrumentResponse']['redirectInfo']['url'];
+      merchantId = finalResult['data']['data']['merchantId'];
+      merchantTransactionId = finalResult['data']['data']['merchantTransactionId'];
+      print("merchante trancfags ${merchantTransactionId}");
+      await initiatePayment();
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  // void initiatePayment(String url) async{
+  //   // Replace this with the actual PhonePe payment URL you have
+  //   String phonePePaymentUrl = '${url}';
+  //   String calBackurl = phonePePaymentUrl + 'Eatoz';
+  //   print("call back url ${calBackurl}");
+  //   var data = await Navigator.push(context, CupertinoPageRoute(
+  //     builder: (context) {
+  //       return WebViewExample(
+  //           url: phonePePaymentUrl);
+  //     },
+  //   ));
+  //   print("Payment Data$data");
+  // }
 
 
   stripePayment() async {
