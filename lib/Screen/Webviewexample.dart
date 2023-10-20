@@ -111,10 +111,10 @@ class _WebViewExampleState extends State<WebViewExample> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back,),
+            child: Icon(Icons.arrow_back, color: colors.whiteTemp,),
           ),
           backgroundColor: colors.primary,
-          title: Text('Phone Pay'),
+          title: Text('Phone Pay',style: TextStyle(color: colors.whiteTemp),),
         ),
         backgroundColor: Colors.white,
         body: WebViewWidget(controller: _controller),

@@ -747,7 +747,7 @@
     },
     {
       "name": "permission_handler",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler-10.4.5",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/permission_handler-10.4.3",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -1184,7 +1184,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2023-10-17T10:11:58.283788Z",
+  "generated": "2023-10-19T06:36:53.791740Z",
   "generator": "pub",
   "generatorVersion": "2.19.2"
 }

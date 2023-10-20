@@ -1,7 +1,9 @@
+import 'package:eshop_multivendor/Helper/Constant.dart';
 import 'package:eshop_multivendor/Screen/Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../Provider/UserProvider.dart';
@@ -30,12 +32,15 @@ class _NewLocationPageState extends State<NewLocationPage> {
         return Future.error('Location Not Available');
       }
     }
+
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     var loc = Provider.of<LocationProvider>(context, listen: false);
 
     latitude = position.latitude.toString();
     longitude = position.longitude.toString();
+
+
     List<Placemark> placemark = await placemarkFromCoordinates(
         double.parse(latitude!), double.parse(longitude!),
         localeIdentifier: "en");
