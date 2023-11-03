@@ -3805,7 +3805,7 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'BANKTRAN'))
         payVia = "bank_transfer";
       else if (payMethod == getTranslated(context, 'CC_AVENUE')) {
-        payVia = "PhonePe";
+        payVia = "PhonePay";
       }
       try {
         var parameter = {
@@ -4199,6 +4199,7 @@ bool  isAdreesChange = false ;
 
   String? newStats;
   bool? paymentStatuss;
+
   handelPhonePaySuccess(String url) async{
     Map <String, dynamic> finalResult = await fetchPaymentStatus();
     if(finalResult['data'][0]['error'] ==  'true'){
