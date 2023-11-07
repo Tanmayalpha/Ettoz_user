@@ -1908,7 +1908,8 @@ bool isAvailableDelivery = true;
       var result  = await response.stream.bytesToString();
       var finalResult = jsonDecode(result) ;
       if(finalResult ['error'] == false) {
-        getPhonpayURL();
+        _checkOrderShouldBePlacedOrNot ();
+      //  getPhonpayURL();
        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(finalResult ['message'].toString())));
         isAvailableDelivery =  false ;
       }else {
@@ -3242,7 +3243,7 @@ setState(() {
                                                           getTranslated(context,
                                                               'MIN_CART_AMT')!,
                                                           _checkscaffoldKey);
-                                                    } else if(payMethod == 'RazorPay'&& isAvailableDelivery) {
+                                                    } else if(payMethod == 'dfd'&& isAvailableDelivery) {
                                                       checkAddressForDelivery();
                                                       checkoutState!(() {
                                                         _placeOrder = true;
@@ -3286,11 +3287,11 @@ setState(() {
       placeOrder('');
     } else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
 
-      _checkOrderShouldBePlacedOrNot ();
+     // _checkOrderShouldBePlacedOrNot ();
        // razorpayPayment();
     // else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
     //   paystackPayment(context);
-    else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
+    {}else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
       flutterwavePayment();
     else if (payMethod == getTranslated(context, 'STRIPE_LBL'))
       stripePayment();
@@ -3332,6 +3333,9 @@ setState(() {
 
         if (response.statusCode == 200){
           var getdata = json.decode(response.body);
+
+          print('${parameter}___parametercheck_____');
+          print('${response.body}___parametercheckbody_____');
 
           bool error = getdata["error"];
           if (!error) {
@@ -3791,7 +3795,7 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'PAYUMONEY_LBL'))
         payVia = "PayUMoney";
       else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
-        payVia = "RazorPay";
+        payVia = "PhonePay";
       else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
         payVia = "Paystack";
       else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
@@ -4141,7 +4145,10 @@ bool  isAdreesChange = false ;
         Map response = jsonDecode(value.body);
         if(response['data']!=null) {
           setSnackbar("${response['data'][0]["message"]}", GlobalKey());
-          if ( response['data'][0]["error"]=="false"){
+          print('${response['data'][0]["error"].runtimeType}________________________runType');
+          print('${response['data'][0]["error"].runtimeType}________________________method');
+
+          if ( response['data'][0]["error"] == "false"){
             placeOrder(merchantTransactionId);
           } else {
           }
