@@ -17,6 +17,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:upgrader/upgrader.dart';
 import 'Helper/Demo_Localization.dart';
 import 'Helper/PushNotificationService.dart';
 import 'Helper/Session.dart';
@@ -30,6 +31,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+  await Upgrader.clearSavedSettings();
+
   initializedDownload();
   FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -198,7 +201,9 @@ class _MyAppState extends State<MyApp> {
             initialRoute: '/',
             routes: {
               '/': (context) => Splash(),
-              '/home': (context) => Dashboard(),
+              '/home': (context) => UpgradeAlert(
+
+                  child: Dashboard()),
             },
             darkTheme: ThemeData(
               canvasColor: colors.darkColor,

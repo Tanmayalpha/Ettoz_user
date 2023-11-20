@@ -3795,7 +3795,7 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'PAYUMONEY_LBL'))
         payVia = "PayUMoney";
       else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
-        payVia = "PhonePay";
+        payVia = "PhonePe";
       else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
         payVia = "Paystack";
       else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
@@ -3809,7 +3809,7 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'BANKTRAN'))
         payVia = "bank_transfer";
       else if (payMethod == getTranslated(context, 'CC_AVENUE')) {
-        payVia = "PhonePay";
+        payVia = "PhonePe";
       }
       try {
         var parameter = {
@@ -4148,7 +4148,7 @@ bool  isAdreesChange = false ;
           print('${response['data'][0]["error"].runtimeType}________________________runType');
           print('${response['data'][0]["error"].runtimeType}________________________method');
 
-          if ( response['data'][0]["error"] == "false"){
+          if ( response['data'][0]["error"].toString() == "false"){
             placeOrder(merchantTransactionId);
           } else {
           }

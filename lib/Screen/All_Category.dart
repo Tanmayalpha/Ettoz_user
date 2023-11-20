@@ -174,6 +174,7 @@ class _AllCategoryState extends State<AllCategory> {
     );
   }
 
+
   Widget catItem(int index, BuildContext context1) {
     return Selector<CategoryProvider, int>(
       builder: (context, data, child) {

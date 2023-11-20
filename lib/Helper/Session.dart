@@ -330,6 +330,7 @@ String? validateMob(String value, String? msg1, String? msg2) {
   }
   return null;
 }
+
 String? validateMobile(String value, String? msg1) {
   if (value.length == 0)
     return msg1;

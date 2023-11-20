@@ -121,6 +121,7 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
   }
 
   List<String?> paymentMethodList = [];
+
   List<String> paymentIconList = [
     Platform.isIOS ? 'assets/images/applepay.svg' : 'assets/images/gpay.svg',
     'assets/images/cod.svg',

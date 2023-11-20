@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "_flutterfire_internals",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/_flutterfire_internals-1.3.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/_flutterfire_internals-1.3.12",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -146,6 +146,42 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "device_info_plus",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/device_info_plus-6.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "device_info_plus_linux",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/device_info_plus_linux-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "device_info_plus_macos",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/device_info_plus_macos-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "device_info_plus_platform_interface",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/device_info_plus_platform_interface-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "device_info_plus_web",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/device_info_plus_web-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "device_info_plus_windows",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/device_info_plus_windows-6.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "downloads_path_provider_28",
       "rootUri": "../downloads_path_provider",
       "packageUri": "lib/",
@@ -183,85 +219,85 @@
     },
     {
       "name": "firebase_auth",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth-4.10.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth-4.14.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_auth_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_platform_interface-6.19.1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_platform_interface-7.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_auth_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.8.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.8.7",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_core",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.17.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.22.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_core_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_platform_interface-4.8.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_platform_interface-5.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_core_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_web-2.8.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_web-2.8.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_database",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database-10.2.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database-10.3.4",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_database_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database_platform_interface-0.2.5+7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database_platform_interface-0.2.5+12",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_database_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database_web-0.2.3+7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_database_web-0.2.3+12",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_dynamic_links",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_dynamic_links-5.3.7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_dynamic_links-5.4.4",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_dynamic_links_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_dynamic_links_platform_interface-0.2.6+7",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_dynamic_links_platform_interface-0.2.6+12",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging-14.6.9",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging-14.7.4",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging_platform_interface",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_platform_interface-4.5.8",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_platform_interface-4.5.13",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging_web",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_web-3.5.8",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_web-3.5.13",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -375,7 +411,7 @@
     },
     {
       "name": "fluttertoast",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/fluttertoast-8.2.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/fluttertoast-8.2.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -429,7 +465,7 @@
     },
     {
       "name": "google_api_headers",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_api_headers-1.5.0+1",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/google_api_headers-1.4.0+1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -525,9 +561,9 @@
     },
     {
       "name": "html",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.3",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.12"
     },
     {
       "name": "http",
@@ -633,7 +669,7 @@
     },
     {
       "name": "modal_bottom_sheet",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/modal_bottom_sheet-3.0.0-pre",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/modal_bottom_sheet-2.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -662,6 +698,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "os_detect",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/os_detect-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "package_info",
       "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/package_info-2.0.2",
       "packageUri": "lib/",
@@ -669,7 +711,19 @@
     },
     {
       "name": "package_info_plus",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus-3.1.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_linux",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus_linux-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_macos",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus_macos-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -678,6 +732,18 @@
       "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus_platform_interface-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_web",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus_web-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_windows",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus_windows-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "path",
@@ -831,7 +897,7 @@
     },
     {
       "name": "provider",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.0.5",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -867,9 +933,9 @@
     },
     {
       "name": "shared_preferences",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.2.0",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.0.20",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.17"
     },
     {
       "name": "shared_preferences_android",
@@ -1034,10 +1100,16 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "url_launcher",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.1.11",
+      "name": "upgrader",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/upgrader-4.11.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "url_launcher",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "url_launcher_android",
@@ -1184,7 +1256,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2023-11-07T10:27:40.716818Z",
+  "generated": "2023-11-20T05:07:04.930596Z",
   "generator": "pub",
   "generatorVersion": "2.19.2"
 }
