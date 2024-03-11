@@ -3,14 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Helper/ApiBaseHelper.dart';
+
 import 'package:eshop_multivendor/Helper/Constant.dart';
 import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/web_view.dart';
 import 'package:eshop_multivendor/Provider/CartProvider.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/webview_cc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -1908,8 +1906,7 @@ bool isAvailableDelivery = true;
       var result  = await response.stream.bytesToString();
       var finalResult = jsonDecode(result) ;
       if(finalResult ['error'] == false) {
-        _checkOrderShouldBePlacedOrNot ();
-      //  getPhonpayURL();
+        getPhonpayURL();
        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(finalResult ['message'].toString())));
         isAvailableDelivery =  false ;
       }else {
@@ -2969,6 +2966,7 @@ bool isAvailableDelivery = true;
                                 ),
                         ]),
                   ),
+                Platform.isAndroid ? SizedBox() : SizedBox(height: 8,)
                 ],
               );
   }
@@ -3044,6 +3042,7 @@ bool isAvailableDelivery = true;
       ),
     );
   }
+
   static int roundUpAbsolute(double number) {
     //return number.isNegative ? number.floor() : number.ceil();
     print('___________${number}__________');
@@ -3243,7 +3242,7 @@ setState(() {
                                                           getTranslated(context,
                                                               'MIN_CART_AMT')!,
                                                           _checkscaffoldKey);
-                                                    } else if(payMethod == 'dfd'&& isAvailableDelivery) {
+                                                    } else if(payMethod == 'RazorPay'&& isAvailableDelivery) {
                                                       checkAddressForDelivery();
                                                       checkoutState!(() {
                                                         _placeOrder = true;
@@ -3258,13 +3257,19 @@ setState(() {
                                                     //   checkDeliverable();
                                                     // }
                                                     else
-
+                                                    _placeOrder = true;
                                                     confirmDialog();
                                                   }
                                                 : null)
                                         //}),
                                       ]),
                                     ),
+                                  Platform.isAndroid
+                                        ? SizedBox()
+                                        : SizedBox(
+                                            height: 10,
+                                          )
+                                  
                                   ],
                                 )
                       : noInternet(context),
@@ -3287,11 +3292,11 @@ setState(() {
       placeOrder('');
     } else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
 
-     // _checkOrderShouldBePlacedOrNot ();
+      _checkOrderShouldBePlacedOrNot ();
        // razorpayPayment();
     // else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
     //   paystackPayment(context);
-    {}else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
+    else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
       flutterwavePayment();
     else if (payMethod == getTranslated(context, 'STRIPE_LBL'))
       stripePayment();
@@ -3333,9 +3338,6 @@ setState(() {
 
         if (response.statusCode == 200){
           var getdata = json.decode(response.body);
-
-          print('${parameter}___parametercheck_____');
-          print('${response.body}___parametercheckbody_____');
 
           bool error = getdata["error"];
           if (!error) {
@@ -3795,7 +3797,7 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'PAYUMONEY_LBL'))
         payVia = "PayUMoney";
       else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
-        payVia = "PhonePe";
+        payVia = "RazorPay";
       else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
         payVia = "Paystack";
       else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
@@ -3809,7 +3811,7 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'BANKTRAN'))
         payVia = "bank_transfer";
       else if (payMethod == getTranslated(context, 'CC_AVENUE')) {
-        payVia = "PhonePe";
+        payVia = "PhonePay";
       }
       try {
         var parameter = {
@@ -4145,10 +4147,7 @@ bool  isAdreesChange = false ;
         Map response = jsonDecode(value.body);
         if(response['data']!=null) {
           setSnackbar("${response['data'][0]["message"]}", GlobalKey());
-          print('${response['data'][0]["error"].runtimeType}________________________runType');
-          print('${response['data'][0]["error"].runtimeType}________________________method');
-
-          if ( response['data'][0]["error"].toString() == "false"){
+          if ( response['data'][0]["error"]=="false"){
             placeOrder(merchantTransactionId);
           } else {
           }
@@ -4306,25 +4305,25 @@ bool  isAdreesChange = false ;
   stripePayment() async {
     context.read<CartProvider>().setProgress(true);
 
-    var response = await StripeService.payWithNewCard(
-        amount: (totalPrice.toInt() * 100).toString(),
-        currency: stripeCurCode,
-        from: "order",
-        context: context);
-
-    if (response.message == "Transaction successful") {
-      print("strip order");
-      placeOrder(response.status);
-    } else if (response.status == 'pending' || response.status == "captured") {
-      placeOrder(response.status);
-    } else {
-      if (mounted)
-        setState(() {
-          _placeOrder = true;
-        });
-      context.read<CartProvider>().setProgress(false);
-    }
-    setSnackbar(response.message!, _checkscaffoldKey);
+    // var response = await StripeService.payWithNewCard(
+    //     amount: (totalPrice.toInt() * 100).toString(),
+    //     currency: stripeCurCode,
+    //     from: "order",
+    //     context: context);
+    //
+    // if (response.message == "Transaction successful") {
+    //   print("strip order");
+    //   placeOrder(response.status);
+    // } else if (response.status == 'pending' || response.status == "captured") {
+    //   placeOrder(response.status);
+    // } else {
+    //   if (mounted)
+    //     setState(() {
+    //       _placeOrder = true;
+    //     });
+    //   context.read<CartProvider>().setProgress(false);
+    // }
+   // setSnackbar(response.message!, _checkscaffoldKey);
   }
 
   address() {
@@ -5387,11 +5386,11 @@ bool  isAdreesChange = false ;
 // import 'dart:convert';
 // import 'dart:io';
 // import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:eshop_multivendor/Helper/Constant.dart';
-// import 'package:eshop_multivendor/Helper/Session.dart';
-// import 'package:eshop_multivendor/Provider/CartProvider.dart';
-// import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-// import 'package:eshop_multivendor/Provider/UserProvider.dart';
+// import 'package:eatozfood_user/Helper/Constant.dart';
+// import 'package:eatozfood_user/Helper/Session.dart';
+// import 'package:eatozfood_user/Provider/CartProvider.dart';
+// import 'package:eatozfood_user/Provider/SettingProvider.dart';
+// import 'package:eatozfood_user/Provider/UserProvider.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/svg.dart';

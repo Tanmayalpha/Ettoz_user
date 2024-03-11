@@ -9,6 +9,7 @@ import 'package:eshop_multivendor/Helper/cropped_container.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Screen/Privacy_Policy.dart';
 import 'package:eshop_multivendor/Screen/Verify_Otp.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -167,7 +168,7 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
                 MaterialPageRoute(
                     builder: (context) => VerifyOtp(
                       signUp: true,
-                          otp: otp,
+                          otp: otp.toString(),
                           mobileNumber: mobile!,
                           countryCode: countrycode,
                           title: getTranslated(context, 'SEND_OTP_TITLE'),
@@ -181,7 +182,7 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
         if (error!) {
           int otp = getdata["data"];
           setSnackbar("Ready to send OTP request!!");
-          setSnackbar(otp.toString());
+         // setSnackbar(otp.toString());
           settingsProvider.setPrefrence(MOBILE, mobile!);
           settingsProvider.setPrefrence(COUNTRY_CODE, countrycode!);
           Future.delayed(Duration(seconds: 1)).then((_) {
@@ -191,7 +192,7 @@ class _SendOtpState extends State<SendOtp> with TickerProviderStateMixin {
                     builder: (context) => VerifyOtp(
                       signUp: true,
                           mobileNumber: mobile!,
-                          otp: otp,
+                          otp: otp.toString(),
                           countryCode: countrycode,
                           title: getTranslated(context, 'FORGOT_PASS_TITLE'),
                         )));

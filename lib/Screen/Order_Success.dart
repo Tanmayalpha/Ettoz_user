@@ -1,3 +1,4 @@
+
 import 'package:eshop_multivendor/Helper/Color.dart';
 import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +20,7 @@ class StateSuccess extends State<OrderSuccess> {
     deviceHeight = MediaQuery.of(context).size.height;
     deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: getAppBar(getTranslated(context, 'ORDER_PLACED')!, context),
+      appBar: getAppBar(getTranslated(context, 'ORDER_PLACED')!, context,isfromSucess: true),
       body: Center(
         child: SingleChildScrollView(
             child: Column(

@@ -2,14 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Helper/cropped_container.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/Login.dart';
-import 'package:eshop_multivendor/Screen/NewLocationPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +14,14 @@ import '../Helper/Color.dart';
 import '../Helper/Constant.dart';
 import '../Helper/Session.dart';
 import 'package:http/http.dart' as http;
+
+import '../Helper/String.dart';
+import '../Helper/app_assets.dart';
+import '../Helper/cropped_container.dart';
+import '../Provider/SettingProvider.dart';
+import '../Provider/UserProvider.dart';
+import 'Login.dart';
+import 'NewLocationPage.dart';
 
 class SignUp extends StatefulWidget {
   final mobile;
@@ -93,7 +93,7 @@ class _SignUpPageState extends State<SignUp> with TickerProviderStateMixin {
 
   List<String> cityList = [];
 
-  getCity()async{
+  getCity() async {
     cityList.clear();
     var headers = {
       'Cookie': 'ci_session=3ad3fc5d67fdee5adffc328c45a5f45ce4796626'
@@ -104,19 +104,14 @@ class _SignUpPageState extends State<SignUp> with TickerProviderStateMixin {
     if (response.statusCode == 200) {
       var finalResult = await response.stream.bytesToString();
       final jsonResponse = json.decode(finalResult);
-      for(var i=0;i< jsonResponse['data'].length;i++){
+      for (var i = 0; i < jsonResponse['data'].length; i++) {
         cityList.add(jsonResponse['data'][i]['name']);
       }
       print("checking data here now first ${cityList}");
-
-    }
-    else {
+    } else {
       print(response.reasonPhrase);
     }
-
   }
-
-
 
   Future<void> checkNetwork() async {
     bool avail = await isNetworkAvailable();
@@ -214,9 +209,9 @@ class _SignUpPageState extends State<SignUp> with TickerProviderStateMixin {
         EMAIL: email,
         PASSWORD: password,
         COUNTRY_CODE: widget.countryCode,
-        REFERCODE: referController.text,
+        'friends_code': referController.text,
         'city': selectedCity.toString(),
-       // FRNDCODE: friendCode
+        // FRNDCODE: friendCode
       };
       print(data.toString());
       Response response =
@@ -246,8 +241,11 @@ class _SignUpPageState extends State<SignUp> with TickerProviderStateMixin {
         SettingProvider settingProvider = context.read<SettingProvider>();
         settingProvider.saveUserDetail(id!, name, email, mobile, city, area,
             address, pincode, latitude, longitude, "", context);
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => NewLocationPage()), (route) => false);
-       // Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => NewLocationPage()),
+            (route) => false);
+        // Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
       } else {
         print(msg);
         setSnackbar(msg!);
@@ -750,29 +748,36 @@ class _SignUpPageState extends State<SignUp> with TickerProviderStateMixin {
                       setPass(),
                       setRefer(),
                       //showPass(),
-                      SizedBox(height: 5,),
-                    cityList.length == 0 ? SizedBox.shrink() : Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child:DropdownButton(
-                          isExpanded: true,
-                          hint: Text("Select City",style: TextStyle(fontSize: 14),),
-                          value: selectedCity,
-
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          items: cityList.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedCity = newValue!;
-                            });
-                            print("selected cities are here ${selectedCity}");
-                          },
-                        ),
+                      SizedBox(
+                        height: 5,
                       ),
+                      cityList.length == 0
+                          ? SizedBox.shrink()
+                          : Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: DropdownButton(
+                                isExpanded: true,
+                                hint: Text(
+                                  "Select City",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                value: selectedCity,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: cityList.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedCity = newValue!;
+                                  });
+                                  print(
+                                      "selected cities are here ${selectedCity}");
+                                },
+                              ),
+                            ),
                       verifyBtn(),
                       loginTxt(),
                     ],

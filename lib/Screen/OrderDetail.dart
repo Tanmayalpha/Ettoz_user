@@ -6,8 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Model/Order_Model.dart';
-import 'package:eshop_multivendor/Screen/Seller_Details.dart';
-import 'package:eshop_multivendor/Screen/live_track.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +24,7 @@ import '../Helper/Color.dart';
 import '../Helper/Constant.dart';
 import '../Helper/String.dart';
 import '../Model/User.dart';
+import 'live_track.dart';
 
 class OrderDetail extends StatefulWidget {
   final OrderModel? model;

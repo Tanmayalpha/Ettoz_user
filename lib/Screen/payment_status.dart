@@ -1,7 +1,8 @@
 
-import 'package:eshop_multivendor/Screen/Cart.dart';
-import 'package:eshop_multivendor/Screen/Dashboard.dart';
 import 'package:flutter/material.dart';
+
+import 'Cart.dart';
+import 'Dashboard.dart';
 
 
 class PaymentStatus extends StatefulWidget {

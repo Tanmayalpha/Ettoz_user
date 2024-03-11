@@ -4,9 +4,11 @@ import 'package:connectivity/connectivity.dart';
 import 'package:eshop_multivendor/Helper/app_assets.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/Cart.dart';
+import 'package:eshop_multivendor/Screen/Dashboard.dart';
 import 'package:eshop_multivendor/Screen/Favorite.dart';
 import 'package:eshop_multivendor/Screen/Login.dart';
 import 'package:eshop_multivendor/Screen/Search.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -90,7 +92,7 @@ String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
 getAppBar(
   String title,
-  BuildContext context,
+  BuildContext context,{bool? isfromSucess}
 ) {
   return AppBar(
     titleSpacing: 0,
@@ -101,7 +103,13 @@ getAppBar(
           margin: EdgeInsets.all(10),
           child: InkWell(
             borderRadius: BorderRadius.circular(4),
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () { 
+              if(isfromSucess ?? false){
+             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+              }else {
+             Navigator.of(context).pop();
+              }
+              },
             child: Center(
               child: Icon(
                 Icons.arrow_back_ios_rounded,
@@ -330,7 +338,6 @@ String? validateMob(String value, String? msg1, String? msg2) {
   }
   return null;
 }
-
 String? validateMobile(String value, String? msg1) {
   if (value.length == 0)
     return msg1;

@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eshop_multivendor/Model/todaySpecialModel.dart';
-import 'package:http/http.dart' as http;
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop_multivendor/Helper/ApiBaseHelper.dart';
 import 'package:eshop_multivendor/Helper/AppBtn.dart';
 import 'package:eshop_multivendor/Helper/Color.dart';
@@ -24,7 +21,8 @@ import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/SellerList.dart';
 import 'package:eshop_multivendor/Screen/SubCategory.dart';
-import 'package:eshop_multivendor/Screen/search_location.dart';
+import 'package:http/http.dart' as http;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -452,7 +450,7 @@ class _HomePageState extends State<HomePage>
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                2,
+                                                2.08,
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
@@ -789,8 +787,8 @@ class _HomePageState extends State<HomePage>
                         children: homeSliderList.map((e) {
                           int index = homeSliderList.indexOf(e);
                           return Container(
-                              width: 8.0,
-                              height: 8.0,
+                              width: MediaQuery.of(context).size.width*0.022,
+                              height: MediaQuery.of(context).size.width * 0.022,
                               margin: EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 2.0),
                               decoration: BoxDecoration(
@@ -1424,7 +1422,7 @@ class _HomePageState extends State<HomePage>
                     highlightColor: Theme.of(context).colorScheme.simmerHigh,
                     child: catLoading()))
             : Container(
-                height: 110,
+                height: MediaQuery.of(context).size.width * 0.30,
                 padding: const EdgeInsets.only(top: 10, left: 10),
                 child: ListView.builder(
                   itemCount: catList.length,
@@ -1473,14 +1471,14 @@ class _HomePageState extends State<HomePage>
                                       )));
                         },
                         child: Container(
-                          width: 60,
+                          width: MediaQuery.of(context).size.width* 0.17,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsetsDirectional.only(
-                                    bottom: 5.0),
+                                    bottom: 4.0),
                                 child: new ClipRRect(
                                   borderRadius: BorderRadius.circular(100.0),
                                   child: new FadeInImage(
@@ -1488,8 +1486,8 @@ class _HomePageState extends State<HomePage>
                                     image: CachedNetworkImageProvider(
                                       catList[index].image!,
                                     ),
-                                    height: 60.0,
-                                    width: 60.0,
+                                    height: MediaQuery.of(context).size.width *0.17,
+                                    width: MediaQuery.of(context).size.width * 0.17,
                                     fit: BoxFit.cover,
                                     imageErrorBuilder:
                                         (context, error, stackTrace) =>
@@ -1499,7 +1497,7 @@ class _HomePageState extends State<HomePage>
                                 ),
                               ),
                               Container(
-                                width: 60,
+                                width: MediaQuery.of(context).size.width * 0.17,
                                 alignment: Alignment.center,
                                 child: Text(
                                   catList[index].name!,
@@ -2092,8 +2090,8 @@ class _HomePageState extends State<HomePage>
         latitude = data['lati'].toString();
         longitude = data['longi'].toString();
         var loc = Provider.of<LocationProvider>(context, listen: false);
-        loc.lat = latitude ;
-        loc.lng = longitude ;
+        loc.lat = latitude;
+        loc.lng = longitude;
         _refresh();
 
         // if (data.isNotEmpty) {
@@ -2399,18 +2397,16 @@ class _HomePageState extends State<HomePage>
       if (!error) {
         var data = getdata["data"];
 
-
-
         sellerList =
             (data as List).map((data) => new Product.fromSeller(data)).toList();
 
         print('___________${sellerList.length}___kfjsdljgdlsjs_______');
         sellerList.forEach((element) {
-          print('___________${element.online}___abcdefgh_______');});
+          print('___________${element.online}___abcdefgh_______');
+        });
         setState(() {
           sellerList.sort((a, b) => b.online!.compareTo(a.online!));
         });
-
       } else {
         // setSnackbar(msg!, context);
       }
@@ -2500,7 +2496,7 @@ class _HomePageState extends State<HomePage>
                                 child: Text("No Restaurant to show"),
                               )
                             : GridView.builder(
-                          shrinkWrap: true,
+                                shrinkWrap: true,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         childAspectRatio: 3 / 3.3,
@@ -2509,7 +2505,8 @@ class _HomePageState extends State<HomePage>
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (c, index) {
-                                  print('___________${sellerList.length}__________');
+                                  print(
+                                      '___________${sellerList.length}__________');
                                   return InkWell(
                                     onTap: () {
                                       if (sellerList[index].online == "1") {
@@ -2535,7 +2532,8 @@ class _HomePageState extends State<HomePage>
                                       }
                                     },
                                     child: Container(
-                                      width: 170,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.47,
                                       child: Card(
                                         child: Column(
                                           crossAxisAlignment:
@@ -2543,7 +2541,10 @@ class _HomePageState extends State<HomePage>
                                           children: [
                                             Container(
                                               height: 100,
-                                              width: 170,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.47,
                                               // height: 110,
                                               // width: 160,
                                               child: ClipRRect(
@@ -3441,7 +3442,7 @@ class _HomePageState extends State<HomePage>
                                     }
                                   },
                                   child: Container(
-                                    width: 170,
+                                    width: MediaQuery.of(context).size.width*0.48,
                                     child: Card(
                                       child: Column(
                                         crossAxisAlignment:
@@ -3449,7 +3450,10 @@ class _HomePageState extends State<HomePage>
                                         children: [
                                           Container(
                                             height: 110,
-                                            width: 160,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.47,
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.only(
                                                   topLeft: Radius.circular(10),
@@ -3937,7 +3941,8 @@ class _HomePageState extends State<HomePage>
                                     }
                                   },
                                   child: Container(
-                                    width: 170,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.47,
                                     child: Card(
                                       child: Column(
                                         crossAxisAlignment:
@@ -3945,12 +3950,15 @@ class _HomePageState extends State<HomePage>
                                         children: [
                                           Container(
                                             height: 110,
-                                            width: 160,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.48,
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10),
+                                                  topLeft: Radius.circular(8),
                                                   topRight:
-                                                      Radius.circular(10)),
+                                                      Radius.circular(8)),
                                               child: FadeInImage(
                                                 fadeInDuration:
                                                     Duration(milliseconds: 150),

@@ -1,13 +1,8 @@
+
 import 'package:country_code_picker/country_localizations.dart';
 import 'package:eshop_multivendor/Helper/Color.dart';
-import 'package:eshop_multivendor/Helper/Constant.dart';
-import 'package:eshop_multivendor/Provider/CartProvider.dart';
-import 'package:eshop_multivendor/Provider/CategoryProvider.dart';
-import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
-import 'package:eshop_multivendor/Provider/HomeProvider.dart';
-import 'package:eshop_multivendor/Provider/ProductDetailProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/Splash.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,24 +12,39 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:upgrader/upgrader.dart';
+import 'Helper/Constant.dart';
 import 'Helper/Demo_Localization.dart';
 import 'Helper/PushNotificationService.dart';
 import 'Helper/Session.dart';
 import 'Helper/String.dart';
+import 'Provider/CartProvider.dart';
+import 'Provider/CategoryProvider.dart';
+import 'Provider/FavoriteProvider.dart';
+import 'Provider/HomeProvider.dart';
+import 'Provider/ProductDetailProvider.dart';
 import 'Provider/SettingProvider.dart';
 import 'Provider/Theme.dart';
 import 'Provider/order_provider.dart';
 import 'Screen/Dashboard.dart';
+import 'dart:io' show Platform;
+
+import 'Screen/Splash.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+try{
   await Firebase.initializeApp();
-  await Upgrader.clearSavedSettings();
+  var apnsToken = await FirebaseMessaging.instance.getToken();
+  print('APNS Token: $apnsToken');
+} catch (e) {
+    print('Error during Firebase initialization: $e');
+  }
+    
+     initializedDownload();
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  initializedDownload();
-  FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
   //   statusBarColor: Colors.transparent, // status bar color
@@ -67,7 +77,7 @@ void main() async {
 }
 
 Future<void> initializedDownload() async {
-  await FlutterDownloader.initialize(debug: false);
+  await FlutterDownloader.initialize(debug: true,);
 }
 
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
@@ -144,7 +154,7 @@ class _MyAppState extends State<MyApp> {
           child: MaterialApp(
             builder: (context, child) {
               return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: Platform.isAndroid? 1 : 1.1),
                   child: child!);
             },
             //scaffoldMessengerKey: rootScaffoldMessengerKey,
@@ -201,9 +211,7 @@ class _MyAppState extends State<MyApp> {
             initialRoute: '/',
             routes: {
               '/': (context) => Splash(),
-              '/home': (context) => UpgradeAlert(
-
-                  child: Dashboard()),
+              '/home': (context) => Dashboard(),
             },
             darkTheme: ThemeData(
               canvasColor: colors.darkColor,

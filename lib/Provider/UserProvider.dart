@@ -1,5 +1,6 @@
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:flutter/material.dart';
+
+import 'SettingProvider.dart';
 
 class UserProvider extends ChangeNotifier {
   String _userName = '',

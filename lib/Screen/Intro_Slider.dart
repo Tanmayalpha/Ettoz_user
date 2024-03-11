@@ -1,11 +1,12 @@
+
 import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Screen/SignInUpAcc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../Helper/AppBtn.dart';
 import '../Helper/Color.dart';
+import 'SignInUpAcc.dart';
 
 class IntroSlider extends StatefulWidget {
   @override

@@ -2,15 +2,15 @@ import 'dart:developer';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Provider/CategoryProvider.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/SellerList.dart';
-import 'package:eshop_multivendor/Screen/Seller_Details.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';

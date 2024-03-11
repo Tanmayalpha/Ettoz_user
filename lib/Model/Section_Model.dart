@@ -1,5 +1,8 @@
+
+
 import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Model/User.dart';
+
+import 'User.dart';
 
 class SectionModel {
   var id,

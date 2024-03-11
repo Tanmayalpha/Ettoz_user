@@ -9,15 +9,14 @@ import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Helper/String.dart';
 import 'package:eshop_multivendor/Model/Section_Model.dart';
 import 'package:eshop_multivendor/Model/response_recomndet_products.dart';
-import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
-import 'package:eshop_multivendor/Screen/Login.dart';
-import 'package:eshop_multivendor/Screen/Product_Detail.dart';
-import 'package:eshop_multivendor/Screen/Seller_Details.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 import '../Model/favRestaurantModel.dart';
+import 'Product_Detail.dart';
+import 'Seller_Details.dart';
 
 class SubCategory extends StatefulWidget {
   final String title;

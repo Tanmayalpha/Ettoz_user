@@ -141,9 +141,9 @@
     },
     {
       "name": "dbus",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/dbus-0.7.8",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/dbus-0.7.10",
       "packageUri": "lib/",
-      "languageVersion": "2.15"
+      "languageVersion": "2.17"
     },
     {
       "name": "device_info_plus",
@@ -669,7 +669,7 @@
     },
     {
       "name": "modal_bottom_sheet",
-      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/modal_bottom_sheet-2.1.2",
+      "rootUri": "file:///C:/Users/Alphawizz/AppData/Local/Pub/Cache/hosted/pub.dev/modal_bottom_sheet-3.0.0-pre",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -1256,7 +1256,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2023-11-20T05:07:04.930596Z",
+  "generated": "2023-12-18T14:34:53.987762Z",
   "generator": "pub",
   "generatorVersion": "2.19.2"
 }

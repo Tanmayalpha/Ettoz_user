@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+
 import 'package:eshop_multivendor/Helper/Color.dart';
 import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Provider/CartProvider.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +13,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../Helper/Constant.dart';
 import '../Helper/Session.dart';
 import '../Model/Section_Model.dart';
+import '../Provider/CartProvider.dart';
+import '../Provider/SettingProvider.dart';
+import '../Provider/UserProvider.dart';
 import 'Cart.dart';
 import 'Order_Success.dart';
 

@@ -5,9 +5,7 @@ import 'dart:io';
 
 import 'package:eshop_multivendor/Helper/Constant.dart';
 import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/location_details.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/Map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
@@ -1666,6 +1664,11 @@ class StateAddress extends State<AddAddress> with TickerProviderStateMixin {
                 saveButton(getTranslated(context, 'SAVE_LBL')!, () {
                   validateAndSubmit();
                 }),
+                Platform.isAndroid
+                    ? SizedBox()
+                    : SizedBox(
+                        height: 15,
+                      )
               ],
             )),
         showCircularProgress(_isProgress, colors.primary)

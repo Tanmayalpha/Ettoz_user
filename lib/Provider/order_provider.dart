@@ -1,7 +1,9 @@
-import 'package:eshop_multivendor/Helper/ApiBaseHelper.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
-import 'package:eshop_multivendor/Model/Order_Model.dart';
+
 import 'package:flutter/material.dart';
+
+import '../Helper/ApiBaseHelper.dart';
+import '../Helper/String.dart';
+import '../Model/Order_Model.dart';
 
 class OrderProvider extends ChangeNotifier {
 

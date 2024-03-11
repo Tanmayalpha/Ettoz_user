@@ -4,13 +4,13 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop_multivendor/Provider/CartProvider.dart';
+
 import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
 import 'package:eshop_multivendor/Provider/HomeProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/Cart.dart';
-import 'package:eshop_multivendor/Screen/ProductList.dart';
 import 'package:eshop_multivendor/Screen/ReviewList.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+// import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -33,6 +33,7 @@ import '../Model/User.dart';
 import 'Favorite.dart';
 import 'HomePage.dart';
 import 'Login.dart';
+import 'ProductList.dart';
 import 'Product_Preview.dart';
 import 'Review_Gallary.dart';
 import 'Review_Preview.dart';
@@ -94,7 +95,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
   late AnimationController _progressAnimcontroller;
 
   var isDarkTheme;
-  late ShortDynamicLink shortenedLink;
+  // late ShortDynamicLink shortenedLink;
   String? shareLink;
   late String curPin;
   late double growStepWidth, beginWidth, endWidth = 0.0;
@@ -271,21 +272,21 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
   }
 
   Future<void> createDynamicLink() async {
-    var documentDirectory;
-
-    if (Platform.isIOS)
-      documentDirectory = (await getApplicationDocumentsDirectory()).path;
-    else
-      documentDirectory = (await getExternalStorageDirectory())!.path;
-
-    final response1 = await get(Uri.parse(widget.model!.image!));
-    final bytes1 = response1.bodyBytes;
-
-    final File imageFile = File('$documentDirectory/${widget.model!.name}.png');
-    imageFile.writeAsBytesSync(bytes1);
-    Share.shareFiles(['$documentDirectory/${widget.model!.name}.png'],
-        text:
-            "${widget.model!.name}\n${shortenedLink.shortUrl.toString()}\n$shareLink");
+    // var documentDirectory;
+    //
+    // if (Platform.isIOS)
+    //   documentDirectory = (await getApplicationDocumentsDirectory()).path;
+    // else
+    //   documentDirectory = (await getExternalStorageDirectory())!.path;
+    //
+    // final response1 = await get(Uri.parse(widget.model!.image!));
+    // final bytes1 = response1.bodyBytes;
+    //
+    // final File imageFile = File('$documentDirectory/${widget.model!.name}.png');
+    // imageFile.writeAsBytesSync(bytes1);
+    // Share.shareFiles(['$documentDirectory/${widget.model!.name}.png'],
+    //     text:
+    //         "${widget.model!.name}\n${shortenedLink.shortUrl.toString()}\n$shareLink");
   }
 
   Future<Null> _playAnimation() async {
@@ -2909,7 +2910,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
       ])),
       widget.model!.availability == "1" || widget.model!.stockType == "null"
           ? Container(
-              height: 55,
+              height: Platform.isAndroid ? 55 : 70,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.white,
                 boxShadow: [
@@ -3105,38 +3106,46 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                   //   ),
                   // ),
                   Expanded(
-                    child: TextButton.icon(
-                        style: TextButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.btnColor),
-                        onPressed: () {
-                          String qty = ((int.parse(qtyController.text)) +
-                                  (int.parse(widget.model!.qtyStepSize!)))
-                              .toString();
-                          print(
-                              "checking add on data here ${widget.model!.addOnList.length} ");
-                          if (widget.model!.addOnList.length > 0) {
-                            showBottom(
-                              widget.model!,
-                            );
-                            return;
-                          }
-                          addToCart(newCounter.toString(), true, addIdList);
-                        },
-                        icon: Icon(
-                          Icons.shopping_bag,
-                          color: Theme.of(context).colorScheme.white,
-                        ),
-                        label: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            "Add to Cart",
-                            //getTranslated(context, 'BUYNOW')!,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.white,
-                                fontWeight: FontWeight.bold),
+
+                    child: SizedBox(
+                      height: Platform.isAndroid ? 37:45,
+                      child: TextButton.icon(
+                    
+                         
+                          style: TextButton.styleFrom(
+                        
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.btnColor,),
+                          onPressed: () {
+                            String qty = ((int.parse(qtyController.text)) +
+                                    (int.parse(widget.model!.qtyStepSize!)))
+                                .toString();
+                            print(
+                                "checking add on data here ${widget.model!.addOnList.length} ");
+                            if (widget.model!.addOnList.length > 0) {
+                              showBottom(
+                                widget.model!,
+                              );
+                              return;
+                            }
+                            addToCart(newCounter.toString(), true, addIdList);
+                          },
+                          icon: Icon(
+                            Icons.shopping_bag,
+                            color: Theme.of(context).colorScheme.white,
                           ),
-                        )),
+                          
+                          label: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              "Add to Cart",
+                              //getTranslated(context, 'BUYNOW')!,
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
+                    ),
                   ),
                   /*    Container(
                     width: deviceWidth! * 0.5,
@@ -3199,6 +3208,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                     .copyWith(fontWeight: FontWeight.bold, color: Colors.red),
               )),
             ),
+    Platform.isAndroid ? SizedBox() :SizedBox(height: 5,)
     ]);
   }
 

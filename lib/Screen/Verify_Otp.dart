@@ -1,29 +1,26 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:eshop_multivendor/Helper/Color.dart';
 import 'package:eshop_multivendor/Helper/Constant.dart';
 import 'package:eshop_multivendor/Helper/app_assets.dart';
 import 'package:eshop_multivendor/Helper/cropped_container.dart';
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/NewLocationPage.dart';
-import 'package:eshop_multivendor/Screen/Set_Password.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-
 import '../Helper/AppBtn.dart';
 import '../Helper/Session.dart';
 import '../Helper/String.dart';
+import '../Provider/SettingProvider.dart';
+import 'Set_Password.dart';
 import 'SignUp.dart';
 
 class VerifyOtp extends StatefulWidget {
   final String? mobileNumber, countryCode, title;
-  final signUp, otp;
+  final signUp; String? otp;
 
   VerifyOtp(
       {Key? key,
@@ -280,9 +277,10 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
       bool? error = getdata["error"];
       String? msg = getdata["message"];
       await buttonController!.reverse();
-
+      setSnackbar(msg!);
       SettingProvider settingsProvider =
       Provider.of<SettingProvider>(context, listen: false);
+
 
       if (widget.title == getTranslated(context, 'SEND_OTP_TITLE')) {
         if (!error!) {
@@ -292,15 +290,15 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
           // settingsProvider.setPrefrence(COUNTRY_CODE, countrycode!);
           if (widget.mobileNumber!.length == 10) {
             Future.delayed(Duration(seconds: 1)).then((_) {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => VerifyOtp(
-                        mobileNumber: widget.mobileNumber!,
-                        countryCode: widget.countryCode,
-                        otp: "${getdata['data']['otp']}",
-                        title: getTranslated(context, 'SEND_OTP_TITLE'),
-                      )));
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => VerifyOtp(
+              //           mobileNumber: widget.mobileNumber!,
+              //           countryCode: widget.countryCode,
+              //           otp: "${getdata['data']['otp']}",
+              //           title: getTranslated(context, 'SEND_OTP_TITLE'),
+              //         )));
               print('___otp________${otp}__________');
             });
           }else{
@@ -321,24 +319,28 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
       }
       if (widget.title == getTranslated(context, 'FORGOT_PASS_TITLE')) {
         if (!error!) {
-           int otp = getdata["data"]["otp"];
+          // int otp = getdata["data"]["otp"];
           settingsProvider.setPrefrence(MOBILE, widget.mobileNumber!);
           settingsProvider.setPrefrence(COUNTRY_CODE, widget.countryCode!);
-          Future.delayed(Duration(seconds: 1)).then((_) {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => VerifyOtp(
-                      mobileNumber: widget.mobileNumber!,
-                      countryCode: widget.countryCode ,
-                      otp: "${getdata['data']['otp']}",
-                      title: getTranslated(context, 'FORGOT_PASS_TITLE'),
-                    )));
-          });
+          // Future.delayed(Duration(seconds: 1)).then((_) {
+          //   Navigator.pushReplacement(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => VerifyOtp(
+          //             mobileNumber: widget.mobileNumber!,
+          //             countryCode: widget.countryCode ,
+          //             otp: "${getdata['data'].toString()}",
+          //             title: getTranslated(context, 'FORGOT_PASS_TITLE'),
+          //           )));
+          // });
+          widget.otp = getdata["data"].toString();
+          print('${widget.otp}___________');
         } else {
           setSnackbar("OTP is not correct");
           setSnackbar(getTranslated(context, 'FIRSTSIGNUP_MSG')!);
         }
+      }else {
+        widget.otp = getdata["data"].toString() ;
       }
     } on TimeoutException catch (_) {
       setSnackbar(getTranslated(context, 'somethingMSg')!);

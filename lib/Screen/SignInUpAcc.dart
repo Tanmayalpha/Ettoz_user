@@ -1,10 +1,14 @@
+
 import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Helper/String.dart';
 import 'package:eshop_multivendor/Helper/app_assets.dart';
+import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/Login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 
 import '../Helper/Color.dart';
 import 'SendOtp.dart';
@@ -23,7 +27,7 @@ class _SignInUpAccState extends State<SignInUpAcc> {
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ));
-
+    getCurrentLoc();
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -35,6 +39,21 @@ class _SignInUpAccState extends State<SignInUpAcc> {
     //     statusBarBrightness: Brightness.dark,
     //   ),
     // );
+  }
+
+  Future<void> getCurrentLoc() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      print("checking permission here ${permission}");
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    var loc = Provider.of<LocationProvider>(context, listen: false);
   }
 
   _subLogo() {

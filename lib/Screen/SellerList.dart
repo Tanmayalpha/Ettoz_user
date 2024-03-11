@@ -1,16 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop_multivendor/Helper/Color.dart';
+
 import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Helper/String.dart';
 import 'package:eshop_multivendor/Model/Section_Model.dart';
 import 'package:eshop_multivendor/Provider/HomeProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/SubCategory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
 import 'HomePage.dart';
 import 'Seller_Details.dart';
+import 'SubCategory.dart';
 
 class SellerList extends StatefulWidget {
   final catId;

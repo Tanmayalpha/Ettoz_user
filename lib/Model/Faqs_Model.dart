@@ -1,3 +1,4 @@
+
 import 'package:eshop_multivendor/Helper/String.dart';
 
 class FaqsModel {

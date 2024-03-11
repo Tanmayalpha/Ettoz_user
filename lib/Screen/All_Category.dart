@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:eshop_multivendor/Helper/Color.dart';
 import 'package:eshop_multivendor/Helper/String.dart';
 import 'package:eshop_multivendor/Provider/CategoryProvider.dart';
 import 'package:eshop_multivendor/Provider/HomeProvider.dart';
-import 'package:eshop_multivendor/Screen/SellerList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,6 +13,7 @@ import '../Helper/Session.dart';
 import '../Model/Section_Model.dart';
 import 'HomePage.dart';
 import 'ProductList.dart';
+import 'SellerList.dart';
 
 class AllCategory extends StatefulWidget {
   @override
@@ -173,7 +174,6 @@ class _AllCategoryState extends State<AllCategory> {
       ),
     );
   }
-
 
   Widget catItem(int index, BuildContext context1) {
     return Selector<CategoryProvider, int>(

@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:eshop_multivendor/Screen/NewLocationPage.dart';
-import 'package:http/http.dart' as http;
 import 'package:eshop_multivendor/Helper/String.dart';
 import 'package:eshop_multivendor/Helper/app_assets.dart';
 import 'package:eshop_multivendor/Helper/cropped_container.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/HomePage.dart';
+import 'package:eshop_multivendor/Screen/NewLocationPage.dart';
 import 'package:eshop_multivendor/Screen/SendOtp.dart';
 import 'package:eshop_multivendor/Screen/Verify_Otp.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,6 +74,27 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
     token = await FirebaseMessaging.instance.getToken();
   }
 
+  Future<void> getCurrentLoc() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      print("checking permission here ${permission}");
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    var loc = Provider.of<LocationProvider>(context, listen: false);
+
+    latitude = position.latitude.toString();
+    longitude = position.longitude.toString();
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        double.parse(latitude!), double.parse(longitude!),
+        localeIdentifier: "en");
+  }
+
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -82,6 +106,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
     super.initState();
     getToken();
     getSetting();
+    getCurrentLoc();
     buttonController = new AnimationController(
         duration: new Duration(milliseconds: 2000), vsync: this);
     buttonSqueezeanimation = new Tween(
@@ -192,7 +217,8 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
   }
 
   Future<void> getLoginUser() async {
-    var data = {MOBILE: mobile, FCM_ID: token};
+    var data = {MOBILE: mobile, FCM_ID: token??""};
+    print(data);
     Response response =
         await post(getUserLoginApi, body: data, headers: headers)
             .timeout(Duration(seconds: timeOut));
@@ -1088,8 +1114,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
   Widget signUpLink() {
     return TextButton(
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => SendOtp(
               title: getTranslated(context, 'SEND_OTP_TITLE'),
             ),

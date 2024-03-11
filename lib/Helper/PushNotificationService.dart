@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+
 import 'package:eshop_multivendor/Model/Section_Model.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Screen/MyOrder.dart';
@@ -155,7 +156,7 @@ class PushNotificationService {
       }
     });
 
-    messaging.getInitialMessage().then((RemoteMessage? message) async {
+    messaging.getInitialMessage().then((RemoteMessage? message ) async {
       await Future.delayed(Duration.zero);
       // bool back = await getPrefrenceBool(ISFROMBACK);
       bool back = await Provider.of<SettingProvider>(context, listen: false)
@@ -300,10 +301,12 @@ class PushNotificationService {
   }
 }
 
-Future<dynamic> myForgroundMessageHandler(RemoteMessage message) async {
-  setPrefrenceBool(ISFROMBACK, true);
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
-  return Future<void>.value();
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  print('Handling a background message ${message.messageId}');
 }
 
 Future<String> _downloadAndSaveImage(String url, String fileName) async {

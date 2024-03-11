@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
+
 
 import 'Color.dart';
 
@@ -22,7 +24,7 @@ class SimBtn extends StatelessWidget {
     return CupertinoButton(
       child: Container(
           width: size,
-          height: 35,
+          height:Platform.isAndroid ? 35 : 45,
           alignment: FractionalOffset.center,
           decoration: new BoxDecoration(
 

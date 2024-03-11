@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop_multivendor/Helper/AppBtn.dart';
 import 'package:eshop_multivendor/Helper/SimBtn.dart';
-import 'package:eshop_multivendor/Provider/CartProvider.dart';
 import 'package:eshop_multivendor/Provider/FavoriteProvider.dart';
 import 'package:eshop_multivendor/Provider/HomeProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -17,11 +16,13 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
+import '../Helper/AppBtn.dart';
 import '../Helper/Color.dart';
 import '../Helper/Constant.dart';
 import '../Helper/Session.dart';
 import '../Helper/String.dart';
 import '../Model/Section_Model.dart';
+import '../Provider/CartProvider.dart';
 import 'HomePage.dart';
 import 'Login.dart';
 import 'Product_Detail.dart';

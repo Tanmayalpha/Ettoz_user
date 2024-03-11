@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart'as http;
-
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/PaypalWebviewActivity.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart'as http;
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_paystack/flutter_paystack.dart';
@@ -718,16 +719,16 @@ class StateWallet extends State<MyWallet> with TickerProviderStateMixin {
         _isProgress = true;
       });
 
-    var response = await StripeService.payWithNewCard(
-        amount: (price * 100).toString(),
-        currency: stripeCurCode,
-        from: "wallet");
-
-    if (mounted)
-      setState(() {
-        _isProgress = false;
-      });
-    setSnackbar(response.message!);
+    // var response = await StripeService.payWithNewCard(
+    //     amount: (price * 100).toString(),
+    //     currency: stripeCurCode,
+    //     from: "wallet");
+    //
+    // if (mounted)
+    //   setState(() {
+    //     _isProgress = false;
+    //   });
+    // setSnackbar(response.message!);
   }
 
   // paystackPayment(BuildContext context, int price) async {

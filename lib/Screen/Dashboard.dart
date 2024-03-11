@@ -2,21 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 import 'package:eshop_multivendor/Helper/Color.dart';
 import 'package:eshop_multivendor/Helper/Constant.dart';
 import 'package:eshop_multivendor/Helper/PushNotificationService.dart';
 import 'package:eshop_multivendor/Helper/Session.dart';
-import 'package:eshop_multivendor/Helper/String.dart';
 import 'package:eshop_multivendor/Helper/app_assets.dart';
-import 'package:eshop_multivendor/Helper/ccavenue.dart';
 import 'package:eshop_multivendor/Model/Section_Model.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
-import 'package:eshop_multivendor/Screen/Favorite.dart';
-import 'package:eshop_multivendor/Screen/Login.dart';
-import 'package:eshop_multivendor/Screen/MyOrder.dart';
-import 'package:eshop_multivendor/Screen/MyProfile.dart';
-import 'package:eshop_multivendor/Screen/Product_Detail.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+// import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,11 +18,18 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'dart:io' show Platform;
 
+import '../Helper/String.dart';
 import 'All_Category.dart';
 import 'Cart.dart';
+import 'Favorite.dart';
 import 'HomePage.dart';
+import 'Login.dart';
+import 'MyOrder.dart';
+import 'MyProfile.dart';
 import 'NotificationLIst.dart';
+import 'Product_Detail.dart';
 import 'Sale.dart';
 import 'Search.dart';
 
@@ -152,22 +153,22 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
       print(e.message);
     });*/
 
-    final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri? deepLink = data?.link;
-    if (deepLink != null) {
-      if (deepLink.queryParameters.length > 0) {
-        int index = int.parse(deepLink.queryParameters['index']!);
-
-        int secPos = int.parse(deepLink.queryParameters['secPos']!);
-
-        String? id = deepLink.queryParameters['id'];
-
-        // String list = deepLink.queryParameters['list'];
-
-        getProduct(id!, index, secPos, true);
-      }
-    }
+    // final PendingDynamicLinkData? data =
+    //     await FirebaseDynamicLinks.instance.getInitialLink();
+    // final Uri? deepLink = data?.link;
+    // if (deepLink != null) {
+    //   if (deepLink.queryParameters.length > 0) {
+    //     int index = int.parse(deepLink.queryParameters['index']!);
+    //
+    //     int secPos = int.parse(deepLink.queryParameters['secPos']!);
+    //
+    //     String? id = deepLink.queryParameters['id'];
+    //
+    //     // String list = deepLink.queryParameters['list'];
+    //
+    //     getProduct(id!, index, secPos, true);
+    //   }
+    // }
   }
 
   Future<void> getProduct(String id, int index, int secPos, bool list) async {
@@ -274,7 +275,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
               //height: 40,
 
               // width: 150,
-              height: 75,
+              height: Platform.isAndroid ? 75 : 85,
 
               // color: colors.primary,
               // width: 45,
@@ -290,7 +291,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
               child: Center(
                   child: SvgPicture.asset(
                 imagePath + "search.svg",
-                height: 20,
+                height: Platform.isAndroid ? 20 : 25,
                 color: colors.primary,
               )),
               onTap: () {
@@ -310,7 +311,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
             : IconButton(
                 icon: SvgPicture.asset(
                   imagePath + "search.svg",
-                  height: 20,
+                  height:Platform.isAndroid ? 20 : 25,
                   color: colors.primary,
                 ),
                 onPressed: () {
@@ -326,6 +327,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                 icon: SvgPicture.asset(
                   imagePath + "desel_notification.svg",
                   color: colors.primary,
+                  height: Platform.isAndroid ?20:25,
                 ),
                 onPressed: () {
                   CUR_USERID != null
@@ -348,6 +350,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                 icon: SvgPicture.asset(
                   imagePath + "desel_fav.svg",
                   color: colors.primary,
+                  height: Platform.isAndroid ? 20 : 25,
                 ),
                 onPressed: () {
                   CUR_USERID != null
@@ -400,6 +403,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                     ? SvgPicture.asset(
                         imagePath + "sel_home.svg",
                         color: colors.primary,
+                        //height: Platform.isAndroid ? 20 :50,
                       )
                     : SvgPicture.asset(
                         imagePath + "desel_home.svg",
@@ -510,86 +514,93 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
     return Material(
       color: Colors.transparent,
       elevation: 0,
-      child: CurvedNavigationBar(
-        height: 50,
-        backgroundColor: Colors.transparent,
-        items: <Widget>[
-          Icon(Icons.home, size: 30),
-          Icon(Icons.category, size: 30),
-          Icon(Icons.fire_truck_outlined, size: 30),
-          Icon(Icons.shopping_cart_outlined, size: 30),
-          // Center(
-          //           child: SvgPicture.asset(
-          //             imagePath + "appbarCart.svg",
-          //             color: colors.primary,
-          //           ),
-          //         ),
-          // Selector<UserProvider, String>   (
-          //   builder: (context, data, child) {
-          //     return IconButton(
-          //       icon: Stack(
-          //         children: [
-          //           Center(
-          //             child: SvgPicture.asset(
-          //               imagePath + "appbarCart.svg",
-          //               color: colors.primary,
-          //             ),
-          //           ),
-          //           (data != null && data.isNotEmpty && data != "0")
-          //               ? new Positioned(
-          //             bottom: 20,
-          //             right: 0,
-          //             child: Container(
-          //               //  height: 20,
-          //               decoration: BoxDecoration(
-          //                   shape: BoxShape.circle,
-          //                   color: colors.primary),
-          //               child: new Center(
-          //                 child: Padding(
-          //                   padding: EdgeInsets.all(3),
-          //                   child: new Text(
-          //                     data,
-          //                     style: TextStyle(
-          //                         fontSize: 7,
-          //                         fontWeight: FontWeight.bold,
-          //                         color: Theme.of(context)
-          //                             .colorScheme
-          //                             .white),
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //           )
-          //               : Container()
-          //         ],
-          //       ),
-          //       // onPressed: () {
-          //       //   CUR_USERID != null
-          //       //       ? Navigator.push(
-          //       //     context,
-          //       //     MaterialPageRoute(
-          //       //       builder: (context) => Cart(
-          //       //         fromBottom: false,
-          //       //       ),
-          //       //     ),
-          //       //   )
-          //       //       : Navigator.push(
-          //       //     context,
-          //       //     MaterialPageRoute(
-          //       //       builder: (context) => Login(),
-          //       //     ),
-          //       //   );
-          //       // },
-          //     );
-          //   },
-          //   selector: (_, homeProvider) => homeProvider.curCartCount,
-          // ),
-          Icon(Icons.person, size: 30),
-        ],
-        onTap: (index) {
-          _tabController.animateTo(index);
-        },
-      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+        CurvedNavigationBar(
+      
+              height: 50,
+              backgroundColor: Colors.transparent,
+              items: <Widget>[
+                Icon(Icons.home, size: Platform.isAndroid ? 30 :35),
+                Icon(Icons.category, size: Platform.isAndroid ? 30 : 35),
+                Icon(Icons.fire_truck_outlined, size: Platform.isAndroid ? 30 : 35),
+                Icon(Icons.shopping_cart_outlined, size: Platform.isAndroid ? 30 :35),
+                // Center(
+                //           child: SvgPicture.asset(
+                //             imagePath + "appbarCart.svg",
+                //             color: colors.primary,
+                //           ),
+                //         ),
+                // Selector<UserProvider, String>   (
+                //   builder: (context, data, child) {
+                //     return IconButton(
+                //       icon: Stack(
+                //         children: [
+                //           Center(
+                //             child: SvgPicture.asset(
+                //               imagePath + "appbarCart.svg",
+                //               color: colors.primary,
+                //             ),
+                //           ),
+                //           (data != null && data.isNotEmpty && data != "0")
+                //               ? new Positioned(
+                //             bottom: 20,
+                //             right: 0,
+                //             child: Container(
+                //               //  height: 20,
+                //               decoration: BoxDecoration(
+                //                   shape: BoxShape.circle,
+                //                   color: colors.primary),
+                //               child: new Center(
+                //                 child: Padding(
+                //                   padding: EdgeInsets.all(3),
+                //                   child: new Text(
+                //                     data,
+                //                     style: TextStyle(
+                //                         fontSize: 7,
+                //                         fontWeight: FontWeight.bold,
+                //                         color: Theme.of(context)
+                //                             .colorScheme
+                //                             .white),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //           )
+                //               : Container()
+                //         ],
+                //       ),
+                //       // onPressed: () {
+                //       //   CUR_USERID != null
+                //       //       ? Navigator.push(
+                //       //     context,
+                //       //     MaterialPageRoute(
+                //       //       builder: (context) => Cart(
+                //       //         fromBottom: false,
+                //       //       ),
+                //       //     ),
+                //       //   )
+                //       //       : Navigator.push(
+                //       //     context,
+                //       //     MaterialPageRoute(
+                //       //       builder: (context) => Login(),
+                //       //     ),
+                //       //   );
+                //       // },
+                //     );
+                //   },
+                //   selector: (_, homeProvider) => homeProvider.curCartCount,
+                // ),
+                Icon(Icons.person, size: Platform.isAndroid ? 30 : 35),
+              ],
+              onTap: (index) {
+                _tabController.animateTo(index);
+              },
+            ),
+      Platform.isAndroid ? SizedBox() :
+      SizedBox(height: 40,)
+      ],)
     );
   }
 

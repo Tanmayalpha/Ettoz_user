@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:eshop_multivendor/Provider/SettingProvider.dart';
-import 'package:eshop_multivendor/Screen/Cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:stripe_payment/stripe_payment.dart';
+
+import '../Provider/SettingProvider.dart';
+// import 'package:stripe_payment/stripe_payment.dart';
 
 class StripeTransactionResponse {
   final String? message, status;
@@ -27,55 +27,55 @@ class StripeService {
   };
 
   static init(String? stripeId, String? stripeMode) {
-    StripePayment.setOptions(StripeOptions(
-        publishableKey: stripeId,
-        merchantId: "Test",
-        androidPayMode: stripeMode));
+    // StripePayment.setOptions(StripeOptions(
+    //     publishableKey: stripeId,
+    //     merchantId: "Test",
+    //     androidPayMode: stripeMode));
   }
 
   
-  static Future<StripeTransactionResponse> payWithNewCard(
-      {String? amount, String? currency, String? from,BuildContext? context}) async {
-    try {
-      var paymentMethod = await StripePayment.paymentRequestWithCardForm(
-          CardFormPaymentRequest());
-
-      var paymentIntent =
-          await (StripeService.createPaymentIntent(amount, currency, from,context));
-
-      var response = await StripePayment.confirmPaymentIntent(PaymentIntent(
-        clientSecret: paymentIntent!['client_secret'],
-        paymentMethodId: paymentMethod.id,
-      ));
-
-      stripePayId = paymentIntent['id'];
-
-      if (response.status == 'succeeded') {
-        return new StripeTransactionResponse(
-            message: 'Transaction successful',
-            success: true,
-            status: response.status);
-      } else if (response.status == 'pending' ||
-          response.status == "captured") {
-        return new StripeTransactionResponse(
-            message: 'Transaction pending',
-            success: true,
-            status: response.status);
-      } else {
-        return new StripeTransactionResponse(
-            message: 'Transaction failed',
-            success: false,
-            status: response.status);
-      }
-    } on PlatformException catch (err) {
-      return StripeService.getPlatformExceptionErrorResult(err);
-    } catch (err) {
-      return new StripeTransactionResponse(
-          message: 'Transaction failed: ${err.toString()}',
-          success: false,
-          status: "fail");
-    }
-  }
+  // static Future<StripeTransactionResponse> payWithNewCard(
+  //     {String? amount, String? currency, String? from,BuildContext? context}) async {
+  //   try {
+  //     var paymentMethod = await StripePayment.paymentRequestWithCardForm(
+  //         CardFormPaymentRequest());
+  //
+  //     var paymentIntent =
+  //         await (StripeService.createPaymentIntent(amount, currency, from,context));
+  //
+  //     var response = await StripePayment.confirmPaymentIntent(PaymentIntent(
+  //       clientSecret: paymentIntent!['client_secret'],
+  //       paymentMethodId: paymentMethod.id,
+  //     ));
+  //
+  //     stripePayId = paymentIntent['id'];
+  //
+  //     if (response.status == 'succeeded') {
+  //       return new StripeTransactionResponse(
+  //           message: 'Transaction successful',
+  //           success: true,
+  //           status: response.status);
+  //     } else if (response.status == 'pending' ||
+  //         response.status == "captured") {
+  //       return new StripeTransactionResponse(
+  //           message: 'Transaction pending',
+  //           success: true,
+  //           status: response.status);
+  //     } else {
+  //       return new StripeTransactionResponse(
+  //           message: 'Transaction failed',
+  //           success: false,
+  //           status: response.status);
+  //     }
+  //   } on PlatformException catch (err) {
+  //     return StripeService.getPlatformExceptionErrorResult(err);
+  //   } catch (err) {
+  //     return new StripeTransactionResponse(
+  //         message: 'Transaction failed: ${err.toString()}',
+  //         success: false,
+  //         status: "fail");
+  //   }
+  // }
 
   static getPlatformExceptionErrorResult(err) {
     String message = 'Something went wrong';
