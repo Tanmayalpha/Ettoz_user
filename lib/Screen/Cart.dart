@@ -3797,7 +3797,7 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'PAYUMONEY_LBL'))
         payVia = "PayUMoney";
       else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
-        payVia = "RazorPay";
+        payVia = "PhonePe";
       else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
         payVia = "Paystack";
       else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
@@ -3811,7 +3811,7 @@ bool  isAdreesChange = false ;
       else if (payMethod == getTranslated(context, 'BANKTRAN'))
         payVia = "bank_transfer";
       else if (payMethod == getTranslated(context, 'CC_AVENUE')) {
-        payVia = "PhonePay";
+        payVia = "PhonePe";
       }
       try {
         var parameter = {
@@ -4147,7 +4147,7 @@ bool  isAdreesChange = false ;
         Map response = jsonDecode(value.body);
         if(response['data']!=null) {
           setSnackbar("${response['data'][0]["message"]}", GlobalKey());
-          if ( response['data'][0]["error"]=="false"){
+          if ( response['data'][0]["error"].toString()=="false"){
             placeOrder(merchantTransactionId);
           } else {
           }

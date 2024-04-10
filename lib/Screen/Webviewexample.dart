@@ -114,7 +114,7 @@ class _WebViewExampleState extends State<WebViewExample> {
             child: Icon(Icons.arrow_back, color: colors.whiteTemp,),
           ),
           backgroundColor: colors.primary,
-          title: Text('Phone Pay',style: TextStyle(color: colors.whiteTemp),),
+          title: Text('PhonePe',style: TextStyle(color: colors.whiteTemp),),
         ),
         backgroundColor: Colors.white,
         body: WebViewWidget(controller: _controller),
