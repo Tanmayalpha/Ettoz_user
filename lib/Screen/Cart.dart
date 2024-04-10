@@ -4277,9 +4277,11 @@ bool  isAdreesChange = false ;
       print(result);
       var finalResult = jsonDecode(result);
       url = finalResult['data']['data']['instrumentResponse']['redirectInfo']['url'];
+
       merchantId = finalResult['data']['data']['merchantId'];
       merchantTransactionId = finalResult['data']['data']['merchantTransactionId'];
       print("merchante trancfags ${merchantTransactionId}");
+      print("merchante trancfags ${url}");
       await initiatePayment();
     }
     else {
