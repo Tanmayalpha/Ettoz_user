@@ -26,3 +26,8 @@ final String imageUrl = 'https://eatoz.in/';
 final String jwtKey = "0352e7a815f965e8e278d47976b8f9cf466e1f42";
 double latitudeFirst = 0;
 double longitudeFirst = 0;
+
+final  phonePemerchantId = "SANDLEATOZONLINE";
+final saltkey = "c4205b43-9dcc-49d9-85d3-96ceececda73";
+final apiEndPoint = "/pg/v1/pay";
+final  saltIndex = "1";

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -9,6 +11,7 @@ import 'package:eshop_multivendor/Helper/Session.dart';
 import 'package:eshop_multivendor/Provider/CartProvider.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:eshop_multivendor/Screen/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -16,9 +19,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:paytm/paytm.dart';
+import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 import '../Helper/AppBtn.dart';
 import '../Helper/Color.dart';
@@ -154,6 +159,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     super.initState();
     clearAll();
     getUserData();
+///phonePe Payment initialization
+    initPhonePeSdk();
 
     Future.delayed(Duration(milliseconds: 300), () {
       return getUserData();
@@ -1906,7 +1913,9 @@ bool isAvailableDelivery = true;
       var result  = await response.stream.bytesToString();
       var finalResult = jsonDecode(result) ;
       if(finalResult ['error'] == false) {
-        getPhonpayURL();
+        //getPhonpayURL();
+        body = await getChecksum() ;
+        startTransaction();
        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(finalResult ['message'].toString())));
         isAvailableDelivery =  false ;
       }else {
@@ -1918,6 +1927,141 @@ bool isAvailableDelivery = true;
       print(response.reasonPhrase);
     }
   }
+
+
+///for phonePe SDK_____________________________________________________
+  List<String> environmentList = <String>['SANDBOX', 'PRODUCTION'];
+  bool enableLogs = true;
+  Object? result;
+  String environmentValue = 'PRODUCTION'; //'SANDBOX';
+  String appId = "";
+  String packageName =  "com.eatozfood_user"; //"com.phonepe.simulator";
+  String checksum = '';
+  String checksum2 = '';
+  String body = '';
+  String callBackUrl = "https://webhook.site/a43fac6c-37d2-4c55-9ade-729ebd38f5a1";
+
+
+  void initPhonePeSdk() {
+    PhonePePaymentSdk.init(environmentValue, appId, phonePemerchantId, enableLogs)
+        .then((isInitialized) => {
+          result = 'PhonePe SDK Initialized - $isInitialized'
+    })
+        .catchError((error) {
+      handleError(error);
+      return <dynamic>{};
+    });
+  }
+
+
+  String? orderId;
+  Future<String> getChecksum() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    mobile = preferences.getString("mobile");
+     orderId = DateTime.now().millisecondsSinceEpoch.toString();
+    final requestData = {
+      "merchantId": phonePemerchantId,
+      "merchantTransactionId": orderId,
+      "merchantUserId": CUR_USERID,
+      "amount": (100*totalPrice).toInt(),
+      "callbackUrl": callBackUrl,
+      "mobileNumber": mobile,
+      "paymentInstrument": {"type": "PAY_PAGE"}
+    };
+    String base64Body = base64.encode(utf8.encode(json.encode(requestData)));
+    checksum = "${sha256.convert(utf8.encode(base64Body + apiEndPoint + saltkey)).toString()}###$saltIndex";
+
+    return base64Body;
+  }
+
+  void startTransaction() async {
+    try {
+      PhonePePaymentSdk.startTransaction(body, callBackUrl, checksum, packageName)
+          .then((response) => {
+        setState(() {
+          log('${response}');
+          if (response != null) {
+            String status = response['status'].toString();
+            String error = response['error'].toString();
+            if (status == 'SUCCESS') {
+              result = "Flow Completed - Status: Success!";
+              print('${result}________________phonePeResult');
+              checkPhonePeTransactionApi() ;
+            } else {
+              result =
+              "Flow Completed - Status: $status and Error: $error";
+              print('${result}________________phonePeResult');
+            }
+
+          } else {
+            result = "Flow Incomplete";
+          }
+        })
+      })
+          .catchError((error) {
+        handleError(error);
+        return <dynamic>{};
+      });
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  Future<void> checkPhonePeTransactionApi() async{
+
+    String concate = "/pg/v1/status/$phonePemerchantId/$orderId$saltkey";
+     var bytes = utf8.encode(concate);
+
+      var digest = sha256.convert(bytes).toString();
+      String xVerify =  "$digest###$saltIndex";
+
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'X-VERIFY': xVerify ,
+      'X-MERCHANT-ID':phonePemerchantId
+    };
+
+    var request = http.Request('GET', Uri.parse('https://api.phonepe.com/apis/hermes/pg/v1/status/$phonePemerchantId/$orderId'));
+
+    request.headers.addAll(headers);
+
+
+    http.StreamedResponse response = await request.send();
+
+    print('${request.url}');
+
+    if (response.statusCode == 200) {
+     var result = await response.stream.bytesToString();
+     var finalResult = jsonDecode(result);
+     try{
+        if(finalResult['success'] && finalResult['code'] == "PAYMENT_SUCCESS" && finalResult['data']['state']=='COMPLETED'){
+          Fluttertoast.showToast(msg: finalResult['message']);
+          placeOrder(merchantTransactionId);
+
+        }else {
+          Fluttertoast.showToast(msg: finalResult['message']);
+        }
+     }catch(e){
+
+     }
+    }
+    else {
+    print(response.reasonPhrase);
+    }
+  }
+
+
+  void handleError(error) {
+    setState(() {
+      if (error is Exception) {
+        result = error.toString();
+      } else {
+        result = {"error": error};
+      }
+    });
+  }
+
 
   promoSheet() {
     showModalBottomSheet<dynamic>(
@@ -3054,6 +3198,7 @@ bool isAvailableDelivery = true;
       return number.floor();
     }
   }
+
   checkout(List<SectionModel> cartList) {
     _razorpay = Razorpay();
     _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -3160,12 +3305,13 @@ setState(() {
                                                     checkoutState!(() {
                                                       _placeOrder = false;
                                                     });
-
-                                                    if (selAddress == null ||
-                                                        selAddress!.isEmpty) {
+                                                    print('${selAddress}__________addresOpen');
+                                                    if (selectedAddress == null) {
                                                       msg = getTranslated(
                                                           context,
                                                           'addressWarning');
+
+
                                                       Navigator.pushReplacement(
                                                           context,
                                                           MaterialPageRoute(
@@ -3282,6 +3428,7 @@ setState(() {
     print("payment method here ${payMethod}");
 
      if(payMethod == getTranslated(context, 'CC_AVENUE')) {
+
     // placeOrder('');
 
           checkAddressForDelivery();
@@ -3290,10 +3437,11 @@ setState(() {
     }else
     if (payMethod == getTranslated(context, 'PAYPAL_LBL')) {
       placeOrder('');
-    } else if (payMethod == getTranslated(context, 'RAZORPAY_LBL'))
+    } else if (payMethod == getTranslated(context, 'RAZORPAY_LBL')) {
 
-      _checkOrderShouldBePlacedOrNot ();
-       // razorpayPayment();
+      _checkOrderShouldBePlacedOrNot();
+    }
+    // razorpayPayment();
     // else if (payMethod == getTranslated(context, 'PAYSTACK_LBL'))
     //   paystackPayment(context);
     else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
@@ -5154,7 +5302,7 @@ bool  isAdreesChange = false ;
                         ),
                       ]),
                   actions: <Widget>[
-                    new TextButton(
+                     TextButton(
                         child: Text(getTranslated(context, 'CANCEL')!,
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.lightBlack,
@@ -5166,7 +5314,7 @@ bool  isAdreesChange = false ;
                           });
                           Navigator.pop(context);
                         }),
-                    new TextButton(
+                     TextButton(
                         child: Text(getTranslated(context, 'DONE')!,
                             style: TextStyle(
                                 color: colors.primary,
