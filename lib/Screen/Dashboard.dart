@@ -311,7 +311,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
             : IconButton(
                 icon: SvgPicture.asset(
                   imagePath + "search.svg",
-                  height:Platform.isAndroid ? 20 : 25,
+                  height: Platform.isAndroid ? 20 : 25,
                   color: colors.primary,
                 ),
                 onPressed: () {
@@ -327,7 +327,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                 icon: SvgPicture.asset(
                   imagePath + "desel_notification.svg",
                   color: colors.primary,
-                  height: Platform.isAndroid ?20:25,
+                  height: Platform.isAndroid ? 20 : 25,
                 ),
                 onPressed: () {
                   CUR_USERID != null
@@ -357,8 +357,9 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                       ? Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Favorite() //CCAvenueScreen(),
-                          ))
+                              builder: (context) =>
+                                  Favorite() //CCAvenueScreen(),
+                              ))
                       : Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -512,20 +513,21 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
 
   Widget _getBottomNavigator() {
     return Material(
-      color: Colors.transparent,
-      elevation: 0,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-        CurvedNavigationBar(
-      
+        color: Colors.transparent,
+        elevation: 0,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CurvedNavigationBar(
               height: 50,
               backgroundColor: Colors.transparent,
               items: <Widget>[
-                Icon(Icons.home, size: Platform.isAndroid ? 30 :35),
+                Icon(Icons.home, size: Platform.isAndroid ? 30 : 35),
                 Icon(Icons.category, size: Platform.isAndroid ? 30 : 35),
-                Icon(Icons.fire_truck_outlined, size: Platform.isAndroid ? 30 : 35),
-                Icon(Icons.shopping_cart_outlined, size: Platform.isAndroid ? 30 :35),
+                Icon(Icons.fire_truck_outlined,
+                    size: Platform.isAndroid ? 30 : 35),
+                Icon(Icons.shopping_cart_outlined,
+                    size: Platform.isAndroid ? 30 : 35),
                 // Center(
                 //           child: SvgPicture.asset(
                 //             imagePath + "appbarCart.svg",
@@ -598,10 +600,13 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                 _tabController.animateTo(index);
               },
             ),
-      Platform.isAndroid ? SizedBox() :
-      SizedBox(height: 40,)
-      ],)
-    );
+            Platform.isAndroid
+                ? SizedBox()
+                : SizedBox(
+                    height: 40,
+                  )
+          ],
+        ));
   }
 
   @override

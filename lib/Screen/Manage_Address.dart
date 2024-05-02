@@ -31,7 +31,7 @@ class StateAddress extends State<ManageAddress> with TickerProviderStateMixin {
   Animation? buttonSqueezeanimation;
   AnimationController? buttonController;
   bool _isNetworkAvail = true;
-  List<RadioModel> addModel = [];
+    List<RadioModel> addModel = [];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

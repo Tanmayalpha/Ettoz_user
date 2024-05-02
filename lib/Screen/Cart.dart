@@ -159,20 +159,21 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     super.initState();
     clearAll();
     getUserData();
+    _getAddress();
 ///phonePe Payment initialization
     initPhonePeSdk();
 
-    Future.delayed(Duration(milliseconds: 300), () {
+    /*Future.delayed(Duration(milliseconds: 300), () {
       return getUserData();
-    });
+    });*/
     _getCart("0");
     _getSaveLater("1");
-    _getAddress();
+
     Future.delayed(Duration(milliseconds: 300), () {
       return getSetting();
     });
     // _getAddress();
-
+    init();
     buttonController = new AnimationController(
         duration: new Duration(milliseconds: 2000), vsync: this);
 
@@ -1913,9 +1914,9 @@ bool isAvailableDelivery = true;
       var result  = await response.stream.bytesToString();
       var finalResult = jsonDecode(result) ;
       if(finalResult ['error'] == false) {
+        _checkOrderShouldBePlacedOrNot ();
         //getPhonpayURL();
-        body = await getChecksum() ;
-        startTransaction();
+
        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(finalResult ['message'].toString())));
         isAvailableDelivery =  false ;
       }else {
@@ -1985,12 +1986,10 @@ bool isAvailableDelivery = true;
             String error = response['error'].toString();
             if (status == 'SUCCESS') {
               result = "Flow Completed - Status: Success!";
-              print('${result}________________phonePeResult');
               checkPhonePeTransactionApi() ;
             } else {
               result =
               "Flow Completed - Status: $status and Error: $error";
-              print('${result}________________phonePeResult');
             }
 
           } else {
@@ -2037,7 +2036,7 @@ bool isAvailableDelivery = true;
      try{
         if(finalResult['success'] && finalResult['code'] == "PAYMENT_SUCCESS" && finalResult['data']['state']=='COMPLETED'){
           Fluttertoast.showToast(msg: finalResult['message']);
-          placeOrder(merchantTransactionId);
+          placeOrder(orderId);
 
         }else {
           Fluttertoast.showToast(msg: finalResult['message']);
@@ -3402,9 +3401,10 @@ setState(() {
                                                     // else if (!deliverable) {
                                                     //   checkDeliverable();
                                                     // }
-                                                    else
-                                                    _placeOrder = true;
-                                                    confirmDialog();
+                                                    else {
+                                                      _placeOrder = true;
+                                                      confirmDialog();
+                                                    }
                                                   }
                                                 : null)
                                         //}),
@@ -3432,7 +3432,7 @@ setState(() {
     // placeOrder('');
 
           checkAddressForDelivery();
-    // _checkOrderShouldBePlacedOrNot ();
+
 
     }else
     if (payMethod == getTranslated(context, 'PAYPAL_LBL')) {
@@ -3489,7 +3489,9 @@ setState(() {
 
           bool error = getdata["error"];
           if (!error) {
-            getPhonpayURL();
+            body = await getChecksum() ;
+            startTransaction();
+            //getPhonpayURL();
             //razorpayPayment();
           }else {
             setSnackbar(getdata["message"], _checkscaffoldKey);
@@ -3515,9 +3517,14 @@ setState(() {
 
     }
   }
-
+  SharedPreferences? prefs;
+  init()async{
+    prefs   = await SharedPreferences.getInstance();
+  }
   Future<void> _getAddress() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    print('________________getAddress__');
+
 
     _isNetworkAvail = await isNetworkAvailable();
     if (_isNetworkAvail) {
@@ -3528,6 +3535,9 @@ setState(() {
         Response response =
             await post(getAddressApi, body: parameter, headers: headers)
                 .timeout(Duration(seconds: timeOut));
+
+        print('${parameter}____${getAddressApi}');
+        log('${response.body}');
 
         if (response.statusCode == 200) {
           var getdata = json.decode(response.body);
@@ -3549,7 +3559,7 @@ setState(() {
               if (!ISFLAT_DEL) {
                 //  if (totalPrice < double.parse(addressList[0].freeAmt!)) {
                 delCharge = double.parse(addressList[0].deliveryCharge!);
-                prefs.setDouble('delicharge', delCharge);
+                prefs!.setDouble('delicharge', delCharge);
                 print("charge 1 ${delCharge}");
                 // } else {
                 //   delCharge = 0;
@@ -3577,9 +3587,10 @@ setState(() {
               double newdel = 0.0;
               delCharge =
                   double.parse(addressList[selectedAddress!].deliveryCharge!);
-              print('___________${delCharge}__________');
+              print('___________${addressList.length}__________');
               //prefs.setDouble('delicharge', delCharge);
               print("final del charge here ${delCharge}");
+              print("final selectedAddress ${selectedAddress}");
               setState(() {
 
               });
@@ -3916,7 +3927,6 @@ bool  isAdreesChange = false ;
 
   Future<void> placeOrder(String? tranId) async {
 
-    print('___________${totalPrice}__________');
 
 
     _isNetworkAvail = await isNetworkAvailable();
